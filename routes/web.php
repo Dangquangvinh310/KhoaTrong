@@ -11,6 +11,7 @@ use App\http\controllers\NgayNghiController;
 use App\http\controllers\LuongController;
 use App\http\controllers\ThongTinController;
 use App\http\controllers\NghiViecController;
+use App\http\controllers\ChamCongController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,9 +23,7 @@ use App\http\controllers\NghiViecController;
 |
 */
 
-Route::get('/', function () {
-    return view('template');
-})->name('dashboard');
+
 
 Route::middleware('guest')->group(function () {
     Route::get('/dang-nhap', [UserController::class, 'login'])->name('login');
@@ -35,6 +34,9 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/dang-xuat', [UserController::class, 'logout'])->name('logout');
 
+Route::get('/', function () {
+    return view('template');
+})->name('dashboard');
 
 Route::get('/danh-sach-hop-dong', [HopDongController::class, 'index'])->name('danh_sach_hop_dong');
 Route::get('/them-moi-hop-dong', [HopDongController::class, 'create'])->name('them_moi_hop_dong');
@@ -106,6 +108,11 @@ Route::get('/danh-sach-nghi-viec-cho-duyet', [NghiViecController::class, 'danh_s
 Route::get('/chap-nhan-don-xin-nghi-viec/{id}', [NghiViecController::class, 'duyet_don_nghi'])->name('duyet_don_nghi_viec');
 Route::get('/xoa-nghi-viec/{id}',[NghiViecController::class, 'destroy'])->name('xoa_nghi_viec');
 
+Route::get('/danh-sach-cham-cong', [ChamCongController::class, 'index'])->name('danh_sach_cham_cong');
+Route::get('/them-moi-cham-cong', [ChamCongController::class, 'create'])->name('them_moi_cham_cong');
+Route::post('/them-moi-cham-cong', [ChamCongController::class, 'store'])->name('xl_them_cham_cong');
+Route::get('/cap-nhat-cham-cong/{id}',[ChamCongController::class, 'edit'])->name('cap_nhat_cham_cong');
+Route::post('/cap-nhat-cham-cong/{id}',[ChamCongController::class, 'update'])->name('xl_cap_nhat_cham_cong');
 });
 
         
