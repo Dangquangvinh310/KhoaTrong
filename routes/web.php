@@ -9,6 +9,7 @@ use App\http\controllers\BHXHController;
 use App\http\controllers\TuyenDungController;
 use App\http\controllers\NgayNghiController;
 use App\http\controllers\LuongController;
+use App\http\controllers\ChamCongController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,9 +21,7 @@ use App\http\controllers\LuongController;
 |
 */
 
-Route::get('/', function () {
-    return view('template');
-})->name('dashboard');
+
 
 Route::middleware('guest')->group(function () {
     Route::get('/dang-nhap', [UserController::class, 'login'])->name('login');
@@ -33,6 +32,9 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/dang-xuat', [UserController::class, 'logout'])->name('logout');
 
+Route::get('/', function () {
+    return view('template');
+})->name('dashboard');
 
 Route::get('/danh-sach-hop-dong', [HopDongController::class, 'index'])->name('danh_sach_hop_dong');
 Route::get('/them-moi-hop-dong', [HopDongController::class, 'create'])->name('them_moi_hop_dong');
@@ -90,6 +92,11 @@ Route::post('/them-moi-bang-luong', [LuongController::class, 'store'])->name('xl
 Route::get('/cap-nhat-bang-luong/{id}',[LuongController::class, 'edit'])->name('cap_nhat_bang_luong');
 Route::post('/cap-nhat-bang-luong/{id}',[LuongController::class, 'update'])->name('xl_cap_nhat_bang_luong');
 
+Route::get('/danh-sach-cham-cong', [ChamCongController::class, 'index'])->name('danh_sach_cham_cong');
+Route::get('/them-moi-cham-cong', [ChamCongController::class, 'create'])->name('them_moi_cham_cong');
+Route::post('/them-moi-cham-cong', [ChamCongController::class, 'store'])->name('xl_them_cham_cong');
+Route::get('/cap-nhat-cham-cong/{id}',[ChamCongController::class, 'edit'])->name('cap_nhat_cham_cong');
+Route::post('/cap-nhat-cham-cong/{id}',[ChamCongController::class, 'update'])->name('xl_cap_nhat_cham_cong');
 });
 
         

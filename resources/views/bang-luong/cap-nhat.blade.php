@@ -21,23 +21,21 @@
                     @csrf
                     <div class="row mb-3">
                         <div class="col-6">
-                            <label class="form-label">Tên phòng ban</label>
-                            <input type="text" class="form-control" id="ten_phong_ban" name="ten_phong_ban" placeholder="Nhập tên phòng ban" required
-                            value="{{$phongBan->ten_phong_ban}}">
-                       </div>
-                       <div class="col-6">
-                            <label class="form-label">Trưởng phòng</label>
-                            <select class="form-select " 
-                                id="user_id" name="user_id">
-                                @foreach($users as $user)
-                                    @if($user->id==$phongBan->user_id)
-                                        <option value="{{ $user->id}} " selected>{{ $user->ho_ten }}</option>
-                                    @else
-                                        <option value="{{ $user->id}}">{{ $user->ho_ten }}</option>
-                                    @endif
-                                @endforeach
-                            </select>
-                       </div>
+                                <label class="form-label">Tên nhân viên</label>
+                                <input type="text" class="form-control" id="user" name="user" value="{{$luong->user->ho_ten}}">
+                        </div>
+                        <div class="col-6">
+                                <label class="form-label">Tổng số ngày làm trong tháng</label>
+                                <input type="text" class="form-control" id="tong_ngay_lam" name="tong_ngay_lam" placeholder="Nhập số ngày làm" >
+                        </div>
+                        <div class="col-6">
+                                <label class="form-label">Phụ cấp</label>
+                                <input type="text" class="form-control" id="phu_cap" name="phu_cap" placeholder="Nhập phụ cấp" >
+                        </div>
+                        <div class="col-6">
+                                <label class="form-label">Tạm ứng</label>
+                                <input type="text" class="form-control" id="tam_ung" name="tam_ung" placeholder="Nhập tạm ứng lương" >
+                        </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>

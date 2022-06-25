@@ -190,6 +190,12 @@
               </a>
             </li>
             <li class="menu-item">
+              <a href="{{route('danh_sach_cham_cong')}}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div data-i18n="Analytics">Chấm công</div>
+              </a>
+            </li>
+            <li class="menu-item">
               <a href="index.html" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Khen thưởng, kĩ luật</div>

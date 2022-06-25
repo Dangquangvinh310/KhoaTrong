@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\Luong;
 use App\Models\User;
+use App\Models\ChamCong;
 use Illuminate\Support\Facades\Validator;
 
 class LuongController extends Controller
@@ -34,8 +35,6 @@ class LuongController extends Controller
         [   
             'user_id.required'      => 'Chưa chọn nhân viên',
             'tong_ngay_lam.required'       => 'Chưa nhập tổng ngày làm',
-
-
         ]
     );
     if ($validator->fails()) {
@@ -69,12 +68,21 @@ class LuongController extends Controller
 
     public function edit($id)
     {
-       $NgayNghi=Luong::find($id);
-       if($NgayNghi==null)
+       $luong=Luong::find($id);
+       $ngayLam = Carbon::now()->format('m-Y');
+       $tongNgayLam = ChamCong::where('user_id',$luong->user_id)->where('ngay_lam','LIKE',"%$ngayLam%")->count();
+       $user = User::find((integer) $luong->user_id)->chucVu;
+
+      
+       $thamSp = [];
+       $thamSp['tongNgayLam'] = $tongNgayLam;
+       $thamSp['luongMotNgay'] =  $user->luong;
+       return $thamSp;
+       if($luong==null)
        {
            return redirect()->route('danh_sach_ngay_nghi')->with('error','Không tìm thấy ngày nghỉ này');
        }
-       return view('ngay-nghi/cap-nhat', compact('NgayNghi'));   
+       return view('ngay-nghi/cap-nhat', compact('luong','thamSp'));   
     }
 
 

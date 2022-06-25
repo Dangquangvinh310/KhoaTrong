@@ -13,32 +13,32 @@
 </div>
 @endif
 <div class="row">
-    <!-- <div class="col-12 mb-3">
-        <a href="{{route('them_moi_bang_luong')}}" class="btn btn-primary" >Thêm mới</a>
-    </div> -->
+    <div class="col-12 mb-3">
+        <a href="{{route('them_moi_cham_cong')}}" class="btn btn-primary" >Thêm mới</a>
+    </div>
     <div class="col-12">
         <div class="card">
-            <h5 class="card-header">Danh sách lương</h5>
+            <h5 class="card-header">Danh sách chấm công</h5>
             <div class="card-body demo-vertical-spacing demo-only-element">
             <table class="table">
                 <thead>
                   <tr>
                     <th scope="col">Tên nhân viên</th>
-                    <th scope="col">Tháng</th>
-                    <th scope="col">Số lương nhận được</th>
+                    <th scope="col">Ngày làm</th>
 
                   </tr>
                 </thead>
                 <tbody>
-                @forelse($luongs as $luong)
+                @forelse($chamCongs as $chamCong)
                 <tr>
-                    <td>{{ $luong->user->ho_ten}}</td>
-                    <td>{{ $luong->thang_nam}}</td>
-                    <td>{{ $luong->tong_luong}}</td>
-
+                    <td>{{ $chamCong->user->ho_ten}}</td>
+                    <td>{{ $chamCong->ngay_lam}}</td>
                     <td>
-                        <a href="{{route('cap_nhat_phong_ban',['id' => $luong->id])}}" ><i class="bx bx-message-square-add"></i></a>
-                        <a href="" class="ms-3"><i class="bx bx-trash"></i></a>
+                        @if(Carbon\Carbon::now()->format('m-Y') == Carbon\Carbon::parse($chamCong->ngay_lam)->format('m-Y') )
+                        <a href="{{route('cap_nhat_cham_cong',['id' => $chamCong->id])}}" ><i class="bx bx-message-square-add"></i></a>
+                        <a href="{{route('cap_nhat_cham_cong',['id' => $chamCong->id])}}" class="ms-3"><i class="bx bx-trash"></i></a>
+                        @endif
+                       
                     </td>
                 </tr>
                 @empty
