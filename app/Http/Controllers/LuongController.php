@@ -77,47 +77,35 @@ class LuongController extends Controller
        $thamSp = [];
        $thamSp['tongNgayLam'] = $tongNgayLam;
        $thamSp['luongMotNgay'] =  $user->luong;
-       return $thamSp;
        if($luong==null)
        {
            return redirect()->route('danh_sach_ngay_nghi')->with('error','Không tìm thấy ngày nghỉ này');
        }
-       return view('ngay-nghi/cap-nhat', compact('luong','thamSp'));   
+       return view('bang-luong/cap-nhat', compact('luong','thamSp'));   
     }
 
 
     public function update(Request $request,$id)
     {
         // return $request->all();
-        $validator = Validator::make($request->all(), [
-            'user_id'        => 'required',
-            'ngay_bat_dau_nghi'        => 'required',
-            'ngay_di_lam_lai'        => 'required',
-            'ly_do'        => 'required',
     
-            ],
-            [   
-                'user_id.required'      => 'Chưa chọn nhân viên',
-                'ngay_bat_dau_nghi.required'       => 'Chưa chọn ngày bắt đầu nghỉ',
-                'ngay_di_lam_lai.required'       => 'Chưa chọn ngày đi làm lại',
-                'ly_do.required'       => 'Chưa nhập lí do',
-    
-            ]
-        );
-        if ($validator->fails()) {
-            return back()->with('error', $validator->messages()->first());
-        }
       $update = Luong::find($id);
       if(empty($update))
       {
         return redirect()->route('danh_sach_ngay_nghi')->with('error','Không tìm thấy ngày nghỉ này');
       }
-      $update->ngay_bat_dau_nghi = $request->ngay_bat_dau_nghi;
-      $update->ngay_di_lam_lai = $request->ngay_di_lam_lai;
-      $update->ly_do = $request->ly_do;
+
+      $user = User::find((integer) $update->user_id)->chucVu;
+      $ngayLam = Carbon::now()->format('m-Y');
+      $tongNgayLam = ChamCong::where('user_id',$update->user_id)->where('ngay_lam','LIKE',"%$ngayLam%")->count();
+
+
+      $update->tam_ung = $request->tam_ung;
+      $update->phu_cap = $request->phu_cap;
+      $update->tong_luong =  $tongNgayLam * $user->luong  + (float)$request->phu_cap - (float)$request->tam_ung;
 
       $update->save();
-      return redirect()->route('danh_sach_ngay_nghi')->with('status','Cập nhật thành công');
+      return redirect()->route('danh_sach_bang_luong')->with('status','Cập nhật thành công');
 
     }
 

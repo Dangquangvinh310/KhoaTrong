@@ -37,7 +37,7 @@
                     <td>{{ $luong->tong_luong}}</td>
 
                     <td>
-                        <a href="{{route('cap_nhat_phong_ban',['id' => $luong->id])}}" ><i class="bx bx-message-square-add"></i></a>
+                        <a href="{{route('cap_nhat_bang_luong',['id' => $luong->id])}}" ><i class="bx bx-message-square-add"></i></a>
                         <a href="" class="ms-3"><i class="bx bx-trash"></i></a>
                     </td>
                 </tr>
