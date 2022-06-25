@@ -134,8 +134,6 @@ class UserController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'ma_nhan_vien'  => "required|unique:App\Models\User,ma_nhan_vien,{$id},id,deleted_at,NULL",
-            'username'      => "required|unique:App\Models\User,username,{$id},id,deleted_at,NULL",
-            'password'      => 'required|min:6|max:191',
             'ho_ten'        => 'required|max:191',
             'cmnd'          => 'max:191',
             'dia_chi'       => 'max:191',
@@ -149,12 +147,6 @@ class UserController extends Controller
                 'ma_nhan_vien.required'   => 'Chưa nhập mã nhân viên',
                 'ma_nhan_vien.max'        => 'Mã nhân viên vượt quá 191 ký tự',
                 'ma_nhan_vien.unique'     => 'Mã nhân viên đã tồn tại',
-                'username.required'       => 'Chưa nhập tên đăng nhập',
-                'username.unique'         => 'Tên đăng nhập đã tồn tại',
-                'username.max'            => 'Tên đăng nhập vượt quá 191 ký tự',
-                'password.required'       => 'Chưa nhập mật khẩu',
-                'password.min'            => 'Mật khẩu chưa đủ 6 kí tự',
-                'password.max'            => 'Mật khẩu vượt quá 191 kí tự',
                 'ho_ten.required'         => 'Chưa nhập họ tên',
                 'ho_ten.max'              => 'Họ tên vượt quá 191 kí tự',
                 'cmnd.max'                => 'CMND/CCCD vượt quá 191 kí tự',
@@ -195,9 +187,22 @@ class UserController extends Controller
     public function destroy(Request $request)
     {
         try {
-            User::destroy($request->id);
-            return redirect()->route('danh_sach_nhan_vien')->with('error','Xoá thành công');
-
+            $user = User::find($request->id);
+            $hopDong = HopDong::where('user_id', $user->id)->first();
+            $phongBan = PhongBan::where('user_id', $user->id)->first();
+            if($hopDong!=null)
+            {
+                return redirect()->route('danh_sach_nhan_vien')->with('error','Nhân viên đang còn họp đồng');
+            }
+            else if($phongBan!=null)
+            {
+                return redirect()->route('danh_sach_nhan_vien')->with('error','Nhân viên đang làm trưởng phòng');
+            }
+            else
+            {
+                User::destroy($request->id);
+                return redirect()->route('danh_sach_nhan_vien')->with('status','Xoá thành công');
+            }
         } catch (Exception $e) {
             return redirect()->route('danh_sach_nhan_vien')->with('error','Xoá không thành công');
 

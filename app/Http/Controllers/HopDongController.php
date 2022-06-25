@@ -103,7 +103,7 @@ class HopDongController extends Controller
     {
         try {
             HopDong::destroy($request->id);
-            return redirect()->route('danh_sach_hop_dong')->with('error','Xoá thành công');
+            return redirect()->route('danh_sach_hop_dong')->with('status','Xoá thành công');
 
         } catch (Exception $e) {
             return redirect()->route('danh_sach_hop_dong')->with('error','Xoá không thành công');

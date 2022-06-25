@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\ChucVu;
 use Illuminate\Support\Facades\Validator;
-
+use App\Models\User;
 class ChucVuController extends Controller
 {
     public function index()
@@ -88,9 +88,18 @@ class ChucVuController extends Controller
     public function destroy(Request $request)
     {
         try {
-            ChucVu::destroy($request->id);
-            return redirect()->route('danh_sach_chuc_vu')->with('error','Xoá thành công');
-
+            $chucVu = ChucVu::find($request->id);
+            $user = User::where('chuc_vu_id', $chucVu->id)->first();
+            if($user!==null)
+            {
+                return redirect()->route('danh_sach_chuc_vu')->with('error','Có nhân viên đang sử dụng chức vụ này');
+            }
+            else
+            {
+                ChucVu::destroy($request->id);
+                return redirect()->route('danh_sach_chuc_vu')->with('status','Xoá thành công');    
+            }
+            
         } catch (Exception $e) {
             return redirect()->route('danh_sach_chuc_vu')->with('error','Xoá không thành công');
 

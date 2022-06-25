@@ -118,7 +118,7 @@ class LuongController extends Controller
     {
         try {
             Luong::destroy($request->id);
-            return redirect()->route('danh_sach_ngay_nghi')->with('error','Xoá thành công');
+            return redirect()->route('danh_sach_ngay_nghi')->with('status','Xoá thành công');
 
         } catch (Exception $e) {
             return redirect()->route('danh_sach_ngay_nghi')->with('error','Xoá không thành công');

@@ -13,16 +13,16 @@
 </div>
 @endif
 <div class="row">
-    <div class="col-12">
+    <div class="col-12 mb-3">
         <div class="card">
-            <h5 class="card-header">Cập nhật nhân viên</h5>
+            <h5 class="card-header">Cập nhật thông tin</h5>
             <div class="card-body demo-vertical-spacing demo-only-element">
-                <form class="forms-sample" action="{{route('xl_cap_nhat_nhan_vien',['id' => $user->id])}}" method="post" enctype="multipart/form-data">
+                <form class="forms-sample" action="{{route('xl_cap_nhat_thong_tin')}}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="row mb-3">
                         <div class="col-6">
                             <label class="form-label">Mã nhân viên</label>
-                            <input type="text" class="form-control" id="ma_nhan_vien" name="ma_nhan_vien" placeholder="Nhập mã nhân viên" required
+                            <input type="text" class="form-control" id="ma_nhan_vien" name="ma_nhan_vien" placeholder="Nhập mã nhân viên" required readonly
                             value="{{$user->ma_nhan_vien}}">
                         </div>
                         <div class="col-6">
@@ -103,39 +103,29 @@
                             <input type="date" class="form-control" id="ngay_het_han" name="ngay_het_han"
                             value="{{$user->ngay_het_han}}">
                         </div>
-                        <div class="col-6">
-                            <label class="form-label">Phòng ban</label>
-                            <select class="form-select " 
-                                id="phong_ban_id" name="phong_ban_id">
-                                @foreach($phongBans as $phongBan)
-                                    @if($phongBan->id==$user->phong_ban_id)
-                                        <option value="{{ $phongBan->id}} " selected>{{ $phongBan->ten_phong_ban }}</option>
-                                    @else
-                                        <option value="{{ $phongBan->id}} ">{{ $phongBan->ten_phong_ban }}</option>
-                                    @endif
-                                @endforeach
-                            </select>
-                        </div>
                     </div>
-                    <div class="row mb-3">
-                        <div class="col-6">
-                            <label class="form-label">Chức vụ</label>
-                            <select class="form-select " 
-                                id="chuc_vu_id" name="chuc_vu_id">
-                                @foreach($chucVus as $chucVu)
-                                    @if($chucVu->id==$user->chuc_vu_id)
-                                        <option value="{{ $chucVu->id}} " selected>{{ $chucVu->ten_chuc_vu }}</option>
-                                    @else
-                                        <option value="{{ $chucVu->id}} ">{{ $chucVu->ten_chuc_vu }}</option>
-                                    @endif
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="col-6">
-                            <label class="form-label">Ngày nhận chức</label>
-                            <input type="date" class="form-control" id="ngay_nhan_chuc" name="ngay_nhan_chuc"
-                            value="{{$user->ngay_nhan_chuc}}">
-                        </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="card">
+            <h5 class="card-header">Cập nhật mật khẩu</h5>
+            <div class="card-body demo-vertical-spacing demo-only-element">
+                <form class="forms-sample" action="{{route('xl_doi_mat_khau')}}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <div class="col-6">
+                        <label class="form-label">Mật khẩu cũ</label>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Nhập mật khẩu cũ" required>
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label">Mật khẩu mới</label>
+                        <input type="password" class="form-control" id="new_password" name="new_password" placeholder="Nhập mật mới" required>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <label class="form-label">Nhập lại mật khẩu mới</label>
+                        <input type="password" class="form-control" id="enter_new_pass" name="enter_new_pass" placeholder="Nhập lại mật khẩu mới" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>

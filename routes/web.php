@@ -9,6 +9,8 @@ use App\http\controllers\BHXHController;
 use App\http\controllers\TuyenDungController;
 use App\http\controllers\NgayNghiController;
 use App\http\controllers\LuongController;
+use App\http\controllers\ThongTinController;
+use App\http\controllers\NghiViecController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -46,7 +48,7 @@ Route::get('/them-moi-chuc-vu', [ChucVuController::class, 'create'])->name('them
 Route::post('/them-moi-chuc-vu', [ChucVuController::class, 'store'])->name('xl_them_chuc_vu');
 Route::get('/cap-nhat-chuc-vu/{id}',[ChucVuController::class, 'edit'])->name('cap_nhat_chuc_vu');
 Route::post('/cap-nhat-chuc-vu/{id}',[ChucVuController::class, 'update'])->name('xl_cap_nhat_chuc_vu');
-Route::get('/xoa-chuc-vu/{id}',[NgayNghiController::class, 'destroy'])->name('xoa_chuc_vu');
+Route::get('/xoa-chuc-vu/{id}',[ChucVuController::class, 'destroy'])->name('xoa_chuc_vu');
 
 Route::get('/danh-sach-phong-ban', [PhongBanController::class, 'index'])->name('danh_sach_phong_ban');
 Route::get('/them-moi-phong-ban', [PhongBanController::class, 'create'])->name('them_moi_phong_ban');
@@ -89,6 +91,20 @@ Route::get('/them-moi-bang-luong', [LuongController::class, 'create'])->name('th
 Route::post('/them-moi-bang-luong', [LuongController::class, 'store'])->name('xl_them_bang_luong');
 Route::get('/cap-nhat-bang-luong/{id}',[LuongController::class, 'edit'])->name('cap_nhat_bang_luong');
 Route::post('/cap-nhat-bang-luong/{id}',[LuongController::class, 'update'])->name('xl_cap_nhat_bang_luong');
+
+Route::get('/cap-nhat-thong-tin',[ThongTinController::class, 'edit'])->name('cap_nhat_thong_tin');
+Route::post('/cap-nhat-thong-tin',[ThongTinController::class, 'update'])->name('xl_cap_nhat_thong_tin');
+Route::post('/doi-mat-khau',[ThongTinController::class, 'changPass'])->name('xl_doi_mat_khau');
+
+
+Route::get('/danh-sach-nghi-viec', [NghiViecController::class, 'index'])->name('danh_sach_nghi_viec');
+Route::get('/them-moi-nghi-viec', [NghiViecController::class, 'create'])->name('them_moi_nghi_viec');
+Route::post('/them-moi-nghi-viec', [NghiViecController::class, 'store'])->name('xl_them_nghi_viec');
+Route::get('/cap-nhat-nghi-viec/{id}',[NghiViecController::class, 'edit'])->name('cap_nhat_nghi_viec');
+Route::post('/cap-nhat-nghi-viec/{id}',[NghiViecController::class, 'update'])->name('xl_cap_nhat_nghi_viec');
+Route::get('/danh-sach-nghi-viec-cho-duyet', [NghiViecController::class, 'danh_sach_ngay_nghi_cho_duyet'])->name('danh_sach_nghi_viec_cho_duyet');
+Route::get('/chap-nhan-don-xin-nghi-viec/{id}', [NghiViecController::class, 'duyet_don_nghi'])->name('duyet_don_nghi_viec');
+Route::get('/xoa-nghi-viec/{id}',[NghiViecController::class, 'destroy'])->name('xoa_nghi_viec');
 
 });
 

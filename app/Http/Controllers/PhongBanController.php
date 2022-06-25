@@ -88,9 +88,17 @@ class PhongBanController extends Controller
     public function destroy(Request $request)
     {
         try {
-            PhongBan::destroy($request->id);
-            return redirect()->route('danh_sach_phong_ban')->with('error','Xoá thành công');
-
+            $phongBan = PhongBan::find($request->id);
+            $user = User::where('phong_ban_id', $phongBan->id)->first();
+            if($user!==null)
+            {
+                return redirect()->route('danh_sach_phong_ban')->with('error','Có nhân viên đang sử dụng phòng ban này');
+            }
+            else
+            {
+                PhongBan::destroy($request->id);
+                return redirect()->route('danh_sach_phong_ban')->with('status','Xoá thành công');  
+            }
         } catch (Exception $e) {
             return redirect()->route('danh_sach_phong_ban')->with('error','Xoá không thành công');
 
