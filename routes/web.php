@@ -1,0 +1,95 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+use App\http\controllers\HopDongController;
+use App\http\controllers\ChucVuController;
+use App\http\controllers\PhongBanController;
+use App\http\controllers\UserController;
+use App\http\controllers\BHXHController;
+use App\http\controllers\TuyenDungController;
+use App\http\controllers\NgayNghiController;
+use App\http\controllers\LuongController;
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+Route::get('/', function () {
+    return view('template');
+})->name('dashboard');
+
+Route::middleware('guest')->group(function () {
+    Route::get('/dang-nhap', [UserController::class, 'login'])->name('login');
+    Route::post('/dang-nhap', [UserController::class, 'doLogin'])->name('do_login');
+});
+
+Route::middleware('auth')->group(function () {
+
+Route::get('/dang-xuat', [UserController::class, 'logout'])->name('logout');
+
+
+Route::get('/danh-sach-hop-dong', [HopDongController::class, 'index'])->name('danh_sach_hop_dong');
+Route::get('/them-moi-hop-dong', [HopDongController::class, 'create'])->name('them_moi_hop_dong');
+Route::post('/them-moi-hop-dong', [HopDongController::class, 'store'])->name('xl_them_hop_dong');
+Route::get('/cap-nhat-hop-dong/{id}',[HopDongController::class, 'edit'])->name('cap_nhat_hop_dong');
+Route::post('/cap-nhat-hop-dong/{id}',[HopDongController::class, 'update'])->name('xl_cap_nhat_hop_dong');
+Route::get('/xoa-hop-dong/{id}',[NgayNghiController::class, 'destroy'])->name('xoa_hop_dong');
+
+Route::get('/danh-sach-chuc-vu', [ChucVuController::class, 'index'])->name('danh_sach_chuc_vu');
+Route::get('/them-moi-chuc-vu', [ChucVuController::class, 'create'])->name('them_moi_chuc_vu');
+Route::post('/them-moi-chuc-vu', [ChucVuController::class, 'store'])->name('xl_them_chuc_vu');
+Route::get('/cap-nhat-chuc-vu/{id}',[ChucVuController::class, 'edit'])->name('cap_nhat_chuc_vu');
+Route::post('/cap-nhat-chuc-vu/{id}',[ChucVuController::class, 'update'])->name('xl_cap_nhat_chuc_vu');
+Route::get('/xoa-chuc-vu/{id}',[NgayNghiController::class, 'destroy'])->name('xoa_chuc_vu');
+
+Route::get('/danh-sach-phong-ban', [PhongBanController::class, 'index'])->name('danh_sach_phong_ban');
+Route::get('/them-moi-phong-ban', [PhongBanController::class, 'create'])->name('them_moi_phong_ban');
+Route::post('/them-moi-phong-ban', [PhongBanController::class, 'store'])->name('xl_them_phong_ban');
+Route::get('/cap-nhat-phong-ban/{id}',[PhongBanController::class, 'edit'])->name('cap_nhat_phong_ban');
+Route::post('/cap-nhat-phong-ban/{id}',[PhongBanController::class, 'update'])->name('xl_cap_nhat_phong_ban');
+Route::get('/xoa-phong-ban/{id}',[NgayNghiController::class, 'destroy'])->name('xoa_phong_ban');
+
+Route::get('/danh-sach-nhan-vien', [UserController::class, 'index'])->name('danh_sach_nhan_vien');
+Route::get('/them-moi-nhan-vien', [UserController::class, 'create'])->name('them_moi_nhan_vien');
+Route::post('/them-moi-nhan-vien', [UserController::class, 'store'])->name('xl_them_nhan_vien');
+Route::get('/cap-nhat-nhan-vien/{id}',[UserController::class, 'edit'])->name('cap_nhat_nhan_vien');
+Route::post('/cap-nhat-nhan-vien/{id}',[UserController::class, 'update'])->name('xl_cap_nhat_nhan_vien');
+Route::get('/xoa-nhan-vien/{id}',[NgayNghiController::class, 'destroy'])->name('xoa_nhan-vien');
+
+
+Route::get('/danh-sach-bhxh', [BHXHController::class, 'index'])->name('danh_sach_bhxh');
+
+Route::get('/danh-sach-tuyen-dung', [TuyenDungController::class, 'index'])->name('danh_sach_tuyen_dung');
+Route::get('/them-moi-tuyen-dung', [TuyenDungController::class, 'create'])->name('them_moi_tuyen_dung');
+Route::post('/them-moi-tuyen-dung', [TuyenDungController::class, 'store'])->name('xl_them_tuyen_dung');
+Route::get('/tuyen-dung/rot/{id}', [TuyenDungController::class, 'rot'])->name('tuyen_dung_rot');
+Route::get('/tuyen-dung/dau/{id}', [TuyenDungController::class, 'dau'])->name('tuyen_dung_dau');
+Route::get('/tuyen-dung/them-nhan-vien/{id}', [TuyenDungController::class, 'formThemNhanVien'])->name('them_nhan_vien_dau');
+Route::post('/tuyen-dung/them-nhan-vien/{id}', [TuyenDungController::class, 'xuLyThem'])->name('xl_them_nhan_vien_dau');
+
+
+Route::get('/danh-sach-ngay-nghi', [NgayNghiController::class, 'index'])->name('danh_sach_ngay_nghi');
+Route::get('/them-moi-ngay-nghi', [NgayNghiController::class, 'create'])->name('them_moi_ngay_nghi');
+Route::post('/them-moi-ngay-nghi', [NgayNghiController::class, 'store'])->name('xl_them_ngay_nghi');
+Route::get('/cap-nhat-ngay-nghi/{id}',[NgayNghiController::class, 'edit'])->name('cap_nhat_ngay_nghi');
+Route::post('/cap-nhat-ngay-nghi/{id}',[NgayNghiController::class, 'update'])->name('xl_cap_nhat_ngay_nghi');
+
+Route::get('/danh-sach-ngay-nghi-cho-duyet', [NgayNghiController::class, 'danh_sach_ngay_nghi_cho_duyet'])->name('danh_sach_ngay_nghi_cho_duyet');
+Route::get('/chap-nhan-don-xin-nghi/{id}', [NgayNghiController::class, 'duyet_don_nghi'])->name('duyet_don_nghi');
+Route::get('/xoa-ngay-nghi/{id}',[NgayNghiController::class, 'destroy'])->name('xoa_ngay_nghi');
+
+Route::get('/danh-sach-bang-luong', [LuongController::class, 'index'])->name('danh_sach_bang_luong');
+Route::get('/them-moi-bang-luong', [LuongController::class, 'create'])->name('them_moi_bang_luong');
+Route::post('/them-moi-bang-luong', [LuongController::class, 'store'])->name('xl_them_bang_luong');
+Route::get('/cap-nhat-bang-luong/{id}',[LuongController::class, 'edit'])->name('cap_nhat_bang_luong');
+Route::post('/cap-nhat-bang-luong/{id}',[LuongController::class, 'update'])->name('xl_cap_nhat_bang_luong');
+
+});
+
+        
