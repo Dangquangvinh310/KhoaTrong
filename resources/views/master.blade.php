@@ -129,7 +129,7 @@
           <ul class="menu-inner py-1">
 
             <li class="menu-item">
-              <a href="index.html" class="menu-link">
+              <a href="{{route('thong_ke')}}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Thống kê</div>
               </a>

@@ -12,6 +12,7 @@ use App\http\controllers\LuongController;
 use App\http\controllers\ThongTinController;
 use App\http\controllers\NghiViecController;
 use App\http\controllers\ChamCongController;
+use App\http\controllers\ThongKeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -34,9 +35,7 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/dang-xuat', [UserController::class, 'logout'])->name('logout');
 
-Route::get('/', function () {
-    return view('template');
-})->name('dashboard');
+Route::get('/', [ThongKeController::class, 'danhSachDon'])->name('thong_ke');
 
 Route::get('/danh-sach-hop-dong', [HopDongController::class, 'index'])->name('danh_sach_hop_dong');
 Route::get('/them-moi-hop-dong', [HopDongController::class, 'create'])->name('them_moi_hop_dong');

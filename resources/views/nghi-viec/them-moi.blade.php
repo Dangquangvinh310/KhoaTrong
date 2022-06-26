@@ -15,7 +15,7 @@
 <div class="row">
     <div class="col-12">
         <div class="card">
-            <h5 class="card-header">Thêm mới phòng ban</h5>
+            <h5 class="card-header">Thêm mới nghĩ việc</h5>
             <div class="card-body demo-vertical-spacing demo-only-element">
                 <form class="forms-sample" action="{{route('xl_them_nghi_viec')}}" method="post" enctype="multipart/form-data">
                     @csrf

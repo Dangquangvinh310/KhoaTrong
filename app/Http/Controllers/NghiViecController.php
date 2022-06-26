@@ -54,7 +54,18 @@ class NghiViecController extends Controller
 
     public function create()
     {
-        $users =User::all();
+        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
+        {
+            $users =User::all();
+        }
+        else if(auth()->user()->chucVu->ten_chuc_vu == "Trưởng phòng")
+        {
+            $phongBan = PhongBan::where('user_id', auth()->user()->id)->first();
+            $users = User::where('phong_ban_id', $phongBan->id)->get();
+        }
+        else{
+            $users =User::where('id',auth()->user()->id)->get();
+        }
         return view('nghi-viec/them-moi',compact('users'));
     }
 

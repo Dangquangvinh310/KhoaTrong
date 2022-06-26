@@ -27,7 +27,7 @@ class UserController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->route('dashboard');
+            return redirect()->route('thong_ke');
         }
 
         return back()->with([
@@ -42,7 +42,18 @@ class UserController extends Controller
     }
     public function index()
     {
-        $users =User::all();
+        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
+        {
+            $users =User::all();
+        }
+        else if(auth()->user()->chucVu->ten_chuc_vu == "Trưởng phòng")
+        {
+            $phongBan = PhongBan::where('user_id', auth()->user()->id)->first();
+            $users = User::where('phong_ban_id', $phongBan->id)->get();
+        }
+        else{
+            $users =User::where('id',auth()->user()->id)->get();
+        }
         if($users==null)
         {
             return back()->with('error','Không tìm thấy danh sách nhân viên');
@@ -52,8 +63,21 @@ class UserController extends Controller
 
     public function create()
     {
-        $phongBans =PhongBan::all();
-        $chucVus =ChucVu::all();
+        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
+        {
+            $phongBans =PhongBan::all();
+            $chucVus =ChucVu::whereNotIn('ten_chuc_vu',['Trưởng phòng'])->get();
+        }
+        else if(auth()->user()->chucVu->ten_chuc_vu == "Trưởng phòng")
+        {
+            $phongBans =PhongBan::where('id', auth()->user()->phong_ban_id)->get();
+            $chucVus =ChucVu::whereNotIn('ten_chuc_vu',['Trưởng phòng','admin'])->get();
+        }
+        else
+        {
+            $phongBans =PhongBan::where('id', auth()->user()->phong_ban_id)->get();
+            $chucVus =ChucVu::where('id', auth()->user()->chuc_vu_id)->get();
+        }
         return view('nhan-vien/them-moi',compact('phongBans','chucVus'));
     }
 
@@ -96,6 +120,7 @@ class UserController extends Controller
         if ($validator->fails()) {
             return back()->with('error', $validator->messages()->first());
         }
+
         $user = new User();
         $user->ma_nhan_vien = $request->ma_nhan_vien;
         $user->username = $request->username;
@@ -121,11 +146,20 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        $phongBans =PhongBan::all();
-        $chucVus =ChucVu::all();
-        if($user==null)
+        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
         {
-            return redirect()->route('danh_sach_nhan_vien')->with('error','Không tìm thấy nhân viên này');
+            $phongBans =PhongBan::all();
+            $chucVus =ChucVu::whereNotIn('ten_chuc_vu',['Trưởng phòng'])->get();
+        }
+        else if(auth()->user()->chucVu->ten_chuc_vu == "Trưởng phòng")
+        {
+            $phongBans =PhongBan::where('id', auth()->user()->phong_ban_id)->get();
+            $chucVus =ChucVu::whereNotIn('ten_chuc_vu',['Trưởng phòng','admin'])->get();
+        }
+        else
+        {
+            $phongBans =PhongBan::where('id', auth()->user()->phong_ban_id)->get();
+            $chucVus =ChucVu::where('id', auth()->user()->chuc_vu_id)->get();
         }
         return view('nhan-vien/cap-nhat', compact('user','phongBans','chucVus'));   
     }

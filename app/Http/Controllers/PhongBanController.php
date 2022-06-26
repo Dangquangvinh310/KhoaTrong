@@ -29,13 +29,14 @@ class PhongBanController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'ten_phong_ban'  => 'required|max:191|unique:App\Models\PhongBan,ten_phong_ban,NULL,id,deleted_at,NULL',
-            'user_id'        => 'required',
+            'user_id'        => 'required|unique:App\Models\PhongBan,user_id,NULL,id,deleted_at,NULL',
             ],
             [   
                 'ten_phong_ban.required'      => 'Chưa nhập tên phòng ban',
                 'ten_phong_ban.max'           => 'Tên phòng ban vượt quá 191 ký tự',
                 'ten_phong_ban.unique'        => 'Tên phòng ban đã tồn tại',
                 'user_id.required'            => 'Chưa chọn trưởng phòng',
+                'user_id.unique'              => 'Nhân viên này hiện là trưởng phòng của phòng ban khác',
             ]
         );
         if ($validator->fails()) {
@@ -62,14 +63,15 @@ class PhongBanController extends Controller
     public function update(Request $request,$id)
     {
         $validator = Validator::make($request->all(), [
-            'ten_phong_ban'  => "required|unique:App\Models\PhongBan,ten_phong_ban,{$id},id,deleted_at,NULL",
-            'user_id'        => 'required',
+            'ten_phong_ban'  => "required|max:191|unique:App\Models\PhongBan,ten_phong_ban,{$id},id,deleted_at,NULL",
+            'user_id'        => "required|unique:App\Models\PhongBan,user_id,{$id},id,deleted_at,NULL",
             ],
             [   
                 'ten_phong_ban.required'      => 'Chưa nhập tên phòng ban',
                 'ten_phong_ban.max'           => 'Tên phòng ban vượt quá 191 ký tự',
                 'ten_phong_ban.unique'        => 'Tên phòng ban đã tồn tại',
                 'user_id.required'            => 'Chưa chọn trưởng phòng',
+                'user_id.unique'              => 'Nhân viên này hiện là trưởng phòng của phòng ban khác',
             ]
         );
         if ($validator->fails()) {

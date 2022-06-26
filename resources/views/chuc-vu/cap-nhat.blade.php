@@ -23,6 +23,9 @@
                         <div class="col-6">
                             <label class="form-label">Tên chức vụ</label>
                             <input type="text" class="form-control" id="ten_chuc_vu" name="ten_chuc_vu" placeholder="Nhập tên chức vụ" required
+                            @if($chucVu->ten_chuc_vu == "admin" || $chucVu->ten_chuc_vu == "Trưởng phòng")
+                            readonly
+                            @endif
                             value="{{$chucVu->ten_chuc_vu}}">
                        </div>
                        <div class="col-6">
