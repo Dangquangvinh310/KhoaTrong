@@ -34,20 +34,26 @@
                 <tbody>
                 @forelse($hopDongs as $hopDong)
                 <tr>
-                    <td>{{ $hopDong->user->ho_ten}}</td>
-                    <td>{{ $hopDong->ngay_ki_hop_dong}}</td>
-                    <td>{{ $hopDong->ngay_bat_dau}}</td>
-                    <td>{{ $hopDong->ngay_ket_thuc}}</td>
-                    <td>{{ $hopDong->noi_dung}}</td>
+                    <?php
+                    $key=0;
+                    ?>
+                    <td>{{ $hopDong->ho_ten}}</td>
+                    <td>{{ $hopDong->hopDong[$key]->ngay_ki_hop_dong}}</td>
+                    <td>{{ $hopDong->hopDong[$key]->ngay_bat_dau}}</td>
+                    <td>{{ $hopDong->hopDong[$key]->ngay_ket_thuc}}</td>
+                    <td>{{ $hopDong->hopDong[$key]->noi_dung}}</td>
                     <td>
-                        <a href="{{route('cap_nhat_hop_dong',['id' => $hopDong->id])}}" ><i class="bx bx-message-square-add"></i></a>
-                        <a href="" class="ms-3"><i class="bx bx-trash"></i></a>
+                        <a href="{{route('cap_nhat_hop_dong',['id' => $hopDong->hopDong[$key]->id])}}" ><i class="bx bx-message-square-add"></i></a>
+                        <a href="{{route('xoa_hop_dong',['id' => $hopDong->hopDong[$key]->id])}}" class="ms-3"><i class="bx bx-trash"></i></a>
                     </td>
                 </tr>
                 @empty
                 <tr>
                     <td colspan="6" style="text-align: center">Không có dữ liệu</td>
                 </tr>
+                <?php
+                    $key++;
+                    ?>
                 @endforelse
                 </tbody>
               </table>

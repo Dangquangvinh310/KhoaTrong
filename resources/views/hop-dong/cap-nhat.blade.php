@@ -15,7 +15,7 @@
 <div class="row">
     <div class="col-12">
         <div class="card">
-            <h5 class="card-header">Thêm mới hợp đồng</h5>
+            <h5 class="card-header">Cập nhật hợp đồng</h5>
             <div class="card-body demo-vertical-spacing demo-only-element">
                 <form class="forms-sample" action="{{route('xl_cap_nhat_hop_dong',['id' => $hopDong->id])}}" method="post" enctype="multipart/form-data">
                     @csrf

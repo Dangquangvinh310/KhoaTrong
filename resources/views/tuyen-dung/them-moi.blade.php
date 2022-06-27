@@ -15,7 +15,7 @@
 <div class="row">
     <div class="col-12">
         <div class="card mb-4">
-        <h5 class="card-header">Basic</h5>
+        <h5 class="card-header">Thêm mới tuyển dụng</h5>
         <div class="card-body">
             <form class="forms-sample mb-3" action="{{route('xl_them_tuyen_dung')}}" method="post" enctype="multipart/form-data">
                 @csrf

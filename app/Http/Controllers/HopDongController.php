@@ -6,12 +6,33 @@ use Illuminate\Http\Request;
 use App\Models\HopDong;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
+use App\Models\PhongBan;
 
 class HopDongController extends Controller
 {
     public function index()
     {
-        $hopDongs =HopDong::all();
+        // $hopDongs =HopDong::all(); 
+        // if($hopDongs==null)
+        // {
+        //     return back()->with('error','Không tìm thấy danh sách hợp đồng');
+        // }
+        // return view('hop-dong/danh-sach',compact('hopDongs'));
+
+
+
+        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
+        {
+             $hopDongs = User::where('id','>',0)->whereHas('hopDong')->with('hopDong') ->get();
+        }
+        else if(auth()->user()->chucVu->ten_chuc_vu == "Trưởng phòng")
+        {
+            $phongBan = PhongBan::where('user_id', auth()->user()->id)->first();
+            $hopDongs = User::where('phong_ban_id', $phongBan->id)->whereHas('hopDong')->with('hopDong') ->get();
+        }
+        else{
+            $hopDongs =User::where('id',auth()->user()->id)->whereHas('hopDong')->with('hopDong') ->get();
+        }
         if($hopDongs==null)
         {
             return back()->with('error','Không tìm thấy danh sách hợp đồng');
@@ -21,7 +42,18 @@ class HopDongController extends Controller
 
     public function create()
     {
-        $users =User::all();
+        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
+        {
+             $users = User::where('id','>',0)->whereHas('hopDong')->with('hopDong') ->get();
+        }
+        else if(auth()->user()->chucVu->ten_chuc_vu == "Trưởng phòng")
+        {
+            $phongBan = PhongBan::where('user_id', auth()->user()->id)->first();
+            $users = User::where('phong_ban_id', $phongBan->id)->whereHas('hopDong')->with('hopDong') ->get();
+        }
+        else{
+            $users =User::where('id',auth()->user()->id)->whereHas('hopDong')->with('hopDong') ->get();
+        }
         return view('hop-dong/them-moi',compact('users'));
     }
 
@@ -101,13 +133,23 @@ class HopDongController extends Controller
     }
     public function destroy(Request $request)
     {
-        try {
-            HopDong::destroy($request->id);
-            return redirect()->route('danh_sach_hop_dong')->with('status','Xoá thành công');
+          $hopDong =  HopDong::find($request->id);
+          if(empty($hopDong))
+          {
+            return redirect()->route('danh_sach_hop_dong')->with('error',"Không tìm thấy hợp đồng ! $request->id");
+          }
+          else
+          {
+            $hopDong->delete();
+            if($hopDong)
+            {
+                return redirect()->route('danh_sach_hop_dong')->with('status',"Xoá thành công");
+            }else{
+                return redirect()->route('danh_sach_hop_dong')->with('error',"Xoá không thành công");
 
-        } catch (Exception $e) {
-            return redirect()->route('danh_sach_hop_dong')->with('error','Xoá không thành công');
+            }
+          }
 
-        }
+       
     }
 }

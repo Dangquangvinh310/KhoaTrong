@@ -9,4 +9,5 @@ class ChucVu extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    
 }

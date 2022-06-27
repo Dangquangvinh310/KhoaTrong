@@ -51,4 +51,8 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\Models\PhongBan');
     }
+    public function hopDong()
+    {
+        return $this->hasMany('App\Models\hopDong');
+    }
 }

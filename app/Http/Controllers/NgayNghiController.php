@@ -48,30 +48,36 @@ class NgayNghiController extends Controller
         'user_id'        => 'required',
         'ngay_bat_dau_nghi'        => 'required',
         'ngay_di_lam_lai'        => 'required',
-        'ly_do'        => 'required',
+        'don_xin_nghi'        => 'required',
 
         ],
         [   
             'user_id.required'      => 'Chưa chọn nhân viên',
             'ngay_bat_dau_nghi.required'       => 'Chưa chọn ngày bắt đầu nghỉ',
             'ngay_di_lam_lai.required'       => 'Chưa chọn ngày đi làm lại',
-            'ly_do.required'       => 'Chưa nhập lí do',
+            'don_xin_nghi.required'       => 'Chưa nộp đơn',
 
         ]
     );
     if ($validator->fails()) {
         return back()->with('error', $validator->messages()->first());
     }
-        NgayNghi::create(
-            [
-                'user_id'    =>(integer) $request->user_id,
-                'ngay_bat_dau_nghi'   => $request->ngay_bat_dau_nghi,
-                'ngay_di_lam_lai'       => $request->ngay_di_lam_lai,
-                'ly_do'                 => $request->ly_do,
-                // 'total_day'     => Carbon::parse($request->ngay_bat_dau_nghi)->diffInDays(Carbon::parse($request->ngay_di_lam_lai)),
-                'trang_thai'        => 'Chưa duyệt'
-            ]
-        );
+    
+       $ngayNghi = new NgayNghi();
+       $ngayNghi->user_id  = (integer) $request->user_id;
+       $ngayNghi->ngay_bat_dau_nghi  = $request->ngay_bat_dau_nghi;
+       $ngayNghi->ngay_di_lam_lai  = $request->ngay_di_lam_lai;
+       $ngayNghi->ly_do  = $request->ly_do;
+       $ngayNghi->trang_thai  = 'Chưa duyệt';
+       if ($request->hasFile('don_xin_nghi')) {
+        $image = $request->file('don_xin_nghi');
+        $ex=  $request->file('don_xin_nghi')->extension();
+        $file_name= time() . '.'.$ex;
+        $storedPath = $image->storeAs('Đơn xin nghỉ', $file_name);
+        $ngayNghi->don_nghi_viec = $file_name;
+    }
+        $ngayNghi->save();
+
         return redirect()->route('danh_sach_ngay_nghi')->with('status','Thêm mới thành công');
     }
 

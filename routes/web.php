@@ -42,7 +42,7 @@ Route::get('/them-moi-hop-dong', [HopDongController::class, 'create'])->name('th
 Route::post('/them-moi-hop-dong', [HopDongController::class, 'store'])->name('xl_them_hop_dong');
 Route::get('/cap-nhat-hop-dong/{id}',[HopDongController::class, 'edit'])->name('cap_nhat_hop_dong');
 Route::post('/cap-nhat-hop-dong/{id}',[HopDongController::class, 'update'])->name('xl_cap_nhat_hop_dong');
-Route::get('/xoa-hop-dong/{id}',[NgayNghiController::class, 'destroy'])->name('xoa_hop_dong');
+Route::get('/xoa-hop-dong/{id}',[HopDongController::class, 'destroy'])->name('xoa_hop_dong');
 
 Route::get('/danh-sach-chuc-vu', [ChucVuController::class, 'index'])->name('danh_sach_chuc_vu');
 Route::get('/them-moi-chuc-vu', [ChucVuController::class, 'create'])->name('them_moi_chuc_vu');
@@ -63,7 +63,7 @@ Route::get('/them-moi-nhan-vien', [UserController::class, 'create'])->name('them
 Route::post('/them-moi-nhan-vien', [UserController::class, 'store'])->name('xl_them_nhan_vien');
 Route::get('/cap-nhat-nhan-vien/{id}',[UserController::class, 'edit'])->name('cap_nhat_nhan_vien');
 Route::post('/cap-nhat-nhan-vien/{id}',[UserController::class, 'update'])->name('xl_cap_nhat_nhan_vien');
-Route::get('/xoa-nhan-vien/{id}',[NgayNghiController::class, 'destroy'])->name('xoa_nhan-vien');
+Route::get('/xoa-nhan-vien/{id}',[UserController::class, 'destroy'])->name('xoa_nhan_vien');
 
 
 Route::get('/danh-sach-bhxh', [BHXHController::class, 'index'])->name('danh_sach_bhxh');
@@ -92,6 +92,8 @@ Route::get('/them-moi-bang-luong', [LuongController::class, 'create'])->name('th
 Route::post('/them-moi-bang-luong', [LuongController::class, 'store'])->name('xl_them_bang_luong');
 Route::get('/cap-nhat-bang-luong/{id}',[LuongController::class, 'edit'])->name('cap_nhat_bang_luong');
 Route::post('/cap-nhat-bang-luong/{id}',[LuongController::class, 'update'])->name('xl_cap_nhat_bang_luong');
+Route::get('/xoa-ngay-nghi/{id}',[LuongController::class, 'destroy'])->name('xoa_ngay_nghi');
+
 
 Route::get('/cap-nhat-thong-tin',[ThongTinController::class, 'edit'])->name('cap_nhat_thong_tin');
 Route::post('/cap-nhat-thong-tin',[ThongTinController::class, 'update'])->name('xl_cap_nhat_thong_tin');
@@ -112,6 +114,8 @@ Route::get('/them-moi-cham-cong', [ChamCongController::class, 'create'])->name('
 Route::post('/them-moi-cham-cong', [ChamCongController::class, 'store'])->name('xl_them_cham_cong');
 Route::get('/cap-nhat-cham-cong/{id}',[ChamCongController::class, 'edit'])->name('cap_nhat_cham_cong');
 Route::post('/cap-nhat-cham-cong/{id}',[ChamCongController::class, 'update'])->name('xl_cap_nhat_cham_cong');
+Route::get('/xoa-ngay-nghi/{id}',[ChamCongController::class, 'destroy'])->name('xoa_ngay_nghi');
+
 });
 
         

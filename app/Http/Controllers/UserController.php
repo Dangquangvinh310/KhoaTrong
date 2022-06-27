@@ -9,6 +9,7 @@ use App\Models\ChucVu;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use App\Models\HopDong;
 
 class UserController extends Controller
 {
@@ -88,11 +89,11 @@ class UserController extends Controller
             'username'      => 'required|max:191|unique:App\Models\User,username,NULL,id,deleted_at,NULL',
             'password'      => 'required|min:6|max:191',
             'ho_ten'        => 'required|max:191',
-            'cmnd'          => 'max:191',
+            'cmnd'          => 'max:12|integer',
             'dia_chi'       => 'max:191',
-            'so_dien_thoai' => 'max:191',
-            'email'         => 'max:191',
-            'ma_bhxh'       => 'max:191',
+            'so_dien_thoai' => 'max:10|integer',
+            'email'         => 'max:191|regex:/(.+)@(.+)\.(.+)/i',
+            'ma_bhxh'       => 'max:10|integer',
             'chuc_vu_id'    => 'required',
             'phong_ban_id'  => 'required',
             ],
@@ -108,11 +109,14 @@ class UserController extends Controller
                 'password.max'            => 'Mật khẩu vượt quá 191 kí tự',
                 'ho_ten.required'         => 'Chưa nhập họ tên',
                 'ho_ten.max'              => 'Họ tên vượt quá 191 kí tự',
-                'cmnd.max'                => 'CMND/CCCD vượt quá 191 kí tự',
+                'cmnd.max'                => 'CMND/CCCD vượt quá 12 kí tự',
                 'dia_chi.max'             => 'Địa chỉ vượt quá 191 kí tự',
-                'so_dien_thoai.max'       => 'Số điện thoại vượt quá 191 kí tự',
+                'so_dien_thoai.max'       => 'Số điện thoại vượt quá 10 kí tự',
                 'email.max'               => 'Email vượt quá 191 kí tự',
-                'ma_bhxh.max'             => 'Mã bhxh vượt quá 191 kí tự',
+                'email.regex'               => 'Email chưa đúng định dang',
+                'cmnd.integer'             => 'CMND không được nhập chữ',
+                'so_dien_thoai.integer'       => 'Số điện thoại không được nhập chữ',
+                'ma_bhxh.integer'               =>'Mã bảo hiểm xã hội không được nhập chữ',
                 'chuc_vu_id.required'     => 'Chưa chọn chức vụ',
                 'phong_ban_id.required'   => 'Chưa chọn phòng ban',
             ]
@@ -159,7 +163,7 @@ class UserController extends Controller
         else
         {
             $phongBans =PhongBan::where('id', auth()->user()->phong_ban_id)->get();
-            $chucVus =ChucVu::where('id', auth()->user()->chuc_vu_id)->get();
+            $chucVus = ChucVu::where('id', auth()->user()->chuc_vu_id)->get();
         }
         return view('nhan-vien/cap-nhat', compact('user','phongBans','chucVus'));   
     }
@@ -169,11 +173,11 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'ma_nhan_vien'  => "required|unique:App\Models\User,ma_nhan_vien,{$id},id,deleted_at,NULL",
             'ho_ten'        => 'required|max:191',
-            'cmnd'          => 'max:191',
-            'dia_chi'       => 'max:191',
-            'so_dien_thoai' => 'max:191',
-            'email'         => 'max:191',
-            'ma_bhxh'       => 'max:191',
+            'cmnd'          => 'max:191|required',
+            'dia_chi'       => 'max:191|required',
+            'so_dien_thoai' => 'max:191|required',
+            'email'         => 'max:191|required',
+            'ma_bhxh'       => 'max:191|required',
             'chuc_vu_id'    => 'required',
             'phong_ban_id'  => 'required',
             ],
@@ -188,6 +192,11 @@ class UserController extends Controller
                 'so_dien_thoai.max'       => 'Số điện thoại vượt quá 191 kí tự',
                 'email.max'               => 'Email vượt quá 191 kí tự',
                 'ma_bhxh.max'             => 'Mã bhxh vượt quá 191 kí tự',
+                'cmnd.required'                => 'CMND/CCCD không được để trống ',
+                'dia_chi.required'             => 'Địa chỉ không được để trông',
+                'so_dien_thoai.required'       => 'Số điện thoại không được để trống',
+                'email.required'               => 'Email không được để trống',
+                'ma_bhxh.required'             => 'Mã bhxh không được để trống',
                 'chuc_vu_id.required'     => 'Chưa chọn chức vụ',
                 'phong_ban_id.required'   => 'Chưa chọn phòng ban',
             ]

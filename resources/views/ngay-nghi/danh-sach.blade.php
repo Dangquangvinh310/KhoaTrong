@@ -30,6 +30,7 @@
                     <th scope="col">Ngày bắt đầu nghỉ</th>
                     <th scope="col">Ngày đi làm lại</th>
                     <th scope="col">Lý do</th>
+                    <th scope="col">Đơn xin nghỉ việc</th>
                     <th scope="col">Trạng thái</th>
                   </tr>
                 </thead>
@@ -40,10 +41,10 @@
                     <td>{{ $ngayNghi->ngay_bat_dau_nghi}}</td>
                     <td>{{ $ngayNghi->ngay_di_lam_lai}}</td>
                     <td>{{ $ngayNghi->ly_do}}</td>
+                    <td><a href="{{url('/Đơn xin nghỉ', $ngayNghi->don_nghi_viec)}}" download>Đơn xin nghỉ việc</td>
                     <td>{{ $ngayNghi->trang_thai}}</td>
 
                     <td>
-                        <a href="{{route('cap_nhat_ngay_nghi',['id' => $ngayNghi->id])}}" ><i class="bx bx-message-square-add"></i></a>
                         <a href="{{route('xoa_ngay_nghi',['id' => $ngayNghi->id])}}" class="ms-3"><i class="bx bx-trash"></i></a>
                     </td>
                 </tr>

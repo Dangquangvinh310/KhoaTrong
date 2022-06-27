@@ -15,7 +15,7 @@
 <div class="row">
     <div class="col-12">
         <div class="card">
-            <h5 class="card-header">Cập nhật phòng ban</h5>
+            <h5 class="card-header">Cập nhật chấm công</h5>
             <div class="card-body demo-vertical-spacing demo-only-element">
                 <form class="forms-sample" action="{{route('xl_cap_nhat_cham_cong',['id' => $chamCong->id])}}" method="post" enctype="multipart/form-data">
                     @csrf
