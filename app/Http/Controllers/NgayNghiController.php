@@ -128,10 +128,11 @@ class NgayNghiController extends Controller
     }
 
 
-    public function destroy(Request $request)
+    public function destroy($id)
     {
+        // dd($id);
         try {
-            NgayNghi::destroy($request->id);
+            NgayNghi::destroy($id);
             return redirect()->route('danh_sach_ngay_nghi')->with('status','Xoá thành công');
 
         } catch (Exception $e) {

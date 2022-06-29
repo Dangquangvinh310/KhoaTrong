@@ -127,10 +127,10 @@ class ChamCongController extends Controller
         return redirect()->route('danh_sach_cham_cong')->with('status','Bạn đã cập nhật thành công! ');
 
     }
-    public function destroy(Request $request)
+    public function destroy($id)
     {
         try {
-            ChamCong::destroy($request->id);
+            ChamCong::destroy($id);
             return redirect()->route('danh_sach_ngay_nghi')->with('error','Xoá thành công');
 
         } catch (Exception $e) {

@@ -145,12 +145,12 @@ class NghiViecController extends Controller
     }
 
 
-    public function destroy(Request $request)
+    public function destroy(Request $request,$id)
     {
+        // dd($id);
         try {
-            NghiViec::destroy($request->id);
+            NghiViec::destroy($id);
             return redirect()->route('danh_sach_nghi_viec')->with('status','Xoá thành công');
-
         } catch (Exception $e) {
             return redirect()->route('danh_sach_nghi_viec')->with('error','Xoá không thành công');
 
