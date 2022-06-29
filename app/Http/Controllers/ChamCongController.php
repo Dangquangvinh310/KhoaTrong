@@ -23,7 +23,23 @@ class ChamCongController extends Controller
     {
         $now = Carbon::now()->format('d-m-Y');
         $userDaChamCong = ChamCong::where('ngay_lam','LIKE',"$now%")->get()->pluck('user_id')->unique()->sort();
-        $users = User::whereNotIn('id', $userDaChamCong)->get();
+
+
+        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
+        {
+            $nguoi_dung =User::where('id','>',0);
+        }
+        else if(auth()->user()->chucVu->ten_chuc_vu == "Trưởng phòng")
+        {
+            $phongBan = PhongBan::where('user_id', auth()->user()->id)->first();
+            $nguoi_dung = User::where('phong_ban_id', $phongBan->id);
+        }
+        else{
+            $nguoi_dung =User::where('id',auth()->user()->id);
+        }
+
+        $users = $nguoi_dung->whereNotIn('id', $userDaChamCong)->get();
+
         return view('cham-cong/them-moi',compact('users'));
     }
 
@@ -83,7 +99,20 @@ class ChamCongController extends Controller
        $now = Carbon::now()->format('d-m-Y');
        $userDaChamCong = ChamCong::where('ngay_lam','LIKE',"$now%")->get()->pluck('user_id')->unique()->sort();
        
-       $users = User::whereNotIn('id', $userDaChamCong)->get();
+       if(auth()->user()->chucVu->ten_chuc_vu == "admin")
+        {
+            $nguoi_dung =User::where('id','>',0);
+        }
+        else if(auth()->user()->chucVu->ten_chuc_vu == "Trưởng phòng")
+        {
+            $phongBan = PhongBan::where('user_id', auth()->user()->id)->first();
+            $nguoi_dung = User::where('phong_ban_id', $phongBan->id);
+        }
+        else{
+            $nguoi_dung =User::where('id',auth()->user()->id);
+        }
+
+       $users = $nguoi_dung->whereNotIn('id', $userDaChamCong)->get();
 
         if($chamCong==null)
        {
@@ -113,16 +142,16 @@ class ChamCongController extends Controller
         {
             $ngayLam = Carbon::now()->format('m-Y');
             $tongNgayLam = ChamCong::where('user_id',$request->user_id)->where('ngay_lam','LIKE',"%$ngayLam%")->count();
-                $user = User::find((integer) $request->user_id)->chucVu;
-                if(empty($user))
-                {
-                    return back()->with('error','Nhân viên này chưa có chức vụ');
-                }
-                
-                $luongUser = Luong::where('user_id',$request->user_id)->where('thang_nam',$ngayLam)->fist();
-                $luongUser->tong_ngay_lam = $tongNgayLam;
-                $luongUser->tong_luong = $tongNgayLam * $user->luong + (float)$luongUser->phu_cap - (float)$luongUser->tam_ung;
-                $luongUser->save();
+            $user = User::find((integer) $request->user_id)->chucVu;
+            if(empty($user))
+            {
+                return back()->with('error','Nhân viên này chưa có chức vụ');
+            }
+            
+            $luongUser = Luong::where('user_id',$request->user_id)->where('thang_nam',$ngayLam)->first();
+            $luongUser->tong_ngay_lam = $tongNgayLam;
+            $luongUser->tong_luong = $tongNgayLam * $user->luong + (float)$luongUser->phu_cap - (float)$luongUser->tam_ung;
+            $luongUser->save();
         }
         return redirect()->route('danh_sach_cham_cong')->with('status','Bạn đã cập nhật thành công! ');
 

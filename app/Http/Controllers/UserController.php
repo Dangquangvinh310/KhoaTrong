@@ -89,11 +89,10 @@ class UserController extends Controller
             'username'      => 'required|max:191|unique:App\Models\User,username,NULL,id,deleted_at,NULL',
             'password'      => 'required|min:6|max:191',
             'ho_ten'        => 'required|max:191',
-            'cmnd'          => 'max:12|integer|required',
+            'cmnd'          => 'max:12|required',
             'dia_chi'       => 'max:191|required',
-            'so_dien_thoai' => 'max:10|integer|min:10|required',
             'email'         => 'max:191|regex:/(.+)@(.+)\.(.+)/i|required',
-            'ma_bhxh'       => 'max:10|integer|required',
+            'ma_bhxh'       => 'max:10|',
             'chuc_vu_id'    => 'required',
             'phong_ban_id'  => 'required',
             ],
@@ -111,13 +110,10 @@ class UserController extends Controller
                 'ho_ten.max'              => 'Họ tên vượt quá 191 kí tự',
                 'cmnd.max'                => 'CMND/CCCD vượt quá 12 kí tự',
                 'dia_chi.max'             => 'Địa chỉ vượt quá 191 kí tự',
-                'so_dien_thoai.max'       => 'Số điện thoại chỉ được nhập 10 kí tự',
-                'so_dien_thoai.min'       => 'Số điện chỉ được nhập 10 kí tự',
                 'email.max'               => 'Email vượt quá 191 kí tự',
                 'email.regex'               => 'Email chưa đúng định dang',
-                'cmnd.integer'             => 'CMND không được nhập chữ',
+                'cmnd.required'             => 'CMND không được để trống',
                 'so_dien_thoai.integer'       => 'Số điện thoại không được nhập chữ',
-                'ma_bhxh.integer'               =>'Mã bảo hiểm xã hội không được nhập chữ',
                 'chuc_vu_id.required'     => 'Chưa chọn chức vụ',
                 'phong_ban_id.required'   => 'Chưa chọn phòng ban',
             ]
@@ -151,15 +147,15 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
+        if($user->chucVu->ten_chuc_vu == "admin")
         {
             $phongBans =PhongBan::all();
             $chucVus =ChucVu::whereNotIn('ten_chuc_vu',['Trưởng phòng'])->get();
         }
-        else if(auth()->user()->chucVu->ten_chuc_vu == "Trưởng phòng")
+        else if($user->chucVu->ten_chuc_vu == "Trưởng phòng")
         {
             $phongBans =PhongBan::where('id', auth()->user()->phong_ban_id)->get();
-            $chucVus =ChucVu::whereNotIn('ten_chuc_vu',['Trưởng phòng','admin'])->get();
+            $chucVus =ChucVu::whereNotIn('ten_chuc_vu',['Nhân viên'])->get();
         }
         else
         {
@@ -176,7 +172,6 @@ class UserController extends Controller
             'ho_ten'        => 'required|max:191',
             'cmnd'          => 'max:191|required',
             'dia_chi'       => 'max:191|required',
-            'so_dien_thoai' => 'max:191|required',
             'email'         => 'max:191|required',
             'ma_bhxh'       => 'max:191|required',
             'chuc_vu_id'    => 'required',
@@ -190,12 +185,10 @@ class UserController extends Controller
                 'ho_ten.max'              => 'Họ tên vượt quá 191 kí tự',
                 'cmnd.max'                => 'CMND/CCCD vượt quá 191 kí tự',
                 'dia_chi.max'             => 'Địa chỉ vượt quá 191 kí tự',
-                'so_dien_thoai.max'       => 'Số điện thoại vượt quá 191 kí tự',
                 'email.max'               => 'Email vượt quá 191 kí tự',
                 'ma_bhxh.max'             => 'Mã bhxh vượt quá 191 kí tự',
                 'cmnd.required'                => 'CMND/CCCD không được để trống ',
                 'dia_chi.required'             => 'Địa chỉ không được để trông',
-                'so_dien_thoai.required'       => 'Số điện thoại không được để trống',
                 'email.required'               => 'Email không được để trống',
                 'ma_bhxh.required'             => 'Mã bhxh không được để trống',
                 'chuc_vu_id.required'     => 'Chưa chọn chức vụ',

@@ -24,10 +24,6 @@
                             <label class="form-label">Tên chức vụ</label>
                             <input type="text" class="form-control" id="ten_chuc_vu" name="ten_chuc_vu" placeholder="Nhập tên chức vụ" required>
                        </div>
-                       <div class="col-6">
-                            <label class="form-label">Lương tháng</label>
-                            <input type="number" class="form-control" id="luong" name="luong" placeholder="Nhập lương mỗi tháng" required>
-                       </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
