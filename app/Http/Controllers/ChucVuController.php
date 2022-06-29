@@ -27,14 +27,11 @@ class ChucVuController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'ten_chuc_vu'  => 'required|max:191|unique:App\Models\ChucVu,ten_chuc_vu,NULL,id,deleted_at,NULL',
-            'luong'        => 'required|max:20',
             ],
             [   
                 'ten_chuc_vu.required'      => 'Chưa nhập tên chức vụ',
                 'ten_chuc_vu.max'           => 'Tên chức vụ vượt quá 191 ký tự',
                 'ten_chuc_vu.unique'        => 'Tên chức vụ đã tồn tại',
-                'luong.required'            => 'Chưa nhập lương hàng tháng',
-                'luong.max'                 => 'Lương hàng tháng vượt quá 20 ký tự',
             ]
         );
         if ($validator->fails()) {
@@ -42,7 +39,6 @@ class ChucVuController extends Controller
         }
         $chucVu = new ChucVu();
         $chucVu->ten_chuc_vu = $request->ten_chuc_vu;
-        $chucVu->luong = $request->luong;
         $chucVu->save();
         return redirect()->route('danh_sach_chuc_vu')->with('status','Thêm mới chức vụ thành công');
     }
@@ -61,14 +57,11 @@ class ChucVuController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'ten_chuc_vu'  => "required|unique:App\Models\ChucVu,ten_chuc_vu,{$id},id,deleted_at,NULL",
-            'luong'        => 'required|max:20',
             ],
             [   
                 'ten_chuc_vu.required'      => 'Chưa nhập tên chức vụ',
                 'ten_chuc_vu.max'           => 'Tên chức vụ vượt quá 191 ký tự',
                 'ten_chuc_vu.unique'        => 'Tên chức vụ đã tồn tại',
-                'luong.required'            => 'Chưa nhập lương hàng tháng',
-                'luong.max'                 => 'Lương hàng tháng vượt quá 20 ký tự',
             ]
         );
         if ($validator->fails()) {
@@ -80,7 +73,6 @@ class ChucVuController extends Controller
             return redirect()->route('danh_sach_chuc_vu')->with('error','Không tìm thấy chức vụ này');
         }
         $chucVu->ten_chuc_vu = $request->ten_chuc_vu;
-        $chucVu->luong = $request->luong;
         $chucVu->save();
         return redirect()->route('danh_sach_chuc_vu')->with('status','Cập nhật chức vụ thành công');
     }
