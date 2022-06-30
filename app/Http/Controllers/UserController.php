@@ -155,12 +155,12 @@ class UserController extends Controller
         else if($user->chucVu->ten_chuc_vu == "Trưởng phòng")
         {
             $phongBans =PhongBan::where('id', auth()->user()->phong_ban_id)->get();
-            $chucVus =ChucVu::whereNotIn('ten_chuc_vu',['Nhân viên'])->get();
+            $chucVus =ChucVu::where('ten_chuc_vu','Trưởng phòng')->get();
         }
         else
         {
             $phongBans =PhongBan::where('id', auth()->user()->phong_ban_id)->get();
-            $chucVus = ChucVu::where('id', auth()->user()->chuc_vu_id)->get();
+            $chucVus = ChucVu::where('id', $user->chuc_vu_id)->get();
         }
         return view('nhan-vien/cap-nhat', compact('user','phongBans','chucVus'));   
     }
