@@ -119,7 +119,7 @@ class ChamCongController extends Controller
                     return back()->with('error','Nhân viên này chưa có chức vụ');
                 }
                 
-                $luongUser = Luong::where('user_id',$request->user_id)->where('thang_nam',$ngayLam)->fist();
+                $luongUser = Luong::where('user_id',$request->user_id)->where('thang_nam',$ngayLam)->first();
                 $luongUser->tong_ngay_lam = $tongNgayLam;
                 $luongUser->tong_luong = $tongNgayLam * $user->luong + (float)$luongUser->phu_cap - (float)$luongUser->tam_ung;
                 $luongUser->save();
