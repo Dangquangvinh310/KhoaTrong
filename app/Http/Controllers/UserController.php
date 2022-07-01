@@ -147,12 +147,13 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        if($user->chucVu->ten_chuc_vu == "admin")
+
+        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
         {
             $phongBans =PhongBan::all();
             $chucVus =ChucVu::whereNotIn('ten_chuc_vu',['Trưởng phòng'])->get();
         }
-        else if($user->chucVu->ten_chuc_vu == "Trưởng phòng")
+        else if(auth()->user()->chucVu->ten_chuc_vu == "Trưởng phòng")
         {
             $phongBans =PhongBan::where('id', auth()->user()->phong_ban_id)->get();
             $chucVus =ChucVu::where('ten_chuc_vu','Trưởng phòng')->get();
@@ -162,6 +163,7 @@ class UserController extends Controller
             $phongBans =PhongBan::where('id', auth()->user()->phong_ban_id)->get();
             $chucVus = ChucVu::where('id', $user->chuc_vu_id)->get();
         }
+
         return view('nhan-vien/cap-nhat', compact('user','phongBans','chucVus'));   
     }
 
