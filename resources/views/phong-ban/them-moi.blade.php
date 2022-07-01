@@ -24,7 +24,7 @@
                             <label class="form-label">Tên phòng ban</label>
                             <input type="text" class="form-control" id="ten_phong_ban" name="ten_phong_ban" placeholder="Nhập tên phòng ban" required>
                        </div>
-                       <div class="col-6">
+                       <!-- <div class="col-6">
                             <label class="form-label">Trưởng phòng</label>
                             <select class="form-select " 
                                 id="user_id" name="user_id">
@@ -32,7 +32,7 @@
                                 <option value="{{ $user->id }}">{{ $user->ho_ten }}</option>
                                 @endforeach
                             </select>
-                       </div>
+                       </div> -->
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>

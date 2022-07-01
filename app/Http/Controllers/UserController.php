@@ -138,6 +138,10 @@ class UserController extends Controller
         $user->ngay_het_han = $request->ngay_het_han;
         $user->chuc_vu_id = $request->chuc_vu_id;
         $user->ngay_nhan_chuc = $request->ngay_nhan_chuc;
+        if($request->chuc_vu_id==2)
+        {
+            
+        }
         $user->phong_ban_id = $request->phong_ban_id;
         
         $user->save();

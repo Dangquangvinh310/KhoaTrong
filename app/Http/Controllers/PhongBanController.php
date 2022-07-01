@@ -30,7 +30,7 @@ class PhongBanController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'ten_phong_ban'  => 'required|max:191|unique:App\Models\PhongBan,ten_phong_ban,NULL,id,deleted_at,NULL',
-            'user_id'        => 'required|unique:App\Models\PhongBan,user_id,NULL,id,deleted_at,NULL',
+            // 'user_id'        => 'required|unique:App\Models\PhongBan,user_id,NULL,id,deleted_at,NULL',
             ],
             [   
                 'ten_phong_ban.required'      => 'Chưa nhập tên phòng ban',
@@ -44,13 +44,13 @@ class PhongBanController extends Controller
             return back()->with('error', $validator->messages()->first());
         }
 
-        $chucVu = ChucVu::where('ten_chuc_vu', 'Trưởng phòng')->first();
-        $user = User::find($request->user_id);
-        $user->chuc_vu_id = $chucVu->id;
-        $user->save();
+        // $chucVu = ChucVu::where('ten_chuc_vu', 'Trưởng phòng')->first();
+        // $user = User::find($request->user_id);
+        // $user->chuc_vu_id = $chucVu->id;
+        // $user->save();
 
         $phongBan = new PhongBan();
-        $phongBan->user_id = $request->user_id;
+        // $phongBan->user_id = $request->user_id;
         $phongBan->ten_phong_ban = $request->ten_phong_ban;
         $phongBan->save();
         return redirect()->route('danh_sach_phong_ban')->with('status','Thêm mới phòng ban thành công');
