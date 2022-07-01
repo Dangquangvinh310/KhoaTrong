@@ -28,6 +28,7 @@
                     <th scope="col">Ngày bắt đầu</th>
                     <th scope="col">Ngày kết thúc</th>
                     <th scope="col">Nội dung</th>
+                    <th scope="col">Lương</th>
                     <th scope="col">Chức năng</th>
                   </tr>
                 </thead>
@@ -35,13 +36,18 @@
                 @forelse($hopDongs as $hopDong)
                 <tr>
                     <?php
-                    $key=0;
+                        $key =-1;
+                        foreach($hopDong->hopDong as $num)
+                        {
+                            $key++;
+                        }
                     ?>
                     <td>{{ $hopDong->ho_ten}}</td>
                     <td>{{ $hopDong->hopDong[$key]->ngay_ki_hop_dong}}</td>
                     <td>{{ $hopDong->hopDong[$key]->ngay_bat_dau}}</td>
                     <td>{{ $hopDong->hopDong[$key]->ngay_ket_thuc}}</td>
                     <td>{{ $hopDong->hopDong[$key]->noi_dung}}</td>
+                    <td>{{ $hopDong->hopDong[$key]->luong}}</td>
                     <td>
                         <a href="{{route('cap_nhat_hop_dong',['id' => $hopDong->hopDong[$key]->id])}}" ><i class="bx bx-message-square-add"></i></a>
                         <a href="{{route('xoa_hop_dong',['id' => $hopDong->hopDong[$key]->id])}}" class="ms-3"><i class="bx bx-trash"></i></a>

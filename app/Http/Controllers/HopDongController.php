@@ -65,6 +65,7 @@ class HopDongController extends Controller
             'ngay_bat_dau'          => 'required',
             'ngay_ket_thuc'         => 'required',
             'noi_dung'              => 'max:191',
+            'luong'                 => 'required|max:19',
             ],
             [   
                 'user_id.required'              => 'Chưa chọn nhân viên',
@@ -72,6 +73,8 @@ class HopDongController extends Controller
                 'ngay_bat_dau.required'         => 'Chưa chọn ngày bắt đầu',
                 'ngay_ket_thuc.required'        => 'Chưa chọn ngày kết thúc',
                 'noi_dung.max'                  => 'Nội dung vượt quá 191 kí tự',
+                'luong.required'                => 'Chưa nhập lương',
+                'luong.max'                     => 'Lương vượt quá 19 kí tự',
             ]
         );
         if ($validator->fails()) {
@@ -83,6 +86,7 @@ class HopDongController extends Controller
         $hopDong->ngay_bat_dau = $request->ngay_bat_dau;
         $hopDong->ngay_ket_thuc = $request->ngay_ket_thuc;
         $hopDong->noi_dung = $request->noi_dung;
+        $hopDong->luong = $request->luong;
         $hopDong->save();
         return redirect()->route('danh_sach_hop_dong')->with('status','Thêm mới hợp đồng thành công');
     }
@@ -106,6 +110,7 @@ class HopDongController extends Controller
             'ngay_bat_dau'          => 'required',
             'ngay_ket_thuc'         => 'required',
             'noi_dung'              => 'max:191',
+            'luong'                 => 'required|max:19',
             ],
             [   
                 'user_id.required'              => 'Chưa chọn nhân viên',
@@ -113,6 +118,8 @@ class HopDongController extends Controller
                 'ngay_bat_dau.required'         => 'Chưa chọn ngày bắt đầu',
                 'ngay_ket_thuc.required'        => 'Chưa chọn ngày kết thúc',
                 'noi_dung.max'                  => 'Nội dung vượt quá 191 kí tự',
+                'luong.required'                => 'Chưa nhập lương',
+                'luong.max'                     => 'Lương vượt quá 19 kí tự',
             ]
         );
         if ($validator->fails()) {
@@ -128,6 +135,7 @@ class HopDongController extends Controller
         $hopDong->ngay_bat_dau = $request->ngay_bat_dau;
         $hopDong->ngay_ket_thuc = $request->ngay_ket_thuc;
         $hopDong->noi_dung = $request->noi_dung;
+        $hopDong->luong = $request->luong;
         $hopDong->save();
         return redirect()->route('danh_sach_hop_dong')->with('status','Cập nhật hợp đồng thành công');
     }

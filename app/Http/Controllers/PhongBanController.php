@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\PhongBan;
 use App\Models\User;
+use App\Models\ChucVu;
 use Illuminate\Support\Facades\Validator;
 
 class PhongBanController extends Controller
@@ -21,7 +22,7 @@ class PhongBanController extends Controller
 
     public function create()
     {
-        $users =User::all();
+        $users=User::where('id', '!=', 1)->get();
         return view('phong-ban/them-moi',compact('users'));
     }
 
@@ -42,6 +43,12 @@ class PhongBanController extends Controller
         if ($validator->fails()) {
             return back()->with('error', $validator->messages()->first());
         }
+
+        $chucVu = ChucVu::where('ten_chuc_vu', 'Trưởng phòng')->first();
+        $user = User::find($request->user_id);
+        $user->chuc_vu_id = $chucVu->id;
+        $user->save();
+
         $phongBan = new PhongBan();
         $phongBan->user_id = $request->user_id;
         $phongBan->ten_phong_ban = $request->ten_phong_ban;
@@ -52,7 +59,7 @@ class PhongBanController extends Controller
     public function edit($id)
     {
         $phongBan=PhongBan::find($id);
-        $users=User::all();
+        $users=User::where('id', '!=', 1)->get();
         if($phongBan==null)
         {
             return redirect()->route('danh_sach_phong_ban')->with('error','Không tìm thấy phòng ban này');
@@ -77,7 +84,22 @@ class PhongBanController extends Controller
         if ($validator->fails()) {
             return back()->with('error', $validator->messages()->first());
         }
+
+        $chucVuNhanVien = ChucVu::where('ten_chuc_vu', 'Nhân viên')->first();
+        $chucVuTruongPhong = ChucVu::where('ten_chuc_vu', 'Trưởng phòng')->first();
+        $userNew = User::find($request->user_id);
+        
         $phongBan=PhongBan::find($id);
+        $userOld = User::find($phongBan->user_id);
+        if($phongBan->user_id != $userNew->id)
+        {
+
+            $userNew->chuc_vu_id = $chucVuTruongPhong->id;
+            $userOld->chuc_vu_id = $chucVuNhanVien->id;
+
+            $userNew->save();
+            $userOld->save();
+        }
         if($phongBan==null)
         {
             return redirect()->route('danh_sach_phong_ban')->with('error','Không tìm thấy phòng ban này');

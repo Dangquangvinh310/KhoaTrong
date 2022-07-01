@@ -50,6 +50,10 @@
                             <input type="text" class="form-control" id="noi_dung" name="noi_dung" placeholder="Nhập nội dung">
                        </div>
                        <div class="col-6">
+                            <label class="form-label">Lương</label>
+                            <input type="number" class="form-control" id="luong" name="luong" placeholder="Nhập lương">
+                       </div>
+                       <div class="col-6">
                        </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>

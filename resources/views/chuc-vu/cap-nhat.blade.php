@@ -28,11 +28,6 @@
                             @endif
                             value="{{$chucVu->ten_chuc_vu}}">
                        </div>
-                       <div class="col-6">
-                            <label class="form-label">Lương tháng</label>
-                            <input type="number" class="form-control" id="luong" name="luong" placeholder="Nhập lương mỗi tháng" required
-                            value="{{$chucVu->luong}}">
-                       </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>

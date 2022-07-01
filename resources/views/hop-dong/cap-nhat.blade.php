@@ -58,6 +58,11 @@
                             value="{{$hopDong->noi_dung}}">
                        </div>
                        <div class="col-6">
+                            <label class="form-label">Lương</label>
+                            <input type="number" class="form-control" id="luong" name="luong" placeholder="Nhập lương"
+                            value="{{$hopDong->luong}}">
+                       </div>
+                       <div class="col-6">
                        </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>

@@ -15,7 +15,7 @@
 <div class="row">
     <div class="col-12">
         <div class="card">
-            <h5 class="card-header">Danh sách hợp đồng mới</h5>
+            <h5 class="card-header">Danh sách hợp đồng</h5>
             <div class="card-body demo-vertical-spacing demo-only-element">
             <table class="table">
                 <thead>
@@ -30,16 +30,22 @@
                 <tbody>
                 @forelse($hopDongs as $hopDong)
                 <tr>
-                    <td>{{ $hopDong->user->ho_ten}}</td>
-                    <td>{{ $hopDong->ngay_ki_hop_dong}}</td>
-                    <td>{{ $hopDong->ngay_bat_dau}}</td>
-                    <td>{{ $hopDong->ngay_ket_thuc}}</td>
-                    <td>{{ $hopDong->noi_dung}}</td>
+                    <?php
+                    $key=0;
+                    ?>
+                    <td>{{ $hopDong->ho_ten}}</td>
+                    <td>{{ $hopDong->hopDong[$key]->ngay_ki_hop_dong}}</td>
+                    <td>{{ $hopDong->hopDong[$key]->ngay_bat_dau}}</td>
+                    <td>{{ $hopDong->hopDong[$key]->ngay_ket_thuc}}</td>
+                    <td>{{ $hopDong->hopDong[$key]->noi_dung}}</td>
                 </tr>
                 @empty
                 <tr>
                     <td colspan="6" style="text-align: center">Không có dữ liệu</td>
                 </tr>
+                <?php
+                    $key++;
+                    ?>
                 @endforelse
                 </tbody>
               </table>

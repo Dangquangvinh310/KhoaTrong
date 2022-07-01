@@ -24,7 +24,6 @@
                 <thead>
                   <tr>
                     <th scope="col">Chức vụ</th>
-                    <th scope="col">Lương tháng</th>
                     <th scope="col">Chức năng</th>
                   </tr>
                 </thead>
@@ -32,7 +31,6 @@
                 @forelse($chucVus as $chucVu)
                 <tr>
                     <td>{{ $chucVu->ten_chuc_vu}}</td>
-                    <td>{{ $chucVu->luong}}</td>
                     <td>
                         <a href="{{route('cap_nhat_chuc_vu',['id' => $chucVu->id])}}" ><i class="bx bx-message-square-add"></i></a>
                         <a href="" class="ms-3"><i class="bx bx-trash"></i></a>
