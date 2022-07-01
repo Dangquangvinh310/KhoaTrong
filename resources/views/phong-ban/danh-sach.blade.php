@@ -32,8 +32,11 @@
                 @forelse($phongBans as $phongBan)
                 <tr>
                     <td>{{ $phongBan->ten_phong_ban}}</td>
-                    @if(empty($phongBan->user->ho_ten))
+                    @if(($phongBan->user_id != null))
                     <td>{{ $phongBan->user->ho_ten}}</td>
+                    @else
+                    <td></td>
+
                     @endif
                     <td>
                         <a href="{{route('cap_nhat_phong_ban',['id' => $phongBan->id])}}" ><i class="bx bx-message-square-add"></i></a>
