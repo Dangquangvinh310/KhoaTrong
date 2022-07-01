@@ -13,6 +13,7 @@ use App\http\controllers\ThongTinController;
 use App\http\controllers\NghiViecController;
 use App\http\controllers\ChamCongController;
 use App\http\controllers\ThongKeController;
+use App\http\controllers\KhenThuongKyLuatController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -56,7 +57,7 @@ Route::get('/them-moi-phong-ban', [PhongBanController::class, 'create'])->name('
 Route::post('/them-moi-phong-ban', [PhongBanController::class, 'store'])->name('xl_them_phong_ban');
 Route::get('/cap-nhat-phong-ban/{id}',[PhongBanController::class, 'edit'])->name('cap_nhat_phong_ban');
 Route::post('/cap-nhat-phong-ban/{id}',[PhongBanController::class, 'update'])->name('xl_cap_nhat_phong_ban');
-Route::get('/xoa-phong-ban/{id}',[NgayNghiController::class, 'destroy'])->name('xoa_phong_ban');
+Route::get('/xoa-phong-ban/{id}',[PhongBanController::class, 'destroy'])->name('xoa_phong_ban');
 
 Route::get('/danh-sach-nhan-vien', [UserController::class, 'index'])->name('danh_sach_nhan_vien');
 Route::get('/them-moi-nhan-vien', [UserController::class, 'create'])->name('them_moi_nhan_vien');
@@ -115,6 +116,14 @@ Route::post('/them-moi-cham-cong', [ChamCongController::class, 'store'])->name('
 Route::get('/cap-nhat-cham-cong/{id}',[ChamCongController::class, 'edit'])->name('cap_nhat_cham_cong');
 Route::post('/cap-nhat-cham-cong/{id}',[ChamCongController::class, 'update'])->name('xl_cap_nhat_cham_cong');
 Route::get('/xoa-cham-cong/{id}',[ChamCongController::class, 'destroy'])->name('xoa_cham_cong');
+
+
+Route::get('/danh-sach-khenthuong-kiluat', [KhenThuongKyLuatController::class, 'index'])->name('danh_sach_khenthuong_kyluat');
+Route::get('/them-moi-khenthuong-kiluat', [KhenThuongKyLuatController::class, 'create'])->name('them_moi_khenthuong_kyluat');
+Route::post('/them-moi-khenthuong-kiluat', [KhenThuongKyLuatController::class, 'store'])->name('xl_them_khenthuong_kyluat');
+Route::get('/cap-nhat-khenthuong-kiluat/{id}',[KhenThuongKyLuatController::class, 'edit'])->name('cap_nhat_khenthuong_kyluat');
+Route::post('/cap-nhat-khenthuong-kiluat/{id}',[KhenThuongKyLuatController::class, 'update'])->name('xl_cap_nhat_khenthuong_kyluat');
+Route::get('/xoa-khenthuong-kiluat/{id}',[KhenThuongKyLuatController::class, 'destroy'])->name('xoa_khenthuong_kyluat');
 
 });
 
