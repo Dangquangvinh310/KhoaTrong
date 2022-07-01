@@ -96,6 +96,7 @@ class PhongBanController extends Controller
 
             $userNew->chuc_vu_id = $chucVuTruongPhong->id;
             $userOld->chuc_vu_id = $chucVuNhanVien->id;
+            $userOld->phong_ban_id = $id;
 
             $userNew->save();
             $userOld->save();
