@@ -43,9 +43,7 @@
                 <tr>
                     <td colspan="6" style="text-align: center">Không có dữ liệu</td>
                 </tr>
-                <?php
-                    $key++;
-                    ?>
+               
                 @endforelse
                 </tbody>
               </table>
