@@ -57,7 +57,7 @@ Route::get('/them-moi-phong-ban', [PhongBanController::class, 'create'])->name('
 Route::post('/them-moi-phong-ban', [PhongBanController::class, 'store'])->name('xl_them_phong_ban');
 Route::get('/cap-nhat-phong-ban/{id}',[PhongBanController::class, 'edit'])->name('cap_nhat_phong_ban');
 Route::post('/cap-nhat-phong-ban/{id}',[PhongBanController::class, 'update'])->name('xl_cap_nhat_phong_ban');
-Route::get('/xoa-phong-ban/{id}',[NgayNghiController::class, 'destroy'])->name('xoa_phong_ban');
+Route::get('/xoa-phong-ban/{id}',[PhongBanController::class, 'destroy'])->name('xoa_phong_ban');
 
 Route::get('/danh-sach-nhan-vien', [UserController::class, 'index'])->name('danh_sach_nhan_vien');
 Route::get('/them-moi-nhan-vien', [UserController::class, 'create'])->name('them_moi_nhan_vien');

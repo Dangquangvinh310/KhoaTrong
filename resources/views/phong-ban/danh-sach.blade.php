@@ -35,7 +35,8 @@
                     <td>{{ $phongBan->user->ho_ten}}</td>
                     <td>
                         <a href="{{route('cap_nhat_phong_ban',['id' => $phongBan->id])}}" ><i class="bx bx-message-square-add"></i></a>
-                        <a href="" class="ms-3"><i class="bx bx-trash"></i></a>
+                        <a href="{{route('xoa_phong_ban',['id' => $phongBan->id])}}" class="ms-3"><i class="bx bx-trash"></i></a>
+
                     </td>
                 </tr>
                 @empty

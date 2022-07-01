@@ -109,10 +109,9 @@ class PhongBanController extends Controller
         $phongBan->save();
         return redirect()->route('danh_sach_phong_ban')->with('status','Cập nhật phòng ban thành công');
     }
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        try {
-            $phongBan = PhongBan::find($request->id);
+            $phongBan = PhongBan::find($id);
             $user = User::where('phong_ban_id', $phongBan->id)->first();
             if($user!==null)
             {
@@ -120,12 +119,9 @@ class PhongBanController extends Controller
             }
             else
             {
-                PhongBan::destroy($request->id);
+                $phongBan->delete();
                 return redirect()->route('danh_sach_phong_ban')->with('status','Xoá thành công');  
             }
-        } catch (Exception $e) {
-            return redirect()->route('danh_sach_phong_ban')->with('error','Xoá không thành công');
-
-        }
+        
     }
 }
