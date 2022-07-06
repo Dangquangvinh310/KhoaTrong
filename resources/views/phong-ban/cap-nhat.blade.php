@@ -29,6 +29,7 @@
                             <label class="form-label">Trưởng phòng</label>
                             <select class="form-select " 
                                 id="user_id" name="user_id">
+                                <option></option>
                                 @foreach($users as $user)
                                     @if($user->id==$phongBan->user_id)
                                         <option value="{{ $user->id}} " selected>{{ $user->ho_ten }}</option>
@@ -36,6 +37,7 @@
                                         <option value="{{ $user->id}}">{{ $user->ho_ten }}</option>
                                     @endif
                                 @endforeach
+
                             </select>
                        </div>
                     </div>

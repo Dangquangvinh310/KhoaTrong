@@ -21,7 +21,7 @@ class TaiKhoanSeeder extends Seeder
         $user->password             = Hash::make('123456');
         $user->ho_ten               = 'admin';
         $user->chuc_vu_id           = 1;
-        $user->phong_ban_id         = 1;
+        $user->phong_ban_id         = null;
         $user->save();
 
     }

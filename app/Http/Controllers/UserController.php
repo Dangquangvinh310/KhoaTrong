@@ -138,6 +138,10 @@ class UserController extends Controller
         $user->ngay_het_han = $request->ngay_het_han;
         $user->chuc_vu_id = $request->chuc_vu_id;
         $user->ngay_nhan_chuc = $request->ngay_nhan_chuc;
+        if($request->chuc_vu_id==2)
+        {
+            
+        }
         $user->phong_ban_id = $request->phong_ban_id;
         
         $user->save();
@@ -147,12 +151,13 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        if($user->chucVu->ten_chuc_vu == "admin")
+
+        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
         {
             $phongBans =PhongBan::all();
             $chucVus =ChucVu::whereNotIn('ten_chuc_vu',['Trưởng phòng'])->get();
         }
-        else if($user->chucVu->ten_chuc_vu == "Trưởng phòng")
+        else if(auth()->user()->chucVu->ten_chuc_vu == "Trưởng phòng")
         {
             $phongBans =PhongBan::where('id', auth()->user()->phong_ban_id)->get();
             $chucVus =ChucVu::where('ten_chuc_vu','Trưởng phòng')->get();
@@ -162,6 +167,7 @@ class UserController extends Controller
             $phongBans =PhongBan::where('id', auth()->user()->phong_ban_id)->get();
             $chucVus = ChucVu::where('id', $user->chuc_vu_id)->get();
         }
+
         return view('nhan-vien/cap-nhat', compact('user','phongBans','chucVus'));   
     }
 
@@ -173,7 +179,7 @@ class UserController extends Controller
             'cmnd'          => 'max:191|required',
             'dia_chi'       => 'max:191|required',
             'email'         => 'max:191|required',
-            'ma_bhxh'       => 'max:191|required',
+            'ma_bhxh'       => 'max:191',
             'chuc_vu_id'    => 'required',
             'phong_ban_id'  => 'required',
             ],

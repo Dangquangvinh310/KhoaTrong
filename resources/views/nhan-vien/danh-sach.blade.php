@@ -45,7 +45,12 @@
                     <td>{{ $user->dia_chi}}</td>
                     <td>{{ $user->chucVu->ten_chuc_vu}}</td>
                     <td>{{ $user->ngay_nhan_chuc}}</td>
+                    @if($user->phongBan != null)
+                    
                     <td>{{ $user->phongBan->ten_phong_ban}}</td>
+                    @else
+                    <td></td>
+                    @endif
                     <td>
                         <a href="{{route('cap_nhat_nhan_vien',['id' => $user->id])}}" ><i class="bx bx-message-square-add"></i></a>
                         <a href="{{route('xoa_nhan_vien',['id' => $user->id])}}" class="ms-3"><i class="bx bx-trash"></i></a>

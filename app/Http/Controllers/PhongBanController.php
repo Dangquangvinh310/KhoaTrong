@@ -30,7 +30,7 @@ class PhongBanController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'ten_phong_ban'  => 'required|max:191|unique:App\Models\PhongBan,ten_phong_ban,NULL,id,deleted_at,NULL',
-            'user_id'        => 'required|unique:App\Models\PhongBan,user_id,NULL,id,deleted_at,NULL',
+            // 'user_id'        => 'required|unique:App\Models\PhongBan,user_id,NULL,id,deleted_at,NULL',
             ],
             [   
                 'ten_phong_ban.required'      => 'Chưa nhập tên phòng ban',
@@ -44,13 +44,13 @@ class PhongBanController extends Controller
             return back()->with('error', $validator->messages()->first());
         }
 
-        $chucVu = ChucVu::where('ten_chuc_vu', 'Trưởng phòng')->first();
-        $user = User::find($request->user_id);
-        $user->chuc_vu_id = $chucVu->id;
-        $user->save();
+        // $chucVu = ChucVu::where('ten_chuc_vu', 'Trưởng phòng')->first();
+        // $user = User::find($request->user_id);
+        // $user->chuc_vu_id = $chucVu->id;
+        // $user->save();
 
         $phongBan = new PhongBan();
-        $phongBan->user_id = $request->user_id;
+        // $phongBan->user_id = $request->user_id;
         $phongBan->ten_phong_ban = $request->ten_phong_ban;
         $phongBan->save();
         return redirect()->route('danh_sach_phong_ban')->with('status','Thêm mới phòng ban thành công');
@@ -71,7 +71,7 @@ class PhongBanController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'ten_phong_ban'  => "required|max:191|unique:App\Models\PhongBan,ten_phong_ban,{$id},id,deleted_at,NULL",
-            'user_id'        => "required|unique:App\Models\PhongBan,user_id,{$id},id,deleted_at,NULL",
+            // 'user_id'        => "required|unique:App\Models\PhongBan,user_id,{$id},id,deleted_at,NULL",
             ],
             [   
                 'ten_phong_ban.required'      => 'Chưa nhập tên phòng ban',
@@ -88,18 +88,30 @@ class PhongBanController extends Controller
         $chucVuNhanVien = ChucVu::where('ten_chuc_vu', 'Nhân viên')->first();
         $chucVuTruongPhong = ChucVu::where('ten_chuc_vu', 'Trưởng phòng')->first();
         $userNew = User::find($request->user_id);
-        
+        // dd($chucVuNhanVien);
         $phongBan=PhongBan::find($id);
         $userOld = User::find($phongBan->user_id);
-        if($phongBan->user_id != $userNew->id)
+        if($request->user_id != null)
         {
-
-            $userNew->chuc_vu_id = $chucVuTruongPhong->id;
-            $userOld->chuc_vu_id = $chucVuNhanVien->id;
-
-            $userNew->save();
-            $userOld->save();
-        }
+            if($phongBan->user_id != $userNew->id)
+            {
+                $userNew->chuc_vu_id = $chucVuTruongPhong->id;
+                $userNew->phong_ban_id = $id;
+                if(($userOld != null))
+                {
+                    // dd($chucVuNhanVien->id);
+                    $userOld->chuc_vu_id = $chucVuNhanVien->id;
+                    $userOld->phong_ban_id = $id;
+                    $userOld->save();
+                }
+                $userNew->save();
+            }
+    }
+    else{
+        $userOld->chuc_vu_id = $chucVuNhanVien->id;
+        $userOld->phong_ban_id = $id;
+        $userOld->save();
+    }
         if($phongBan==null)
         {
             return redirect()->route('danh_sach_phong_ban')->with('error','Không tìm thấy phòng ban này');
