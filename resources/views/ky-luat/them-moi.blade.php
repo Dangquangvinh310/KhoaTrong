@@ -15,13 +15,13 @@
 <div class="row">
     <div class="col-12">
         <div class="card">
-            <h5 class="card-header">Thêm mới khen thưởng hoặc kỷ luật</h5>
+            <h5 class="card-header">Thêm mới kỷ luật</h5>
             <div class="card-body demo-vertical-spacing demo-only-element">
-                <form class="forms-sample" action="{{route('xl_them_khenthuong_kyluat')}}" method="post" enctype="multipart/form-data">
+                <form class="forms-sample" action="{{route('xl_them_ky_luat')}}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="row mb-3">
-                       <div class="col-6">
-                            <label class="form-label">Nhân viên</label>
+                    <div class="col-6">
+                            <label class="form-label">Tên nhân viên</label>
                             <select class="form-select " 
                                 id="user_id" name="user_id">
                                 @foreach($users as $user)
@@ -29,20 +29,14 @@
                                 @endforeach
                             </select>
                        </div>
-                       <div class="col-6">
-                            <label class="form-label">Khen thưởng hoặc kỷ luật</label>
-                            <select class="form-select " 
-                                id="khenthuong_kyluat" name="khenthuong_kyluat">
-cz                                @endforeach
-                            </select>
-                       </div>
-                       <div class="col-6">
+                        <div class="col-6">
                             <label class="form-label">Lý do</label>
-                            <input type="text" class="form-control" id="ly_do" name="ly_do" placeholder="Nhập nội dung">
+                            <input type="text" class="form-control" id="ly_do" name="ly_do" placeholder="Nhập lý do kỷ luật" required>
                        </div>
-                    <div class="row mb-3">
-
-                       
+                       <div class="col-6">
+                            <label class="form-label">Số tiền thưởng</label>
+                            <input type="text" class="form-control" id="so_tien" name="so_tien" placeholder="Nhập số tiền kỷ luật" required>
+                       </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>

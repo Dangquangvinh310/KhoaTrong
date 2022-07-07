@@ -15,30 +15,27 @@
 <div class="row">
     <div class="col-12">
         <div class="card">
-            <h5 class="card-header">Cập nhật phòng ban</h5>
+            <h5 class="card-header">Thêm mới phòng ban</h5>
             <div class="card-body demo-vertical-spacing demo-only-element">
-                <form class="forms-sample" action="{{route('xl_cap_nhat_phong_ban',['id' => $phongBan->id])}}" method="post" enctype="multipart/form-data">
+                <form class="forms-sample" action="{{route('xl_them_khen_thuong')}}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="row mb-3">
-                        <div class="col-6">
-                            <label class="form-label">Tên phòng ban</label>
-                            <input type="text" class="form-control" id="ten_phong_ban" name="ten_phong_ban" placeholder="Nhập tên phòng ban" required
-                            value="{{$phongBan->ten_phong_ban}}">
-                       </div>
-                       <div class="col-6">
-                            <label class="form-label">Trưởng phòng</label>
+                    <div class="col-6">
+                            <label class="form-label">Tên nhân viên</label>
                             <select class="form-select " 
                                 id="user_id" name="user_id">
-                                <option></option>
                                 @foreach($users as $user)
-                                    @if($user->id==$phongBan->user_id)
-                                        <option value="{{ $user->id}} " selected>{{ $user->ho_ten }}</option>
-                                    @else
-                                        <option value="{{ $user->id}}">{{ $user->ho_ten }}</option>
-                                    @endif
+                                <option value="{{ $user->id }}">{{ $user->ho_ten }}</option>
                                 @endforeach
-
                             </select>
+                       </div>
+                        <div class="col-6">
+                            <label class="form-label">Lý do</label>
+                            <input type="text" class="form-control" id="ly_do" name="ly_do" placeholder="Nhập lý do thưởng" required>
+                       </div>
+                       <div class="col-6">
+                            <label class="form-label">Số tiền thưởng</label>
+                            <input type="text" class="form-control" id="so_tien" name="so_tien" placeholder="Nhập số tiền thưởng" required>
                        </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>

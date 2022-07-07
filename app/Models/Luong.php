@@ -15,7 +15,9 @@ class Luong extends Model
         'tong_luong',
         'tong_ngay_lam',
         'tam_ung',
-        'phu_cap'
+        'phu_cap',
+        'khen_thuong',
+        'ky_luat'
     ];
     
     public function user()

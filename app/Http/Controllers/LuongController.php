@@ -7,6 +7,10 @@ use Carbon\Carbon;
 use App\Models\Luong;
 use App\Models\User;
 use App\Models\ChamCong;
+use App\Models\KhenThuong;
+use App\Models\KyLuat;
+use App\Models\HopDong;
+
 use Illuminate\Support\Facades\Validator;
 
 class LuongController extends Controller
@@ -27,7 +31,7 @@ class LuongController extends Controller
     
     public function store(Request $request)
     {
-        // dd($request->all());
+       
     $validator = Validator::make($request->all(), [
         'user_id'        => 'required',
         'tong_ngay_lam'        => 'required',
@@ -40,15 +44,21 @@ class LuongController extends Controller
     if ($validator->fails()) {
         return back()->with('error', $validator->messages()->first());
     }
-    if(empty($request->phu_cap))
-    {
-        $request->phu_cap = 0;
-    }
-    if(empty($request->tam_ung))
-    {
-        $request->tam_ung = 0;
-    }
-    $user = User::find((integer) $request->user_id)->chucVu;
+        if(empty($request->phu_cap))
+        {
+            $request->phu_cap = 0;
+        }
+        if(empty($request->tam_ung))
+        {
+            $request->tam_ung = 0;
+        }
+
+        $now = Carbon::now()->format('m-Y');
+        $khenThuong = KhenThuong::where('user_id',$request->user_id)->where('ngay','LIKE',"%$now%")->sum('so_tien');
+        $kyLuat = KyLuat::where('user_id',$request->user_id)->where('ngay','LIKE',"%$now%")->sum('so_tien');
+
+        $user = User::find((integer) $request->user_id)->chucVu;
+        $luong = HopDong::where('user_id',$request->user_id)->orderBy('id','desc')->first();
     if(empty($user))
     {
         return back()->with('error','Nhân viên này chưa có chức vụ');
@@ -60,7 +70,10 @@ class LuongController extends Controller
                 'tam_ung'       => $request->tam_ung,
                 'phu_cap'                 => $request->phu_cap,
                 'thang_nam'     => Carbon::now()->format('m-Y'),
-                'tong_luong' => (float)$request->tong_ngay_lam* $user->luong + (float)$request->phu_cap - (float)$request->tam_ung,
+                'khen_thuong'       => $khenThuong,
+                'ky_luat'                 => $kyLuat,
+                'tong_luong' => (float)$request->tong_ngay_lam* (float)$luong->luong + (float)$request->phu_cap - (float)$request->tam_ung
+                +(float)$khenThuong - (float)$kyLuat,
             ]
         );
         return redirect()->route('danh_sach_bang_luong')->with('status','Thêm mới thành công');
@@ -94,15 +107,22 @@ class LuongController extends Controller
       {
         return redirect()->route('danh_sach_ngay_nghi')->with('error','Không tìm thấy ngày nghỉ này');
       }
+      $now = Carbon::now()->format('m-Y');
+      $khenThuong = KhenThuong::where('user_id',$request->user_id)->where('ngay','LIKE',"%$now%")->sum('so_tien');
+      $kyLuat = KyLuat::where('user_id',$request->user_id)->where('ngay','LIKE',"%$now%")->sum('so_tien');
 
-      $user = User::find((integer) $update->user_id)->chucVu;
+      $user = User::find((integer) $request->user_id)->chucVu;
+      $luong = HopDong::where('user_id',$request->user_id)->orderBy('id','desc')->first();
+
       $ngayLam = Carbon::now()->format('m-Y');
       $tongNgayLam = ChamCong::where('user_id',$update->user_id)->where('ngay_lam','LIKE',"%$ngayLam%")->count();
-
+      $update->khen_thuong = $khenThuong;
+      $update->ky_luat = $kyLuat;
 
       $update->tam_ung = $request->tam_ung;
       $update->phu_cap = $request->phu_cap;
-      $update->tong_luong =  $tongNgayLam * $user->luong  + (float)$request->phu_cap - (float)$request->tam_ung;
+      $update->tong_luong =  (float)$tongNgayLam * (float)$luong->luong  + (float)$request->phu_cap - (float)$request->tam_ung
+      +(float)$khenThuong - (float)$kyLuat ;
 
       $update->save();
       return redirect()->route('danh_sach_bang_luong')->with('status','Cập nhật thành công');

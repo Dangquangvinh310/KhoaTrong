@@ -77,18 +77,18 @@ class ChucVuController extends Controller
         return redirect()->route('danh_sach_chuc_vu')->with('status','Cập nhật chức vụ thành công');
     }
 
-    public function destroy(Request $request)
+    public function destroy($id)
     {
         try {
-            $chucVu = ChucVu::find($request->id);
-            $user = User::where('chuc_vu_id', $chucVu->id)->first();
+            $chucVu = ChucVu::find($id);
+            $user = User::where('chuc_vu_id', $id)->first();
             if($user!==null)
             {
                 return redirect()->route('danh_sach_chuc_vu')->with('error','Có nhân viên đang sử dụng chức vụ này');
             }
             else
             {
-                ChucVu::destroy($request->id);
+                ChucVu::destroy($id);
                 return redirect()->route('danh_sach_chuc_vu')->with('status','Xoá thành công');    
             }
             
