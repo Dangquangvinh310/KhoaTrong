@@ -14,6 +14,7 @@ use App\http\controllers\NghiViecController;
 use App\http\controllers\ChamCongController;
 use App\http\controllers\ThongKeController;
 use App\http\controllers\KhenThuongKyLuatController;
+use App\http\controllers\TinTucController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -37,6 +38,8 @@ Route::middleware('auth')->group(function () {
 Route::get('/dang-xuat', [UserController::class, 'logout'])->name('logout');
 
 Route::get('/', [ThongKeController::class, 'danhSachDon'])->name('thong_ke');
+Route::get('/thong-tin-cho-duyet/{id}', [ThongKeController::class, 'thongTinChoDuyet'])->name('thong_tin_cho_duyet');
+Route::post('/thong-tin-cho-duyet/{id}', [ThongKeController::class, 'xlDuyet'])->name('xl_duyet');
 
 Route::get('/danh-sach-hop-dong', [HopDongController::class, 'index'])->name('danh_sach_hop_dong');
 Route::get('/them-moi-hop-dong', [HopDongController::class, 'create'])->name('them_moi_hop_dong');
@@ -125,6 +128,12 @@ Route::get('/cap-nhat-khenthuong-kiluat/{id}',[KhenThuongKyLuatController::class
 Route::post('/cap-nhat-khenthuong-kiluat/{id}',[KhenThuongKyLuatController::class, 'update'])->name('xl_cap_nhat_khenthuong_kyluat');
 Route::get('/xoa-khenthuong-kiluat/{id}',[KhenThuongKyLuatController::class, 'destroy'])->name('xoa_khenthuong_kyluat');
 
+Route::get('/danh-sach-tin-tuc', [TinTucController::class, 'index'])->name('danh_sach_tin_tuc');
+Route::get('/them-moi-tin-tuc', [TinTucController::class, 'create'])->name('them_moi_tin_tuc');
+Route::post('/them-moi-tin-tuc', [TinTucController::class, 'store'])->name('xl_them_tin_tuc');
+Route::get('/cap-nhat-tin-tuc/{id}',[TinTucController::class, 'edit'])->name('cap_nhat_tin_tuc');
+Route::post('/cap-nhat-tin-tuc/{id}',[TinTucController::class, 'update'])->name('xl_cap_nhat_tin_tuc');
+Route::get('/xoa-tin-tuc/{id}',[TinTucController::class, 'destroy'])->name('xoa_tin_tuc');
 });
 
         

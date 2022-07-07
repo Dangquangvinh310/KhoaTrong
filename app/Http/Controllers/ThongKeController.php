@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\NgayNghi;
+use App\Models\XacNhan;
 use App\Models\HopDong;
 use App\Models\User;
+use App\Models\TinTuc;
 class ThongKeController extends Controller
 {
     public function danhSachDon()
@@ -26,6 +28,38 @@ class ThongKeController extends Controller
         {
             return back()->with('error','Không tìm thấy danh sách hợp đồng');
         }
-        return view('thong-ke',compact('hopDongs'));
+
+        $thongTinChoCapNhats = XacNhan::where('trang_thai', '1')->get();
+        $tinTucs = TinTuc::all();
+        return view('thong-ke',compact('hopDongs','thongTinChoCapNhats','tinTucs'));
     }
+
+    public function thongTinChoDuyet($id)
+    {
+        $thongTinChoCapNhat = XacNhan::find($id);
+        return view('thong-tin-cho-duyet',compact('thongTinChoCapNhat'));
+    }
+
+    public function xlDuyet($id)
+    {
+        $thongTinChoCapNhat = XacNhan::find($id);
+        $thongTinChoCapNhat->trang_thai ='2';
+        $thongTinChoCapNhat->save();
+
+        $user = User::find($thongTinChoCapNhat->user_id);
+        $user->ho_ten = $thongTinChoCapNhat->ho_ten;
+        $user->cmnd = $thongTinChoCapNhat->cmnd;
+        $user->ngay_sinh = $thongTinChoCapNhat->ngay_sinh;
+        $user->gioi_tinh = $thongTinChoCapNhat->gioi_tinh;
+        $user->dia_chi = $thongTinChoCapNhat->dia_chi;
+        $user->so_dien_thoai = $thongTinChoCapNhat->so_dien_thoai;
+        $user->email = $thongTinChoCapNhat->email;
+        $user->ma_bhxh = $thongTinChoCapNhat->ma_bhxh;
+        $user->ngay_cap = $thongTinChoCapNhat->ngay_cap;
+        $user->ngay_het_han = $thongTinChoCapNhat->ngay_het_han;
+        $user->save();
+       
+        return redirect()->route('thong_ke')->with('status','Đã duyệt');
+    }
+
 }
