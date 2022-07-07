@@ -13,13 +13,84 @@
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 @endif
+<style>
+    input[type="search"] {
+  padding-right: 1.5em;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" stroke="black" stroke-width="2"><circle cx="7" cy="7" r="6" /><path d="M11 11 L15 15" /></svg>');
+  background-size: 0.7em;
+  background-repeat: no-repeat;
+  background-position: right 0.5em center;
+}
+
+input[type="search"]::-webkit-search-cancel-button {
+  display: none;
+}
+
+/**
+ * Unrelated Styles
+ */
+
+
+form {
+ width: 100%;
+}
+
+input,
+select {
+  width: 100%;
+  border: 1px solid currentColor;
+  border-radius: 3px;
+  padding-top: .25rem;
+  padding-bottom: .25rem;
+  background-color: transparent;
+}
+.div-search{
+    width: 100%;
+    padding-right: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.btn-search{
+    color: #fff;
+    background-color: #696cff;
+    border-color: #696cff;
+    /* box-shadow: 0 0.125rem 0.25rem 0 rgb(105 108 255 / 40%); */
+    border: none;
+    height: 100%;
+    padding: 5px 15px;
+    border-radius: 5px ;
+    white-space: nowrap !important;
+    margin-left: 10px;
+}
+    </style>
 <div class="row">
     <div class="col-12 mb-3">
         <a href="{{route('them_moi_nhan_vien')}}" class="btn btn-primary" >Thêm mới</a>
     </div>
+    
     <div class="col-12">
         <div class="card">
-            <h5 class="card-header">Danh sách nhân viên</h5>
+            
+            <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-4">
+            <h4 class="card-header" style="white-space:nowrap">Danh sách nhân viên</h4>
+            </div>
+            <div class="col-8">
+            <form action="{{route('xl_tim_kiem_nhan_vien')}}" method="POST">
+                @csrf
+                <label for="search" class="div-search">
+                  
+                    <input type="search" id="search" name="search">
+                    <button class="btn-search">Tìm kiếm</button>
+                </label>
+
+                </form>
+            </div>
+       
+            
+                </div>
+
             <div class="card-body demo-vertical-spacing demo-only-element">
             <table class="table">
                 <thead>

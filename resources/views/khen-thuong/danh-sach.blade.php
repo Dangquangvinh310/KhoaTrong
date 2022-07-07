@@ -14,26 +14,33 @@
 @endif
 <div class="row">
     <div class="col-12 mb-3">
-        <a href="{{route('them_moi_chuc_vu')}}" class="btn btn-primary" >Thêm mới</a>
+        <a href="{{route('them_moi_khen_thuong')}}" class="btn btn-primary" >Thêm mới</a>
     </div>
     <div class="col-12">
         <div class="card">
-            <h5 class="card-header">Danh sách chức vụ</h5>
+            <h5 class="card-header">Danh sách khen thưởng</h5>
             <div class="card-body demo-vertical-spacing demo-only-element">
             <table class="table">
                 <thead>
                   <tr>
-                    <th scope="col">Chức vụ</th>
-                    <th scope="col">Chức năng</th>
+                    <th scope="col">Tên nhân viên</th>
+                    <th scope="col">Ngày thưởng</th>
+                    <th scope="col">Lý do</th>
+                    <th scope="col">Sôt tiền</th>
+
                   </tr>
                 </thead>
                 <tbody>
-                @forelse($chucVus as $chucVu)
+                @forelse($khenThuongs as $khenThuong)
                 <tr>
-                    <td>{{ $chucVu->ten_chuc_vu}}</td>
+                    <td>{{ $khenThuong->user->ho_ten}}</td>
+                    <td>{{ $khenThuong->ngay}}</td>
+                    <td>{{ $khenThuong->ly_do}}</td>
+                    <td>{{ $khenThuong->so_tien}}</td>
                     <td>
-                        <a href="{{route('cap_nhat_chuc_vu',['id' => $chucVu->id])}}" ><i class="bx bx-message-square-add"></i></a>
-                        <a href="{{route('xoa_chuc_vu',['id' => $chucVu->id])}}" class="ms-3"><i class="bx bx-trash"></i></a>
+                        <a href="{{route('cap_nhat_khen_thuong',['id' => $khenThuong->id])}}" ><i class="bx bx-message-square-add"></i></a>
+                        <a href="{{route('xoa_khen_thuong',['id' => $khenThuong->id])}}" class="ms-3"><i class="bx bx-trash"></i></a>
+
                     </td>
                 </tr>
                 @empty

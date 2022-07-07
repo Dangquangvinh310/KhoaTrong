@@ -13,7 +13,9 @@ use App\http\controllers\ThongTinController;
 use App\http\controllers\NghiViecController;
 use App\http\controllers\ChamCongController;
 use App\http\controllers\ThongKeController;
-use App\http\controllers\KhenThuongKyLuatController;
+use App\http\controllers\KyluatController;
+use App\http\controllers\KhenThuongController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -59,12 +61,27 @@ Route::get('/cap-nhat-phong-ban/{id}',[PhongBanController::class, 'edit'])->name
 Route::post('/cap-nhat-phong-ban/{id}',[PhongBanController::class, 'update'])->name('xl_cap_nhat_phong_ban');
 Route::get('/xoa-phong-ban/{id}',[PhongBanController::class, 'destroy'])->name('xoa_phong_ban');
 
+Route::get('/danh-sach-khen-thuong', [KhenThuongController::class, 'index'])->name('danh_sach_khen_thuong');
+Route::get('/them-moi-khen-thuong', [KhenThuongController::class, 'create'])->name('them_moi_khen_thuong');
+Route::post('/them-moi-khen-thuong', [KhenThuongController::class, 'store'])->name('xl_them_khen_thuong');
+Route::get('/cap-nhat-khen-thuong/{id}',[KhenThuongController::class, 'edit'])->name('cap_nhat_khen_thuong');
+Route::post('/cap-nhat-khen-thuong/{id}',[KhenThuongController::class, 'update'])->name('xl_cap_nhat_khen_thuong');
+Route::get('/xoa-khen-thuong/{id}',[KhenThuongController::class, 'destroy'])->name('xoa_khen_thuong');
+
+Route::get('/danh-sach-ky-luat', [KyluatController::class, 'index'])->name('danh_sach_ky_luat');
+Route::get('/them-moi-ky-luat', [KyluatController::class, 'create'])->name('them_moi_ky_luat');
+Route::post('/them-moi-ky-luat', [KyluatController::class, 'store'])->name('xl_them_ky_luat');
+Route::get('/cap-nhat-ky-luat/{id}',[KyluatController::class, 'edit'])->name('cap_nhat_ky_luat');
+Route::post('/cap-nhat-ky-luat/{id}',[KyluatController::class, 'update'])->name('xl_cap_nhat_ky_luat');
+Route::get('/xoa-ky-luat/{id}',[KyluatController::class, 'destroy'])->name('xoa_ky_luat');
+
 Route::get('/danh-sach-nhan-vien', [UserController::class, 'index'])->name('danh_sach_nhan_vien');
 Route::get('/them-moi-nhan-vien', [UserController::class, 'create'])->name('them_moi_nhan_vien');
 Route::post('/them-moi-nhan-vien', [UserController::class, 'store'])->name('xl_them_nhan_vien');
 Route::get('/cap-nhat-nhan-vien/{id}',[UserController::class, 'edit'])->name('cap_nhat_nhan_vien');
 Route::post('/cap-nhat-nhan-vien/{id}',[UserController::class, 'update'])->name('xl_cap_nhat_nhan_vien');
 Route::get('/xoa-nhan-vien/{id}',[UserController::class, 'destroy'])->name('xoa_nhan_vien');
+Route::post('/tim-kiem-nhan-vien',[UserController::class, 'search'])->name('xl_tim_kiem_nhan_vien');
 
 
 Route::get('/danh-sach-bhxh', [BHXHController::class, 'index'])->name('danh_sach_bhxh');

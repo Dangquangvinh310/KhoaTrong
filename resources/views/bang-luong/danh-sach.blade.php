@@ -13,9 +13,9 @@
 </div>
 @endif
 <div class="row">
-    <!-- <div class="col-12 mb-3">
+    <div class="col-12 mb-3">
         <a href="{{route('them_moi_bang_luong')}}" class="btn btn-primary" >Thêm mới</a>
-    </div> -->
+    </div>
     <div class="col-12">
         <div class="card">
             <h5 class="card-header">Danh sách lương</h5>
@@ -26,7 +26,8 @@
                     <th scope="col">Tên nhân viên</th>
                     <th scope="col">Tháng</th>
                     <th scope="col">Số lương nhận được</th>
-
+                    <th scope="col">Số tiền khen thưởng</th>
+                    <th scope="col">Số kỷ luật</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -35,7 +36,8 @@
                     <td>{{ $luong->user->ho_ten}}</td>
                     <td>{{ $luong->thang_nam}}</td>
                     <td>{{ $luong->tong_luong}}</td>
-
+                    <td>{{ $luong->khen_thuong}}</td>
+                    <td>{{ $luong->ky_luat}}</td>
                     <td>
                         <a href="{{route('cap_nhat_bang_luong',['id' => $luong->id])}}" ><i class="bx bx-message-square-add"></i></a>
                         <a href="" class="ms-3"><i class="bx bx-trash"></i></a>

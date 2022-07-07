@@ -202,9 +202,15 @@
               </a>
             </li>
             <li class="menu-item">
-              <a href="{{route('danh_sach_khenthuong_kyluat')}}" class="menu-link">
+              <a href="{{route('danh_sach_khen_thuong')}}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                <div data-i18n="Analytics">Khen thưởng, kĩ luật</div>
+                <div data-i18n="Analytics">Khen thưởng</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="{{route('danh_sach_ky_luat')}}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div data-i18n="Analytics">Kỷ luật</div>
               </a>
             </li>
         </ul>
@@ -224,17 +230,7 @@
 
             <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
               <!-- Search -->
-              <div class="navbar-nav align-items-center">
-                <div class="nav-item d-flex align-items-center">
-                  <i class="bx bx-search fs-4 lh-0"></i>
-                  <input
-                    type="text"
-                    class="form-control border-0 shadow-none"
-                    placeholder="Search..."
-                    aria-label="Search..."
-                  />
-                </div>
-              </div>
+             
               <ul class="navbar-nav flex-row align-items-center ms-auto">
                 <!-- Place this tag where you want the button to render. -->
 

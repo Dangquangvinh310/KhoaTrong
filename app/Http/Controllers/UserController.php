@@ -251,4 +251,34 @@ class UserController extends Controller
 
         }
     }
+    public function search(Request $request)
+    {
+        if(empty($request->search))
+        {
+            $request->search = "";
+        }
+        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
+        {
+            $users =User::where('ho_ten','LIKE',"%$request->search%")
+            ->orwhere('ho_ten','LIKE',"%$request->search%")
+            ->orwhere('dia_chi','LIKE',"%$request->search%")
+            ->orwhere('so_dien_thoai','LIKE',"%$request->search%")->get();
+        }
+        else if(auth()->user()->chucVu->ten_chuc_vu == "Trưởng phòng")
+        {
+            $phongBan = PhongBan::where('user_id', auth()->user()->id)->first();
+            $users = User::where([['ho_ten','LIKE',"%$request->search%"],['phong_ban_id', $phongBan->id]])
+            ->orwhere([['ho_ten','LIKE',"%$request->search%"],['phong_ban_id', $phongBan->id]])
+            ->orwhere([['dia_chi','LIKE',"%$request->search%"],['phong_ban_id', $phongBan->id]])
+            ->orwhere([['so_dien_thoai','LIKE',"%$request->search%"],['phong_ban_id', $phongBan->id]])->get();    
+        }
+        else{
+            $users =User::where('id',auth()->user()->id)->get();
+        }
+        if($users==null)
+        {
+            return back()->with('error','Không tìm thấy danh sách nhân viên');
+        }
+        return view('nhan-vien/danh-sach',compact('users'));
+    }
 }
