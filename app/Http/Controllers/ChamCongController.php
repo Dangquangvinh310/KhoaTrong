@@ -8,13 +8,22 @@ use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use App\Models\Luong;
-
+use App\Models\PhongBan;
 
 class ChamCongController extends Controller
 {
     public function index()
     {
-        $chamCongs  = ChamCong::all();
+        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
+        {
+            $users =User::all()->pluck('id');
+        }
+        else
+        {
+            $phongBan = PhongBan::where('user_id', auth()->user()->id)->first();
+            $users = User::where('phong_ban_id', $phongBan->id)->get()->pluck('id');
+        }
+        $chamCongs  = ChamCong::whereIn('user_id', $users)->get();
       
         return view('cham-cong/danh-sach',compact('chamCongs'));
     }
@@ -116,7 +125,7 @@ class ChamCongController extends Controller
 
         if($chamCong==null)
        {
-           return redirect()->route('danh_sach_ngay_nghi')->with('error','Không tìm thấy ngày chấm công này');
+           return redirect()->route('danh_sach_cham_cong')->with('error','Không tìm thấy ngày chấm công này');
        }
        return view('cham-cong/cap-nhat', compact('chamCong','users'));   
     }
@@ -160,10 +169,10 @@ class ChamCongController extends Controller
     {
         try {
             ChamCong::destroy($id);
-            return redirect()->route('danh_sach_ngay_nghi')->with('error','Xoá thành công');
+            return redirect()->route('danh_sach_cham_cong')->with('error','Xoá thành công');
 
         } catch (Exception $e) {
-            return redirect()->route('danh_sach_ngay_nghi')->with('error','Xoá không thành công');
+            return redirect()->route('danh_sach_cham_cong')->with('error','Xoá không thành công');
 
         }
     }

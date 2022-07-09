@@ -17,14 +17,30 @@ class LuongController extends Controller
 {
     public function index()
     {
-        $luongs  = Luong::all();
+        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
+        {
+            $user=User::all()->pluck('id');
+        }
+        else
+        {
+            $user=User::where('phong_ban_id', auth()->user()->phong_ban_id)->get()->pluck('id');
+        }
+        $luongs  = Luong::whereIn('user_id', $user)->get();
       
         return view('bang-luong/danh-sach',compact('luongs'));
     }
 
     public function create()
     {
-        $users =User::all();
+        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
+        {
+            $user=User::all()->pluck('id');
+        }
+        else
+        {
+            $user=User::where('phong_ban_id', auth()->user()->phong_ban_id)->get()->pluck('id');
+        }
+        $users =User::whereIn('id', $user)->whereHas('hopDong')->with('hopDong')->get();
         return view('bang-luong/them-moi',compact('users'));
     }
 

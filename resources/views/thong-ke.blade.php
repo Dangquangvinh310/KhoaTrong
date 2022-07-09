@@ -13,6 +13,62 @@
 </div>
 @endif
 <div class="row">
+    <div class="col-12 mb-3">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card">
+                <div class="card-body">
+                    <div class="card-title d-flex align-items-start justify-content-between">
+                    <div class="avatar flex-shrink-0">
+                        <img src="{{ asset('../assets/img/icons/unicons/wallet-info.png')}}" alt="chart success" class="rounded">
+                    </div>
+                    </div>
+                    <span class="fw-semibold d-block mb-1">Số tin tức</span>
+                    <h3 class="card-title mb-2">{{$countTinTuc}}</h3>
+                </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                <div class="card-body">
+                    <div class="card-title d-flex align-items-start justify-content-between">
+                    <div class="avatar flex-shrink-0">
+                        <img src="{{ asset('../assets/img/icons/unicons/cc-primary.png')}}" alt="chart success" class="rounded">
+                    </div>
+                    </div>
+                    <span class="fw-semibold d-block mb-1">Số nhân viên</span>
+                    <h3 class="card-title mb-2">{{$countUser}}</h3>
+                </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                <div class="card-body">
+                    <div class="card-title d-flex align-items-start justify-content-between">
+                    <div class="avatar flex-shrink-0">
+                        <img src="{{ asset('../assets/img/icons/unicons/paypal.png')}}" alt="chart success" class="rounded">
+                    </div>
+                    </div>
+                    <span class="fw-semibold d-block mb-1">Số phòng ban</span>
+                    <h3 class="card-title mb-2">{{$countPhongBan}}</h3>
+                </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                <div class="card-body">
+                    <div class="card-title d-flex align-items-start justify-content-between">
+                    <div class="avatar flex-shrink-0">
+                        <img src="{{ asset('../assets/img/icons/unicons/chart-success.png')}}" alt="chart success" class="rounded">
+                    </div>
+                    </div>
+                    <span class="fw-semibold d-block mb-1">Số hợp đồng</span>
+                    <h3 class="card-title mb-2">{{$countHopDong}}</h3>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
     @if(auth()->user()->chucVu->ten_chuc_vu != "Nhân viên")
     <div class="col-12 mb-3">
         <div class="card">

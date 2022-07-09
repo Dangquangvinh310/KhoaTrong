@@ -11,7 +11,15 @@ class KyluatController extends Controller
 {
     public function index()
     {
-        $kyLuats =KyLuat::all();
+        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
+        {
+            $users=User::all()->pluck('id');
+        }
+        else
+        {
+            $users=User::where('phong_ban_id', auth()->user()->phong_ban_id)->get()->pluck('id');
+        }
+        $kyLuats =KyLuat::whereIn('user_id', $users)->get();
         if($kyLuats==null)
         {
             return back()->with('error','Không tìm thấy danh sách phòng ban');
@@ -22,7 +30,14 @@ class KyluatController extends Controller
 
     public function create()
     {
-        $users=User::where('id', '!=', 1)->get();
+        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
+        {
+            $users=User::all();
+        }
+        else
+        {
+            $users=User::where('phong_ban_id', auth()->user()->phong_ban_id)->get();
+        }
         return view('ky-luat/them-moi',compact('users'));
     }
 
@@ -55,7 +70,14 @@ class KyluatController extends Controller
     public function edit($id)
     {
         $kyLuat = KyLuat::find($id);
-        $users=User::where('id', '!=', 1)->get();
+        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
+        {
+            $users=User::all();
+        }
+        else
+        {
+            $users=User::where('phong_ban_id', auth()->user()->phong_ban_id)->get();
+        }
         if($kyLuat==null)
         {
             return redirect()->route('danh_sach_ky_luat')->with('error','Không tìm thấy khen thưởng này');

@@ -12,27 +12,41 @@ class NgayNghiController extends Controller
 {
     public function index()
     {
-        if(auth()->user()->chucVu->ten_chuc_vu == "Nhân viên")
+        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
         {
-            $ngayNghis  = NgayNghi::where('trang_thai','Duyệt')->where('user_id', auth()->user()->id)->get();
+            $users =User::all()->pluck('id');
+        }
+        else if(auth()->user()->chucVu->ten_chuc_vu == "Trưởng phòng")
+        {
+            $phongBan = PhongBan::where('user_id', auth()->user()->id)->first();
+            $users = User::where('phong_ban_id', $phongBan->id)->get()->pluck('id');
         }
         else
         {
-            $ngayNghis  = NgayNghi::where('trang_thai','Duyệt')->get();
+            $users = User::where('id', auth()->user()->id)->get()->pluck('id');
         }
-      
+    
+        $ngayNghis  = NgayNghi::where('trang_thai','Duyệt')->whereIn('user_id', $users)->get();
+
         return view('ngay-nghi/danh-sach',compact('ngayNghis'));
     }
     public function danh_sach_ngay_nghi_cho_duyet()
     {
-        if(auth()->user()->chucVu->ten_chuc_vu == "Nhân viên")
+        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
         {
-            $ngayNghis  = NgayNghi::where('trang_thai','Chưa duyệt')->where('user_id', auth()->user()->id)->get();
+            $users =User::all()->pluck('id');
+        }
+        else if(auth()->user()->chucVu->ten_chuc_vu == "Trưởng phòng")
+        {
+            $phongBan = PhongBan::where('user_id', auth()->user()->id)->first();
+            $users = User::where('phong_ban_id', $phongBan->id)->get()->pluck('id');
         }
         else
         {
-            $ngayNghis  = NgayNghi::where('trang_thai','Chưa duyệt')->get();
+            $users = User::where('id', auth()->user()->id)->get()->pluck('id');
         }
+        $ngayNghis  = NgayNghi::where('trang_thai','Chưa duyệt')->whereIn('user_id', $users)->get(); 
+
         return view('ngay-nghi/danh-sach-cho-duyet',compact('ngayNghis'));
     }
     

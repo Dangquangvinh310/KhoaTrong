@@ -38,7 +38,7 @@
                     <td>{{ $nghiViec->trang_thai}}</td>
 
                     <td>
-                        @if(auth()->user()->chucVu->ten_chuc_vu != "Nhân viên")<a href="{{route('duyet_don_nghi_viec',['id' => $nghiViec->id])}}" ><i class='bx bx-check'></a>@endif
+                        @if(auth()->user()->chucVu->ten_chuc_vu != "Nhân viên")<a href="{{route('duyet_don_nghi_viec',['id' => $nghiViec->id])}}" ><i class='bx bx-check'></i></a>@endif
                         <a href="{{route('cap_nhat_nghi_viec',['id' => $nghiViec->id])}}" class="ms-3"><i class="bx bx-message-square-add"></i></a>
                         <a href="{{route('xoa_nghi_viec',['id' => $nghiViec->id])}}" class="ms-3"><i class="bx bx-trash"></i></a>
                     </td>

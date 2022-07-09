@@ -15,6 +15,11 @@ class ThongKeController extends Controller
 {
     public function danhSachDon()
     {
+        $countTinTuc = TinTuc::all()->count();
+        $countUser = User::all()->count();
+        $countPhongBan = PhongBan::all()->count();
+        $countHopDong = HopDong::all()->count();
+
         if(auth()->user()->chucVu->ten_chuc_vu == "admin")
         {
              $hopDongs = User::where('id','>',0)->whereHas('hopDong')->with('hopDong')->take(10)->get();
@@ -38,7 +43,7 @@ class ThongKeController extends Controller
 
         $thongTinChoCapNhats = XacNhan::where('trang_thai', '1')->get();
         $tinTucs = TinTuc::all();
-        return view('thong-ke',compact('hopDongs','thongTinChoCapNhats','tinTucs','phongBan','khenThuongs','kyLuats'));
+        return view('thong-ke',compact('countTinTuc','countUser','countPhongBan','countHopDong','hopDongs','thongTinChoCapNhats','tinTucs','phongBan','khenThuongs','kyLuats'));
     }
 
     public function thongTinChoDuyet($id)

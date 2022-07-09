@@ -20,7 +20,7 @@
     </div>
     <div class="col-12">
         <div class="card">
-            <h5 class="card-header">Danh sách đơn xin nghỉ/<a href="{{route('danh_sach_nghi_viec_cho_duyet')}}">Danh sách đơn xin nghỉ chờ duyệt</a></h5>
+            @if(auth()->user()->chucVu->ten_chuc_vu != "Nhân viên")<h5 class="card-header">Danh sách đơn xin nghỉ /<a href="{{route('danh_sach_nghi_viec_cho_duyet')}}">Danh sách đơn xin nghỉ chờ duyệt</a></h5>@endif
             <div class="card-body demo-vertical-spacing demo-only-element">
             <table class="table">
                 <thead>
