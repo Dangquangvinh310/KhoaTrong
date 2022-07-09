@@ -8,6 +8,9 @@ use App\Models\XacNhan;
 use App\Models\HopDong;
 use App\Models\User;
 use App\Models\TinTuc;
+use App\Models\KhenThuong;
+use App\Models\KyLuat;
+use App\Models\PhongBan;
 class ThongKeController extends Controller
 {
     public function danhSachDon()
@@ -29,9 +32,13 @@ class ThongKeController extends Controller
             return back()->with('error','Không tìm thấy danh sách hợp đồng');
         }
 
+        $phongBan = PhongBan::find(auth()->user()->phong_ban_id);
+        $khenThuongs = KhenThuong::where('user_id',auth()->user()->id)->get();
+        $kyLuats = KyLuat::where('user_id',auth()->user()->id)->get();
+
         $thongTinChoCapNhats = XacNhan::where('trang_thai', '1')->get();
         $tinTucs = TinTuc::all();
-        return view('thong-ke',compact('hopDongs','thongTinChoCapNhats','tinTucs'));
+        return view('thong-ke',compact('hopDongs','thongTinChoCapNhats','tinTucs','phongBan','khenThuongs','kyLuats'));
     }
 
     public function thongTinChoDuyet($id)

@@ -44,15 +44,15 @@ class HopDongController extends Controller
     {
         if(auth()->user()->chucVu->ten_chuc_vu == "admin")
         {
-             $users = User::where('id','>',0)->whereHas('hopDong')->with('hopDong') ->get();
+             $users = User::where('id','>',0)->get();
         }
         else if(auth()->user()->chucVu->ten_chuc_vu == "Trưởng phòng")
         {
             $phongBan = PhongBan::where('user_id', auth()->user()->id)->first();
-            $users = User::where('phong_ban_id', $phongBan->id)->whereHas('hopDong')->with('hopDong') ->get();
+            $users = User::where('phong_ban_id', $phongBan->id)->get();
         }
         else{
-            $users =User::where('id',auth()->user()->id)->whereHas('hopDong')->with('hopDong') ->get();
+            $users =User::where('id',auth()->user()->id)->get();
         }
         return view('hop-dong/them-moi',compact('users'));
     }

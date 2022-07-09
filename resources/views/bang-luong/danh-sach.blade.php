@@ -36,8 +36,19 @@
                     <td>{{ $luong->user->ho_ten}}</td>
                     <td>{{ $luong->thang_nam}}</td>
                     <td>{{ $luong->tong_luong}}</td>
+
+                    @if($luong->khen_thuong == null)
+                    <td>0</td>
+                    @else
                     <td>{{ $luong->khen_thuong}}</td>
+                    @endif
+
+                    @if($luong->ky_luat == null)
+                    <td>0</td>
+                    @else
                     <td>{{ $luong->ky_luat}}</td>
+                    @endif
+                    
                     <td>
                         <a href="{{route('cap_nhat_bang_luong',['id' => $luong->id])}}" ><i class="bx bx-message-square-add"></i></a>
                         <a href="" class="ms-3"><i class="bx bx-trash"></i></a>

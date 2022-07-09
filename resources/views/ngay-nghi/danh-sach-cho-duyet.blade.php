@@ -40,7 +40,7 @@
                     <td>{{ $ngayNghi->trang_thai}}</td>
 
                     <td>
-                        <a href="{{route('duyet_don_nghi',['id' => $ngayNghi->id])}}" ><i class='bx bx-check'></i></a>
+                        @if(auth()->user()->chucVu->ten_chuc_vu != "Nhân viên")<a href="{{route('duyet_don_nghi',['id' => $ngayNghi->id])}}" ><i class='bx bx-check'></i></a>@endif
                         <a href="{{route('cap_nhat_ngay_nghi',['id' => $ngayNghi->id])}}" ><i class="bx bx-message-square-add"></i></a>
                         <a href="{{route('xoa_ngay_nghi',['id' => $ngayNghi->id])}}" class="ms-3"><i class="bx bx-trash"></i></a>
                     </td>

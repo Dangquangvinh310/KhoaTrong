@@ -157,6 +157,137 @@
             </div>
         </div>
     </div>
+    <div class="col-12 mb-3">
+        <div class="card">
+            <h5 class="card-header">Hợp đồng của nhân viên</h5>
+            <div class="card-body demo-vertical-spacing demo-only-element">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Nhân viên</th>
+                    <th scope="col">Ngày kí hợp đồng</th>
+                    <th scope="col">Ngày bắt đầu</th>
+                    <th scope="col">Ngày kết thúc</th>
+                    <th scope="col">Nội dung</th>
+                  </tr>
+                </thead>
+                <tbody>
+                @forelse($hopDongs as $hopDong)
+                <tr>
+                    <?php
+                    $key=0;
+                    ?>
+                    <td>{{ $hopDong->ho_ten}}</td>
+                    <td>{{ $hopDong->hopDong[$key]->ngay_ki_hop_dong}}</td>
+                    <td>{{ $hopDong->hopDong[$key]->ngay_bat_dau}}</td>
+                    <td>{{ $hopDong->hopDong[$key]->ngay_ket_thuc}}</td>
+                    <td>{{ $hopDong->hopDong[$key]->noi_dung}}</td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="6" style="text-align: center">Không có dữ liệu</td>
+                </tr>
+                @endforelse
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 mb-3">
+        <div class="card">
+            <h5 class="card-header">Thông tin phòng ban của nhân viên</h5>
+            <div class="card-body demo-vertical-spacing demo-only-element">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Tên phòng ban</th>
+                    <th scope="col">Trưởng phòng</th>
+                  </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{{ $phongBan->ten_phong_ban}}</td>
+                    @if(($phongBan->user_id != null))
+                    <td>{{ $phongBan->user->ho_ten}}</td>
+                    @else
+                    <td></td>
+
+                    @endif
+                </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 mb-3">
+        <div class="card">
+            <h5 class="card-header">Danh sách khen thưởng của nhân viên</h5>
+            <div class="card-body demo-vertical-spacing demo-only-element">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Tên nhân viên</th>
+                    <th scope="col">Ngày thưởng</th>
+                    <th scope="col">Lý do</th>
+                    <th scope="col">Sôt tiền</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                @forelse($khenThuongs as $khenThuong)
+                <tr>
+                    <td>{{ $khenThuong->user->ho_ten}}</td>
+                    <td>{{ $khenThuong->ngay}}</td>
+                    <td>{{ $khenThuong->ly_do}}</td>
+                    <td>{{ $khenThuong->so_tien}}</td>
+                    <td>
+                        <a href="{{route('cap_nhat_khen_thuong',['id' => $khenThuong->id])}}" ><i class="bx bx-message-square-add"></i></a>
+                        <a href="{{route('xoa_khen_thuong',['id' => $khenThuong->id])}}" class="ms-3"><i class="bx bx-trash"></i></a>
+
+                    </td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="6" style="text-align: center">Không có dữ liệu</td>
+                </tr>
+                @endforelse
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 mb-3">
+        <div class="card">
+            <h5 class="card-header">Danh sách kỹ luật của nhân viên</h5>
+            <div class="card-body demo-vertical-spacing demo-only-element">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Tên nhân viên</th>
+                    <th scope="col">Ngày phạt</th>
+                    <th scope="col">Lý do</th>
+                    <th scope="col">Số tiền</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                @forelse($kyLuats as $kyLuat)
+                <tr>
+                    <td>{{ $kyLuat->user->ho_ten}}</td>
+                    <td>{{ $kyLuat->ngay}}</td>
+                    <td>{{ $kyLuat->ly_do}}</td>
+                    <td>{{ $kyLuat->so_tien}}</td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="6" style="text-align: center">Không có dữ liệu</td>
+                </tr>
+                @endforelse
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
     @endif
     @if(auth()->user()->chucVu->ten_chuc_vu != "admin")
     <div class="col-12 mb-3">

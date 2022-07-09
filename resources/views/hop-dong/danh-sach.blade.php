@@ -34,7 +34,6 @@
                 </thead>
                 <tbody>
                 @forelse($hopDongs as $hopDong)
-                {{dd($hopDong)}}
                 <tr>
                     <?php
                         $key =-1;
