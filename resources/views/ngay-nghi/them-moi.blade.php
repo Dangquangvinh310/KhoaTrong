@@ -34,7 +34,7 @@
                             </select>
                        </div>
                     </div> -->
-                    <td><a href="{{url('mau_don_xin_nghi.doc')}}" download>Đơn xin nghỉ mẫu</td>
+                    <td><a href="{{url('mau_don_xin_nghi.doc')}}" download>Đơn xin nghỉ mẫu</a></td>
 
                     <div class="row">
                                 <div class="col-md-6 col-sm-12" style="margin-bottom:2%">

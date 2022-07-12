@@ -25,8 +25,9 @@
                   <tr>
                     <th scope="col">Tên nhân viên</th>
                     <th scope="col">Ngày nghỉ</th>
-                    <th scope="col">Lý do</th>
                     <th scope="col">Trạng thái</th>
+                    <th scope="col">Chức năng</th>
+
                   </tr>
                 </thead>
                 <tbody>
@@ -34,11 +35,13 @@
                 <tr>
                     <td>{{ $nghiViec->user->ho_ten}}</td>
                     <td>{{ $nghiViec->ngay_nghi}}</td>
-                    <td>{{ $nghiViec->ly_do}}</td>
                     <td>{{ $nghiViec->trang_thai}}</td>
 
                     <td>
-                        <a href="{{route('duyet_don_nghi_viec',['id' => $nghiViec->id])}}" ><i class="bx bx-message-square-add"></i></a>
+
+@if(Illuminate\Support\Facades\Auth::user()->chucVu->ten_chuc_vu == "admin" || Illuminate\Support\Facades\Auth::user()->chucVu->ten_chuc_vu == "Trưởng phòng")
+                        <a href="{{route('duyet_don_nghi_viec',['id' => $nghiViec->id])}}" ><i class='bx bx-check'></i></a>
+@endif
                         <a href="{{route('cap_nhat_nghi_viec',['id' => $nghiViec->id])}}" class="ms-3"><i class="bx bx-message-square-add"></i></a>
                         <a href="{{route('xoa_nghi_viec',['id' => $nghiViec->id])}}" class="ms-3"><i class="bx bx-trash"></i></a>
                     </td>

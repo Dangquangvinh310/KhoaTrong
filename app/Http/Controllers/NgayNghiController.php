@@ -62,7 +62,10 @@ class NgayNghiController extends Controller
     if ($validator->fails()) {
         return back()->with('error', $validator->messages()->first());
     }
-    
+    if( $ex = $request->file('don_xin_nghi')->extension() !='doc' && $ex = $request->file('don_xin_nghi')->extension() !='docx')
+    {
+        return redirect()->route('danh_sach_ngay_nghi')->with('error','Đơn phải là file word');
+    }
        $ngayNghi = new NgayNghi();
        $ngayNghi->user_id  = (integer) $request->user_id;
        $ngayNghi->ngay_bat_dau_nghi  = $request->ngay_bat_dau_nghi;
@@ -95,11 +98,12 @@ class NgayNghiController extends Controller
     public function update(Request $request,$id)
     {
         // return $request->all();
+        return $request->file('don_xin_nghi')->extension();
         $validator = Validator::make($request->all(), [
             'user_id'        => 'required',
             'ngay_bat_dau_nghi'        => 'required',
             'ngay_di_lam_lai'        => 'required',
-            'ly_do'        => 'required',
+            // 'ly_do'        => 'required',
     
             ],
             [   
@@ -113,6 +117,13 @@ class NgayNghiController extends Controller
         if ($validator->fails()) {
             return back()->with('error', $validator->messages()->first());
         }
+        if ($request->hasFile('don_xin_nghi')) {
+
+        if( $ex = $request->file('don_xin_nghi')->extension() !='doc' && $ex = $request->file('don_xin_nghi')->extension() !='docx')
+        {
+            return redirect()->route('danh_sach_ngay_nghi')->with('error','Đơn phải là file word');
+        }
+    }
       $update = NgayNghi::find($id);
       if(empty($update))
       {
@@ -120,8 +131,13 @@ class NgayNghiController extends Controller
       }
       $update->ngay_bat_dau_nghi = $request->ngay_bat_dau_nghi;
       $update->ngay_di_lam_lai = $request->ngay_di_lam_lai;
-      $update->ly_do = $request->ly_do;
-
+      if ($request->hasFile('don_xin_nghi')) {
+        $image = $request->file('don_xin_nghi');
+        $ex=  $request->file('don_xin_nghi')->extension();
+        $file_name= time() . '.'.$ex;
+        $storedPath = $image->storeAs('Đơn xin nghỉ', $file_name);
+        $update->don_nghi_viec = $file_name;
+    }
       $update->save();
       return redirect()->route('danh_sach_ngay_nghi')->with('status','Cập nhật thành công');
 
