@@ -19,6 +19,7 @@ class Luong extends Model
         'khen_thuong',
         'ky_luat'
     ];
+    
     public function user()
     {
         return $this->belongsTo('App\Models\User');

@@ -1,6 +1,5 @@
 @extends('master')
 @section('main-content')
-
 @if(session('status'))
 <div class="alert alert-success alert-dismissible" role="alert">
     {{session('status')}}
@@ -12,35 +11,32 @@
     {{session('error')}}
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
-
 @endif
-
 <div class="row">
+    <div class="col-12 mb-3">
+        <a href="{{route('them_moi_tin_tuc')}}" class="btn btn-primary" >Thêm mới</a>
+    </div>
     <div class="col-12">
         <div class="card">
-            <h5 class="card-header">Danh sách đơn xin nghỉ chờ duyệt/<a href="{{route('danh_sach_nghi_viec')}}">Danh sách đơn xin nghỉ</a></h5>
+            <h5 class="card-header">Danh sách tin tức</h5>
             <div class="card-body demo-vertical-spacing demo-only-element">
             <table class="table">
                 <thead>
                   <tr>
-                    <th scope="col">Tên nhân viên</th>
-                    <th scope="col">Ngày nghỉ</th>
-                    <th scope="col">Trạng thái</th>
+                    <th scope="col">Tiêu đề</th>
+                    <th scope="col">Nội dung</th>
                     <th scope="col">Chức năng</th>
-
                   </tr>
                 </thead>
                 <tbody>
-                @forelse($nghiViecs as $nghiViec)
+                @forelse($tinTucs as $tinTuc)
                 <tr>
-                    <td>{{ $nghiViec->user->ho_ten}}</td>
-                    <td>{{ $nghiViec->ngay_nghi}}</td>
-                    <td>{{ $nghiViec->trang_thai}}</td>
-
+                    <td>{{ $tinTuc->tieu_de}}</td>
+                    <td>{{ $tinTuc->noi_dung}}</td>
                     <td>
-                        @if(auth()->user()->chucVu->ten_chuc_vu != "Nhân viên")<a href="{{route('duyet_don_nghi_viec',['id' => $nghiViec->id])}}" ><i class='bx bx-check'></i></a>@endif
-                        <a href="{{route('cap_nhat_nghi_viec',['id' => $nghiViec->id])}}" class="ms-3"><i class="bx bx-message-square-add"></i></a>
-                        <a href="{{route('xoa_nghi_viec',['id' => $nghiViec->id])}}" class="ms-3"><i class="bx bx-trash"></i></a>
+                        <a href="{{route('cap_nhat_tin_tuc',['id' => $tinTuc->id])}}" ><i class="bx bx-message-square-add"></i></a>
+                        <a href="{{route('xoa_tin_tuc',['id' => $tinTuc->id])}}" class="ms-3"><i class="bx bx-trash"></i></a>
+
                     </td>
                 </tr>
                 @empty

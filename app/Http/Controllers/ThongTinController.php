@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\XacNhan;
 use App\Models\PhongBan;
 use App\Models\ChucVu;
 use Illuminate\Support\Facades\Hash;
@@ -16,18 +17,18 @@ class ThongTinController extends Controller
         $user = User::find(auth()->user()->id);
         $phongBans =PhongBan::all();
         $chucVus =ChucVu::all();
+        $thongTinChoCapNhat = XacNhan::where('user_id', auth()->user()->id)->orderBy('id', 'desc')->first();
         if($user==null)
         {
             return back()->with('error','Không tìm thấy thông tin');
         }
-        return view('thong-tin-ca-nhan/cap-nhat', compact('user','phongBans','chucVus'));   
+        return view('thong-tin-ca-nhan/cap-nhat', compact('user','phongBans','chucVus','thongTinChoCapNhat'));   
     }
 
     public function update(Request $request)
     {
         $id = auth()->user()->id;
         $validator = Validator::make($request->all(), [
-            'ma_nhan_vien'  => "required|unique:App\Models\User,ma_nhan_vien,{$id},id,deleted_at,NULL",
             'ho_ten'        => 'required|max:191',
             'cmnd'          => 'max:191',
             'dia_chi'       => 'max:191',
@@ -36,9 +37,6 @@ class ThongTinController extends Controller
             'ma_bhxh'       => 'max:191',
             ],
             [   
-                'ma_nhan_vien.required'   => 'Chưa nhập mã nhân viên',
-                'ma_nhan_vien.max'        => 'Mã nhân viên vượt quá 191 ký tự',
-                'ma_nhan_vien.unique'     => 'Mã nhân viên đã tồn tại',
                 'ho_ten.required'         => 'Chưa nhập họ tên',
                 'ho_ten.max'              => 'Họ tên vượt quá 191 kí tự',
                 'cmnd.max'                => 'CMND/CCCD vượt quá 191 kí tự',
@@ -51,25 +49,45 @@ class ThongTinController extends Controller
         if ($validator->fails()) {
             return back()->with('error', $validator->messages()->first());
         }
-        $user = User::find($id);
-        if($user==null)
+        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
         {
-            return back()->with('error','Không tìm thấy nhân viên này');
-        }
-        $user->ma_nhan_vien = $request->ma_nhan_vien;
-        $user->ho_ten = $request->ho_ten;
-        $user->cmnd = $request->cmnd;
-        $user->ngay_sinh = $request->ngay_sinh;
-        $user->gioi_tinh = $request->gioi_tinh;
-        $user->dia_chi = $request->dia_chi;
-        $user->so_dien_thoai = $request->so_dien_thoai;
-        $user->email = $request->email;
-        $user->ma_bhxh = $request->ma_bhxh;
-        $user->ngay_cap = $request->ngay_cap;
-        $user->ngay_het_han = $request->ngay_het_han;
-        $user->save();
+            $user = User::find(auth()->user()->id);
 
-        return back()->with('status','Cập nhật thông tin thành công');
+            $user->ho_ten = $request->ho_ten;
+            $user->cmnd = $request->cmnd;
+            $user->ngay_sinh = $request->ngay_sinh;
+            $user->gioi_tinh = $request->gioi_tinh;
+            $user->dia_chi = $request->dia_chi;
+            $user->so_dien_thoai = $request->so_dien_thoai;
+            $user->email = $request->email;
+            $user->ma_bhxh = $request->ma_bhxh;
+            $user->ngay_cap = $request->ngay_cap;
+            $user->ngay_het_han = $request->ngay_het_han;
+            $user->save();
+            return back()->with('status','Cập nhật thành công');
+        }
+        else
+        {
+            $user = new XacNhan();
+            if($user==null)
+            {
+                return back()->with('error','Không tìm thấy nhân viên này');
+            }
+            $user->user_id = auth()->user()->id;
+            $user->ho_ten = $request->ho_ten;
+            $user->cmnd = $request->cmnd;
+            $user->ngay_sinh = $request->ngay_sinh;
+            $user->gioi_tinh = $request->gioi_tinh;
+            $user->dia_chi = $request->dia_chi;
+            $user->so_dien_thoai = $request->so_dien_thoai;
+            $user->email = $request->email;
+            $user->ma_bhxh = $request->ma_bhxh;
+            $user->ngay_cap = $request->ngay_cap;
+            $user->ngay_het_han = $request->ngay_het_han;
+            $user->trang_thai = '1';
+            $user->save();
+            return back()->with('status','Đang chờ duyệt');
+        }
     }
 
     public function changPass(Request $request)

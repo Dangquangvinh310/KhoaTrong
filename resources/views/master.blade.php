@@ -134,7 +134,7 @@
                 <div data-i18n="Analytics">Thống kê</div>
               </a>
             </li>
-
+            @if(auth()->user()->chucVu->ten_chuc_vu != "Nhân viên")
             <li class="menu-item">
               <a href="{{route('danh_sach_hop_dong')}}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
@@ -177,6 +177,7 @@
                 <div data-i18n="Analytics">Tuyển dụng</div>
               </a>
             </li>
+            @endif
             <li class="menu-item">
               <a href="{{route('danh_sach_ngay_nghi')}}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
@@ -189,6 +190,7 @@
                 <div data-i18n="Analytics">Nghĩ việc</div>
               </a>
             </li>
+            @if(auth()->user()->chucVu->ten_chuc_vu != "Nhân viên")
             <li class="menu-item">
               <a href="{{route('danh_sach_bang_luong')}}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
@@ -213,6 +215,13 @@
                 <div data-i18n="Analytics">Kỷ luật</div>
               </a>
             </li>
+            <li class="menu-item">
+              <a href="{{route('danh_sach_tin_tuc')}}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div data-i18n="Analytics">Tin tức</div>
+              </a>
+            </li>
+            @endif
         </ul>
         </aside>
 

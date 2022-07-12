@@ -12,14 +12,41 @@ class NgayNghiController extends Controller
 {
     public function index()
     {
-        $ngayNghis  = NgayNghi::where('trang_thai','Duyệt')->get();
-      
+        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
+        {
+            $users =User::all()->pluck('id');
+        }
+        else if(auth()->user()->chucVu->ten_chuc_vu == "Trưởng phòng")
+        {
+            $phongBan = PhongBan::where('user_id', auth()->user()->id)->first();
+            $users = User::where('phong_ban_id', $phongBan->id)->get()->pluck('id');
+        }
+        else
+        {
+            $users = User::where('id', auth()->user()->id)->get()->pluck('id');
+        }
+    
+        $ngayNghis  = NgayNghi::where('trang_thai','Duyệt')->whereIn('user_id', $users)->get();
+
         return view('ngay-nghi/danh-sach',compact('ngayNghis'));
     }
     public function danh_sach_ngay_nghi_cho_duyet()
     {
-        $ngayNghis  = NgayNghi::where('trang_thai','Chưa duyệt')->get();
-      
+        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
+        {
+            $users =User::all()->pluck('id');
+        }
+        else if(auth()->user()->chucVu->ten_chuc_vu == "Trưởng phòng")
+        {
+            $phongBan = PhongBan::where('user_id', auth()->user()->id)->first();
+            $users = User::where('phong_ban_id', $phongBan->id)->get()->pluck('id');
+        }
+        else
+        {
+            $users = User::where('id', auth()->user()->id)->get()->pluck('id');
+        }
+        $ngayNghis  = NgayNghi::where('trang_thai','Chưa duyệt')->whereIn('user_id', $users)->get(); 
+
         return view('ngay-nghi/danh-sach-cho-duyet',compact('ngayNghis'));
     }
     
@@ -36,7 +63,14 @@ class NgayNghiController extends Controller
 
     public function create()
     {
-        $users =User::all();
+        if(auth()->user()->chucVu->ten_chuc_vu == "Nhân viên")
+        {
+            $users =User::where('id', auth()->user()->id)->get();
+        }
+        else
+        {
+            $users =User::all();
+        }
         return view('ngay-nghi/them-moi',compact('users'));
     }
 

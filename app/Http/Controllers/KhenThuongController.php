@@ -12,7 +12,15 @@ class KhenThuongController extends Controller
 {
     public function index()
     {
-        $khenThuongs =KhenThuong::all();
+        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
+        {
+            $users=User::all()->pluck('id');
+        }
+        else
+        {
+            $users=User::where('phong_ban_id', auth()->user()->phong_ban_id)->get()->pluck('id');
+        }
+        $khenThuongs =KhenThuong::whereIn('user_id', $users)->get();
         if($khenThuongs==null)
         {
             return back()->with('error','Không tìm thấy danh sách phòng ban');
@@ -22,7 +30,14 @@ class KhenThuongController extends Controller
 
     public function create()
     {
-        $users=User::where('id', '!=', 1)->get();
+        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
+        {
+            $users=User::all();
+        }
+        else
+        {
+            $users=User::where('phong_ban_id', auth()->user()->phong_ban_id)->get();
+        }
         return view('khen-thuong/them-moi',compact('users'));
     }
 
@@ -55,7 +70,14 @@ class KhenThuongController extends Controller
     public function edit($id)
     {
         $khenThuong = KhenThuong::find($id);
-        $users=User::where('id', '!=', 1)->get();
+        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
+        {
+            $users=User::all();
+        }
+        else
+        {
+            $users=User::where('phong_ban_id', auth()->user()->phong_ban_id)->get();
+        }
         if($khenThuong==null)
         {
             return redirect()->route('danh_sach_khen_thuong')->with('error','Không tìm thấy khen thưởng này');

@@ -24,7 +24,7 @@ class TuyenDungController extends Controller
 
     public function create()
     {
-        $users =User::all();
+        $users =User::where('id', auth()->user()->id)->get();
         $phongBans =PhongBan::all();
         $chucVus =ChucVu::all();
         return view('tuyen-dung/them-moi',compact('users','phongBans', 'chucVus'));
@@ -44,7 +44,7 @@ class TuyenDungController extends Controller
             $tuyenDung->cv=$file_name;
         }
         $tuyenDung->save();
-        return redirect()->route('danh_sach_tuyen_dung')->with('status','Đã đánh rớt');
+        return redirect()->route('danh_sach_tuyen_dung')->with('status','Thêm thành công');
     }
 
     public function rot($id)
@@ -58,8 +58,15 @@ class TuyenDungController extends Controller
     public function dau($id)
     {
         $tuyenDung = TuyenDung::find($id);
-        $phongBans = PhongBan::all();
-        $chucVus = ChucVu::all();
+        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
+        {
+            $phongBans = PhongBan::all();
+        }
+        else
+        {
+            $phongBans = PhongBan::where('id', auth()->user()->phong_ban_id)->get();
+        }
+        $chucVus = ChucVu::where('ten_chuc_vu','Nhân viên')->get();
         return view('tuyen-dung/them-moi-nhan-vien',compact('tuyenDung','phongBans','chucVus'));
     }
 
