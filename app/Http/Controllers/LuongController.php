@@ -17,6 +17,19 @@ class LuongController extends Controller
 {
     public function index()
     {
+
+        // $now = Carbon::now()->format('m-Y');
+        // $userDaCoLuongTrongThang = Luong::where('thang_nam','LIKE',"%$now%")->get()->pluck('user_id');
+        // $users = User::whereIn('id',$userDaCoLuongTrongThang)->get();
+        // foreach($users as $user)
+        // {
+        //     $khenThuong = KhenThuong::where('user_id',$user->id)->where('ngay','LIKE',"%$now%")->sum('so_tien');
+        //     $kyLuat = KyLuat::where('user_id',$user->id)->where('ngay','LIKE',"%$now%")->sum('so_tien');
+    
+        //     $user = User::find((integer)$user->id)->chucVu;
+        //     $luong = HopDong::where('user_id',$user->id)->orderBy('id','desc')->first();
+        // }
+
         if(auth()->user()->chucVu->ten_chuc_vu == "admin")
         {
             $user=User::all()->pluck('id');
@@ -34,7 +47,9 @@ class LuongController extends Controller
     {
         if(auth()->user()->chucVu->ten_chuc_vu == "admin")
         {
-            $user=User::all()->pluck('id');
+            $now = Carbon::now()->format('m-Y');
+            $userDaCoLuongTrongThang = Luong::where('thang_nam','LIKE',"%$now%")->get()->pluck('user_id');
+            $user=User::whereNotIn('id',$userDaCoLuongTrongThang)->get()->pluck('id');
         }
         else
         {
@@ -73,12 +88,12 @@ class LuongController extends Controller
         $khenThuong = KhenThuong::where('user_id',$request->user_id)->where('ngay','LIKE',"%$now%")->sum('so_tien');
         $kyLuat = KyLuat::where('user_id',$request->user_id)->where('ngay','LIKE',"%$now%")->sum('so_tien');
 
-        $user = User::find((integer) $request->user_id)->chucVu;
+        // $user = User::find((integer) $request->user_id)->chucVu;
         $luong = HopDong::where('user_id',$request->user_id)->orderBy('id','desc')->first();
-    if(empty($user))
-    {
-        return back()->with('error','Nhân viên này chưa có chức vụ');
-    }
+        if(empty($user))
+        {
+            return back()->with('error','Nhân viên này chưa có chức vụ');
+        }
         Luong::create(
             [
                 'user_id'    =>(integer) $request->user_id,
@@ -116,7 +131,7 @@ class LuongController extends Controller
 
     public function update(Request $request,$id)
     {
-        // return $request->all();
+        // dd( $request->all());
     
       $update = Luong::find($id);
       if(empty($update))
@@ -127,9 +142,9 @@ class LuongController extends Controller
       $khenThuong = KhenThuong::where('user_id',$request->user_id)->where('ngay','LIKE',"%$now%")->sum('so_tien');
       $kyLuat = KyLuat::where('user_id',$request->user_id)->where('ngay','LIKE',"%$now%")->sum('so_tien');
 
-      $user = User::find((integer) $request->user_id)->chucVu;
+    //   $user = User::find((integer) $request->user_id)->chucVu;
       $luong = HopDong::where('user_id',$request->user_id)->orderBy('id','desc')->first();
-
+// dd($luong);
       $ngayLam = Carbon::now()->format('m-Y');
       $tongNgayLam = ChamCong::where('user_id',$update->user_id)->where('ngay_lam','LIKE',"%$ngayLam%")->count();
       $update->khen_thuong = $khenThuong;

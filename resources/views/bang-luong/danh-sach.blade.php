@@ -14,7 +14,7 @@
 @endif
 <div class="row">
     <div class="col-12 mb-3">
-        <a href="{{route('them_moi_bang_luong')}}" class="btn btn-primary" >Thêm mới</a>
+        <!-- <a href="{{route('them_moi_bang_luong')}}" class="btn btn-primary" >Thêm mới</a> -->
     </div>
     <div class="col-12">
         <div class="card">
@@ -25,9 +25,12 @@
                   <tr>
                     <th scope="col">Tên nhân viên</th>
                     <th scope="col">Tháng</th>
-                    <th scope="col">Số lương nhận được</th>
-                    <th scope="col">Số tiền khen thưởng</th>
-                    <th scope="col">Số kỷ luật</th>
+                    <th scope="col">Khen thưởng</th>
+                    <th scope="col">Kỷ luật</th>
+                    <th scope="col">Tạm ứng </th>
+                    <th scope="col">Phụ cấp</th>
+                    <th scope="col">Lương nhận thực</th>
+
                   </tr>
                 </thead>
                 <tbody>
@@ -35,7 +38,6 @@
                 <tr>
                     <td>{{ $luong->user->ho_ten}}</td>
                     <td>{{ $luong->thang_nam}}</td>
-                    <td>{{ $luong->tong_luong}}</td>
 
                     @if($luong->khen_thuong == null)
                     <td>0</td>
@@ -48,10 +50,15 @@
                     @else
                     <td>{{ $luong->ky_luat}}</td>
                     @endif
-                    
+                    <td>{{ $luong->tam_ung}}</td>
+
+                    <td>{{ $luong->phu_cap}}</td>
+
+                    <td>{{ $luong->tong_luong}}</td>
+
                     <td>
                         <a href="{{route('cap_nhat_bang_luong',['id' => $luong->id])}}" ><i class="bx bx-message-square-add"></i></a>
-                        <a href="" class="ms-3"><i class="bx bx-trash"></i></a>
+                        <a href="{{route('xoa_bang_luong',['id' => $luong->id])}}" class="ms-3"><i class="bx bx-trash"></i></a>
                     </td>
                 </tr>
                 @empty

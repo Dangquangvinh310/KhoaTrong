@@ -23,6 +23,8 @@
                         <div class="col-6">
                                 <label class="form-label">Tên nhân viên</label>
                                 <input type="text" class="form-control" id="user" name="user" value="{{$luong->user->ho_ten}}" readonly>
+                                <input type="hidden" class="form-control" id="user_id" name="user_id" value="{{$luong->user_id}}" readonly>
+
                         </div>
                         <div class="col-6">
                                 <label class="form-label">Tổng số ngày làm trong tháng</label>

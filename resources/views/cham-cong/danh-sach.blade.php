@@ -35,7 +35,7 @@
                     <td>{{ $chamCong->ngay_lam}}</td>
                     <td>
                         @if(Carbon\Carbon::now()->format('m-Y') == Carbon\Carbon::parse($chamCong->ngay_lam)->format('m-Y') )
-                        <a href="{{route('cap_nhat_cham_cong',['id' => $chamCong->id])}}" ><i class="bx bx-message-square-add"></i></a>
+                        <!-- <a href="{{route('cap_nhat_cham_cong',['id' => $chamCong->id])}}" ><i class="bx bx-message-square-add"></i></a> -->
                         <a href="{{route('xoa_cham_cong',['id' => $chamCong->id])}}" class="ms-3"><i class="bx bx-trash"></i></a>
                         @endif
                        
