@@ -19,6 +19,8 @@
             <div class="card-body demo-vertical-spacing demo-only-element">
                 <form class="forms-sample" action="{{route('xl_them_nghi_viec')}}" method="post" enctype="multipart/form-data">
                     @csrf
+                    <td><a href="{{url('mau_don_xin_nghi.doc')}}" download>Đơn xin nghỉ mẫu</a></td>
+
                     <div class="row">
                         <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
                             <label class="form-label" for="ten">Tên nhân viên<span class="required"> *</span></label>
@@ -33,9 +35,9 @@
                             <label class="form-label" for="ten">Ngày nghĩ việc<span class="required"> *</span></label>
                             <input type="date" class="form-control" id="ngay_nghi" name="ngay_nghi" required>
                         </div>
-                        <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
-                            <label class="form-label" for="ten">Lí do<span class="required"> *</span></label>
-                            <input type="text" class="form-control" id="ly_do" name="ly_do" required>
+                        <div class="col-6">
+                                    <label class="form-label">Chọn đơn xin nghỉ</label>
+                                    <input type="file" class="form-control" id="don_xin_nghi" name="don_xin_nghi" required>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>

@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-
+use App\Models\Luong;
 use App\Models\User;
 use App\Models\KhenThuong;
+use App\Models\HopDong;
+
 use Carbon\Carbon;
 class KhenThuongController extends Controller
 {
@@ -56,14 +58,30 @@ class KhenThuongController extends Controller
             return back()->with('error', $validator->messages()->first());
         }
 
-      
-
         $phongBan = new KhenThuong();
         $phongBan->user_id = $request->user_id;
         $phongBan->ly_do = $request->ly_do;
         $phongBan->so_tien = $request->so_tien;
         $phongBan->ngay = Carbon::now()->format('d-m-Y H:m:s');
         $phongBan->save();
+        if($phongBan)
+        {
+            $now = Carbon::now()->format('m-Y');
+            $userDaCoLuongTrongThang = Luong::where('thang_nam','LIKE',"%$now%")->where('user_id',$request->user_id)->first();
+            // dd($userDaCoLuongTrongThang);
+            if(!empty($userDaCoLuongTrongThang))
+            {
+                $khenThuong = KhenThuong::where('user_id',$request->user_id)->where('ngay','LIKE',"%$now%")->sum('so_tien');
+                // dd($khenThuong);
+                $luong = HopDong::where('user_id',$request->user_id)->orderBy('id','desc')->first();
+                $userDaCoLuongTrongThang->khen_thuong = $khenThuong;
+                $userDaCoLuongTrongThang->khen_thuong = $khenThuong;
+                $userDaCoLuongTrongThang->tong_luong = (float)$userDaCoLuongTrongThang->tong_ngay_lam * (float)$luong->luong
+                 + (float)$userDaCoLuongTrongThang->phu_cap - (float)$userDaCoLuongTrongThang->tam_ung
+                 +(float)$khenThuong - (float)$userDaCoLuongTrongThang->ky_luat;
+                 $userDaCoLuongTrongThang->save();
+            }
+        }
         return redirect()->route('danh_sach_khen_thuong')->with('status','Thêm mới thành công');
     }
 

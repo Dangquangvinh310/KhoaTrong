@@ -49,13 +49,13 @@ class NghiViecController extends Controller
       
         return view('nghi-viec/danh-sach-cho-duyet',compact('nghiViecs'));
     }
-    
+     
 
     public function duyet_don_nghi($id)
     {
         $update = NghiViec::find($id);
         $update->trang_thai = 'Duyệt';
-        $update->save();
+        // $update->save();
 
         $user = User::find($update->user_id);
         $hopDongs = HopDong::where('user_id', $user->id)->get();
@@ -74,6 +74,8 @@ class NghiViecController extends Controller
                 }
             }
             $user->delete();
+            $update->save();//Nhân viên đó không phải là trưởng phòng thì mới được duyệt nghỉ việc.
+
         }
         return redirect()->route('danh_sach_nghi_viec')->with('status','Đã duyệt thành công');
 
@@ -100,29 +102,45 @@ class NghiViecController extends Controller
     public function store(Request $request)
     {
     // return $request->all();
+    // return $request->file('don_xin_nghi')->extension();
     $validator = Validator::make($request->all(), [
         'user_id'        => 'required',
         'ngay_nghi'        => 'required',
-        'ly_do'        => 'required',
+        // 'ly_do'        => 'required',
+        'don_xin_nghi'        => 'required',
+
 
         ],
         [   
             'user_id.required'      => 'Chưa chọn nhân viên',
             'ngay_nghi.required'       => 'Chưa chọn ngày nghỉ',
             'ly_do.required'       => 'Chưa nhập lí do',
+            'don_xin_nghi.required'       => 'Chưa nộp đơn',
 
         ]
     );
     if ($validator->fails()) {
         return back()->with('error', $validator->messages()->first());
     }
+    if( $ex = $request->file('don_xin_nghi')->extension() !='doc' && $ex = $request->file('don_xin_nghi')->extension() !='docx')
+    {
+        return redirect()->route('danh_sach_nghi_viec')->with('error','Đơn phải là file word');
+    }
+$file_name = '';
+    if ($request->hasFile('don_xin_nghi')) {
+        $image = $request->file('don_xin_nghi');
+        $ex = $request->file('don_xin_nghi')->extension();
+        $file_name= time() . '.'.$ex;
+        $storedPath = $image->storeAs('Đơn xin nghỉ', $file_name);
+    }
+
         NghiViec::create(
             [
                 'user_id'    =>(integer) $request->user_id,
                 'ngay_nghi'   => $request->ngay_nghi,
                 'ly_do'                 => $request->ly_do,
-                // 'total_day'     => Carbon::parse($request->ngay_bat_dau_nghi)->diffInDays(Carbon::parse($request->ngay_di_lam_lai)),
-                'trang_thai'        => 'Chưa duyệt'
+                'trang_thai'        => 'Chưa duyệt',
+                'don_nghi_viec' => $file_name
             ]
         );
         return redirect()->route('danh_sach_nghi_viec')->with('status','Thêm mới thành công');
@@ -145,7 +163,6 @@ class NghiViecController extends Controller
         $validator = Validator::make($request->all(), [
             'user_id'        => 'required',
             'ngay_nghi'        => 'required',
-            'ly_do'        => 'required',
     
             ],
             [   
@@ -158,13 +175,28 @@ class NghiViecController extends Controller
         if ($validator->fails()) {
             return back()->with('error', $validator->messages()->first());
         }
+        if ($request->hasFile('don_xin_nghi')) {
+
+        if( $ex = $request->file('don_xin_nghi')->extension() !='doc' && $ex = $request->file('don_xin_nghi')->extension() !='docx')
+        {
+            return redirect()->route('danh_sach_nghi_viec')->with('error','Đơn phải là file word');
+        }
+    }
+    $file_name = '';
+        if ($request->hasFile('don_xin_nghi')) {
+            $image = $request->file('don_xin_nghi');
+            $ex = $request->file('don_xin_nghi')->extension();
+            $file_name= time() . '.'.$ex;
+            $storedPath = $image->storeAs('Đơn xin nghỉ', $file_name);
+        }
+
       $update = NghiViec::find($id);
       if(empty($update))
       {
         return redirect()->route('danh_sach_nghi_viec')->with('error','Không tìm thấy ngày nghỉ này');
       }
       $update->ngay_nghi = $request->ngay_nghi;
-      $update->ly_do = $request->ly_do;
+      $update->don_nghi_viec = $file_name;
 
       $update->save();
       return redirect()->route('danh_sach_nghi_viec')->with('status','Cập nhật thành công');

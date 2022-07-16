@@ -13,7 +13,8 @@ class NghiViec extends Model
         'user_id',
         'ngay_nghi',
         'ly_do',
-        'trang_thai'
+        'trang_thai',
+        'don_nghi_viec'
     ];
     public function user()
     {

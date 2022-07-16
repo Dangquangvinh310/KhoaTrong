@@ -285,7 +285,7 @@
                     <th scope="col">Tên nhân viên</th>
                     <th scope="col">Ngày thưởng</th>
                     <th scope="col">Lý do</th>
-                    <th scope="col">Sôt tiền</th>
+                    <th scope="col">Sô tiền</th>
 
                   </tr>
                 </thead>

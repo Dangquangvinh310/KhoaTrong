@@ -25,8 +25,9 @@
                   <tr>
                     <th scope="col">Tên nhân viên</th>
                     <th scope="col">Ngày nghỉ</th>
-                    <th scope="col">Lý do</th>
                     <th scope="col">Trạng thái</th>
+                    <th scope="col">Chức năng</th>
+
                   </tr>
                 </thead>
                 <tbody>
@@ -34,7 +35,6 @@
                 <tr>
                     <td>{{ $nghiViec->user->ho_ten}}</td>
                     <td>{{ $nghiViec->ngay_nghi}}</td>
-                    <td>{{ $nghiViec->ly_do}}</td>
                     <td>{{ $nghiViec->trang_thai}}</td>
 
                     <td>

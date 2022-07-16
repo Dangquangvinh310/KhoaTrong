@@ -27,7 +27,7 @@
                                 @foreach($users as $user)
                                 <option value="{{ $user->id }}">{{ $user->ho_ten }}</option>
                                 @endforeach
-                            </select>
+                            </select> 
                        </div>
                        <div class="col-6">
                             <label class="form-label">Tổng số ngày làm trong tháng</label>

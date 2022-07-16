@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use App\Models\KyLuat;
 use Carbon\Carbon;
+use App\Models\Luong;
+use App\Models\KhenThuong;
+use App\Models\HopDong;
 class KyluatController extends Controller
 {
     public function index()
@@ -56,14 +59,30 @@ class KyluatController extends Controller
             return back()->with('error', $validator->messages()->first());
         }
 
-      
-
         $phongBan = new KyLuat();
         $phongBan->user_id = $request->user_id;
         $phongBan->ly_do = $request->ly_do;
         $phongBan->so_tien = $request->so_tien;
         $phongBan->ngay = Carbon::now()->format('d-m-Y H:m:s');
         $phongBan->save();
+        if($phongBan)
+        {
+            $now = Carbon::now()->format('m-Y');
+            $userDaCoLuongTrongThang = Luong::where('thang_nam','LIKE',"%$now%")->where('user_id',$request->user_id)->first();
+            if(!empty($userDaCoLuongTrongThang))
+            {
+                $kyLuat = KyLuat::where('user_id',$request->user_id)->where('ngay','LIKE',"%$now%")->sum('so_tien');
+                $luong = HopDong::where('user_id',$request->user_id)->orderBy('id','desc')->first();
+                $userDaCoLuongTrongThang->ky_luat = $kyLuat;
+                $userDaCoLuongTrongThang->ky_luat = $kyLuat;
+
+                $userDaCoLuongTrongThang->tong_luong = (float)$userDaCoLuongTrongThang->tong_ngay_lam * (float)$luong->luong
+                 + (float)$userDaCoLuongTrongThang->phu_cap - (float)$userDaCoLuongTrongThang->tam_ung
+                 +(float)$userDaCoLuongTrongThang->khen_thuong - (float)$kyLuat;
+                 $userDaCoLuongTrongThang->save();
+
+            }
+        }
         return redirect()->route('danh_sach_ky_luat')->with('status','Thêm mới thành công');
     }
 
