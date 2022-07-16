@@ -130,8 +130,8 @@
 
             <li class="menu-item">
               <a href="{{route('thong_ke')}}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                <div data-i18n="Analytics">Thống kê</div>
+                <i @if(auth()->user()->chucVu->ten_chuc_vu == "Nhân viên") style="color:green !important" @endif class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div data-i18n="Analytics" @if(auth()->user()->chucVu->ten_chuc_vu == "Nhân viên") style="color:green !important" @endif>Thống kê</div>
               </a>
             </li>
             @if(auth()->user()->chucVu->ten_chuc_vu != "Nhân viên")
@@ -180,14 +180,14 @@
             @endif
             <li class="menu-item">
               <a href="{{route('danh_sach_ngay_nghi')}}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                <div data-i18n="Analytics">Ngày nghỉ</div>
+              <i @if(auth()->user()->chucVu->ten_chuc_vu == "Nhân viên") style="color:green !important" @endif class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div data-i18n="Analytics" @if(auth()->user()->chucVu->ten_chuc_vu == "Nhân viên") style="color:green !important" @endif>Ngày nghỉ</div>
               </a>
             </li>
             <li class="menu-item">
               <a href="{{route('danh_sach_nghi_viec')}}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                <div data-i18n="Analytics">Nghĩ việc</div>
+              <i @if(auth()->user()->chucVu->ten_chuc_vu == "Nhân viên") style="color:green !important" @endif class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div data-i18n="Analytics" @if(auth()->user()->chucVu->ten_chuc_vu == "Nhân viên") style="color:green !important" @endif>Nghĩ việc</div>
               </a>
             </li>
             @if(auth()->user()->chucVu->ten_chuc_vu != "Nhân viên")
@@ -228,7 +228,7 @@
         <div class="layout-page">
 
           <nav
-            class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+            class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" @if(auth()->user()->chucVu->ten_chuc_vu == "Nhân viên") style="background-color:green !important" @endif
             id="layout-navbar"
           >
             <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">

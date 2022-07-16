@@ -16,7 +16,7 @@
     <div class="col-12 mb-3">
         <div class="row">
             <div class="col-md-3">
-                <div class="card">
+                <div @if(auth()->user()->chucVu->ten_chuc_vu != "Nhân viên") class="card" @else class="card bg-warning text-black" @endif>
                 <div class="card-body">
                     <div class="card-title d-flex align-items-start justify-content-between">
                     <div class="avatar flex-shrink-0">
@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="card">
+                <div @if(auth()->user()->chucVu->ten_chuc_vu != "Nhân viên") class="card" @else class="card bg-secondary text-black" @endif>
                 <div class="card-body">
                     <div class="card-title d-flex align-items-start justify-content-between">
                     <div class="avatar flex-shrink-0">
@@ -42,7 +42,7 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="card">
+                <div @if(auth()->user()->chucVu->ten_chuc_vu != "Nhân viên") class="card" @else class="card bg-primary text-black" @endif>
                 <div class="card-body">
                     <div class="card-title d-flex align-items-start justify-content-between">
                     <div class="avatar flex-shrink-0">
@@ -55,7 +55,7 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="card">
+                <div @if(auth()->user()->chucVu->ten_chuc_vu != "Nhân viên") class="card" @else class="card bg-danger text-black" @endif>
                 <div class="card-body">
                     <div class="card-title d-flex align-items-start justify-content-between">
                     <div class="avatar flex-shrink-0">
@@ -71,7 +71,7 @@
     </div>
     @if(auth()->user()->chucVu->ten_chuc_vu != "Nhân viên")
     <div class="col-12 mb-3">
-        <div class="card">
+        <div>
             <h5 class="card-header">Danh sách hợp đồng</h5>
             <div class="card-body demo-vertical-spacing demo-only-element">
             <table class="table">
