@@ -15,7 +15,7 @@
 <div class="row">
     <div class="col-12">
         <div class="card">
-            <h5 class="card-header">Thêm mới phòng ban</h5>
+            <h5 class="card-header">Thêm mới ngày nghỉ</h5>
             <div class="card-body demo-vertical-spacing demo-only-element">
                 <form class="forms-sample" action="{{route('xl_them_ngay_nghi')}}" method="post" enctype="multipart/form-data">
                     @csrf
@@ -63,6 +63,10 @@
                                 <div class="col-6">
                                     <label class="form-label">Chọn đơn xin nghỉ</label>
                                     <input type="file" class="form-control" id="don_xin_nghi" name="don_xin_nghi" required>
+                                </div>
+                                <div class="col-6 mb-3">
+                                    <label class="form-label">Lý do</label>
+                                    <input type="text" class="form-control" id="ly_do" name="ly_do" required>
                                 </div>
                     </div>
                         

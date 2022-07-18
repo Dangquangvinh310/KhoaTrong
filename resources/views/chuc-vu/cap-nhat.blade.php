@@ -22,11 +22,15 @@
                     <div class="row mb-3">
                         <div class="col-6">
                             <label class="form-label">Tên chức vụ</label>
-                            <input type="text" class="form-control" id="ten_chuc_vu" name="ten_chuc_vu" placeholder="Nhập tên chức vụ" required
-                            @if($chucVu->ten_chuc_vu == "admin" || $chucVu->ten_chuc_vu == "Trưởng phòng")
-                            readonly
-                            @endif
-                            value="{{$chucVu->ten_chuc_vu}}">
+                            <select class="form-select" name="ten_chuc_vu" required>
+                                @foreach($dsChucVu as $cv)
+                                    @if($cv->id == $chucVu->id)
+                                    <option value="{{$cv->ten_chuc_vu}}" selected>{{$cv->ten_chuc_vu}}</option>
+                                    @else
+                                    <option value="{{$cv->ten_chuc_vu}}">{{$cv->ten_chuc_vu}}</option>
+                                    @endif
+                                @endforeach
+                            </select>
                        </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>

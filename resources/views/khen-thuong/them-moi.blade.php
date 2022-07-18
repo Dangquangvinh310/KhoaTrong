@@ -31,7 +31,10 @@
                        </div>
                         <div class="col-6">
                             <label class="form-label">Lý do</label>
-                            <input type="text" class="form-control" id="ly_do" name="ly_do" placeholder="Nhập lý do thưởng" required>
+                            <select class="form-select" name="ly_do"  id="ly_do" required onchange="myFunction()">
+                                <option value="Hoàn thành chỉ tiêu tuần">Hoàn thành chỉ tiêu tuần</option>
+                                <option value="Đi làm đầy đủ">Đi làm đầy đủ</option>
+                            </select>
                        </div>
                        <div class="col-6">
                             <label class="form-label">Số tiền thưởng</label>
@@ -44,4 +47,30 @@
         </div>
     </div>
 </div>
+<script>
+function myFunction() {
+  var x = document.getElementById("ly_do").value;
+  if(x== 'Hoàn thành chỉ tiêu tuần')
+  {
+    document.getElementById("so_tien").value = "300000";
+  }
+  if(x== 'Đi làm đầy đủ')
+  {
+    document.getElementById("so_tien").value = "300000";
+  }
+}
+</script>
+<script>
+window.onload = function() {
+    var x = document.getElementById("ly_do").value;
+        if(x== 'Hoàn thành chỉ tiêu tuần')
+        {
+            document.getElementById("so_tien").value = "300000";
+        }
+        if(x== 'Đi làm đầy đủ')
+        {
+            document.getElementById("so_tien").value = "300000";
+        }
+};
+</script>
 @endsection

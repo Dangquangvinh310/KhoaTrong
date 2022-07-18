@@ -49,7 +49,7 @@ class ThongTinController extends Controller
         if ($validator->fails()) {
             return back()->with('error', $validator->messages()->first());
         }
-        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
+        if(auth()->user()->chucVu->ten_chuc_vu == "Giám đốc")
         {
             $user = User::find(auth()->user()->id);
 

@@ -47,15 +47,23 @@
                        </div>
                        <div class="col-6">
                             <label class="form-label">Ngày kết thúc</label>
-                            <input type="date" class="form-control" id="ngay_ket_thuc" name="ngay_ket_thuc" required
+                            <input type="date" class="form-control" id="ngay_ket_thuc" name="ngay_ket_thuc"
                             value="{{$hopDong->ngay_ket_thuc}}">
                        </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-6">
                             <label class="form-label">Nội dung</label>
-                            <input type="text" class="form-control" id="noi_dung" name="noi_dung" placeholder="Nhập nội dung"
-                            value="{{$hopDong->noi_dung}}">
+                            <select class="form-select" name="noi_dung" id="noi_dung" required>
+                                @if($hopDong->noi_dung == 'Có thời hạn')
+                                <option value="Có thời hạn" selected>Cóthời hạn</option>
+                                <option value="Không thời hạn">Không thời hạn</option>
+                                @else
+                                <option value="Có thời hạn">Có thời hạn</option>
+                                <option value="Không thời hạn" selected>Không thời hạn</option>
+                                @endif
+                                
+                            </select>
                        </div>
                        <div class="col-6">
                             <label class="form-label">Lương</label>

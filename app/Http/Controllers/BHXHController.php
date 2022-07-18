@@ -9,7 +9,7 @@ class BHXHController extends Controller
 {
     public function index()
     {
-        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
+        if(auth()->user()->chucVu->ten_chuc_vu == "Giám đốc")
         {
             $users =User::all();
         }

@@ -30,7 +30,7 @@ class LuongController extends Controller
         //     $luong = HopDong::where('user_id',$user->id)->orderBy('id','desc')->first();
         // }
 
-        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
+        if(auth()->user()->chucVu->ten_chuc_vu == "Giám đốc")
         {
             $user=User::all()->pluck('id');
         }
@@ -45,7 +45,7 @@ class LuongController extends Controller
 
     public function create()
     {
-        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
+        if(auth()->user()->chucVu->ten_chuc_vu == "Giám đốc")
         {
             $now = Carbon::now()->format('m-Y');
             $userDaCoLuongTrongThang = Luong::where('thang_nam','LIKE',"%$now%")->get()->pluck('user_id');

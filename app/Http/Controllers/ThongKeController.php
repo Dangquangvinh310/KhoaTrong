@@ -20,7 +20,7 @@ class ThongKeController extends Controller
         $countPhongBan = PhongBan::all()->count();
         $countHopDong = HopDong::all()->count();
 
-        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
+        if(auth()->user()->chucVu->ten_chuc_vu == "Giám đốc")
         {
              $hopDongs = User::where('id','>',0)->whereHas('hopDong')->with('hopDong')->take(10)->get();
         }

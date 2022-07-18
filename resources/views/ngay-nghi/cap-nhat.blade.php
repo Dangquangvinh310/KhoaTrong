@@ -42,12 +42,17 @@
                                 <div class="col-6">
                                     <label class="form-label">Chọn đơn xin nghỉ</label>
                                     <input type="file" class="form-control" id="don_xin_nghi" name="don_xin_nghi" >
-                        </div>
+                                </div>
+                                <div class="col-6">
+                                    <label class="form-label">Lý do</label>
+                                    <input type="text" class="form-control" id="ly_do" name="ly_do" value="{{$NgayNghi->ly_do}}" required>
+                                </div>
                                 <div class="col-md-6 col-sm-12" style="margin-bottom:2%">
                                     <label class="form-label" for="ten">Trạng thái<span class="required"> *</span></label>
                                     <input type="text" class="form-control" id="trang_thai" name="trang_thai" value="{{$NgayNghi->trang_thai}}" readonly>
                                     <div id="error-parley-select-nbd" class="error-date"></div>
                                 </div>
+                                
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>

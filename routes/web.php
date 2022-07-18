@@ -107,6 +107,7 @@ Route::post('/cap-nhat-ngay-nghi/{id}',[NgayNghiController::class, 'update'])->n
 
 Route::get('/danh-sach-ngay-nghi-cho-duyet', [NgayNghiController::class, 'danh_sach_ngay_nghi_cho_duyet'])->name('danh_sach_ngay_nghi_cho_duyet');
 Route::get('/chap-nhan-don-xin-nghi/{id}', [NgayNghiController::class, 'duyet_don_nghi'])->name('duyet_don_nghi');
+Route::get('/khong-chap-nhan-don-xin-nghi/{id}', [NgayNghiController::class, 'khong_duyet_don_nghi'])->name('khong_duyet_don_nghi');
 Route::get('/xoa-ngay-nghi/{id}',[NgayNghiController::class, 'destroy'])->name('xoa_ngay_nghi');
 
 Route::get('/danh-sach-bang-luong', [LuongController::class, 'index'])->name('danh_sach_bang_luong');
@@ -130,6 +131,7 @@ Route::post('/cap-nhat-nghi-viec/{id}',[NghiViecController::class, 'update'])->n
 Route::get('/danh-sach-nghi-viec-cho-duyet', [NghiViecController::class, 'danh_sach_ngay_nghi_cho_duyet'])->name('danh_sach_nghi_viec_cho_duyet');
 Route::get('/chap-nhan-don-xin-nghi-viec/{id}', [NghiViecController::class, 'duyet_don_nghi'])->name('duyet_don_nghi_viec');
 Route::get('/xoa-nghi-viec/{id}',[NghiViecController::class, 'destroy'])->name('xoa_nghi_viec');
+Route::get('/khong-chap-nhan-don-xin-nghi-viec/{id}', [NghiViecController::class, 'khong_duyet_don_nghi'])->name('khong_duyet_don_nghi_viec');
 
 Route::get('/danh-sach-cham-cong', [ChamCongController::class, 'index'])->name('danh_sach_cham_cong');
 Route::get('/them-moi-cham-cong', [ChamCongController::class, 'create'])->name('them_moi_cham_cong');

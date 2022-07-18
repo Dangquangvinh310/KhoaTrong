@@ -58,7 +58,7 @@ class TuyenDungController extends Controller
     public function dau($id)
     {
         $tuyenDung = TuyenDung::find($id);
-        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
+        if(auth()->user()->chucVu->ten_chuc_vu == "Giám đốc")
         {
             $phongBans = PhongBan::all();
         }

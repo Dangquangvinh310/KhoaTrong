@@ -14,7 +14,7 @@ class KyluatController extends Controller
 {
     public function index()
     {
-        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
+        if(auth()->user()->chucVu->ten_chuc_vu == "Giám đốc")
         {
             $users=User::all()->pluck('id');
         }
@@ -33,7 +33,7 @@ class KyluatController extends Controller
 
     public function create()
     {
-        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
+        if(auth()->user()->chucVu->ten_chuc_vu == "Giám đốc")
         {
             $users=User::all();
         }
@@ -88,8 +88,9 @@ class KyluatController extends Controller
 
     public function edit($id)
     {
+        $dsKyLuat = KyLuat::all();
         $kyLuat = KyLuat::find($id);
-        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
+        if(auth()->user()->chucVu->ten_chuc_vu == "Giám đốc")
         {
             $users=User::all();
         }
@@ -101,7 +102,7 @@ class KyluatController extends Controller
         {
             return redirect()->route('danh_sach_ky_luat')->with('error','Không tìm thấy khen thưởng này');
         }
-        return view('ky-luat/cap-nhat', compact('kyLuat','users'));   
+        return view('ky-luat/cap-nhat', compact('kyLuat','users','dsKyLuat'));   
     }
 
     public function update(Request $request,$id)

@@ -26,7 +26,15 @@
                        </div>
                         <div class="col-6">
                             <label class="form-label">Lý do</label>
-                            <input type="text" class="form-control" id="ly_do" name="ly_do" placeholder="Nhập lý do thưởng" value="{{$khenThuong->ly_do }}" required>
+                            <select class="form-select" name="ly_do" id="ly_do" required onchange="myFunction()">
+                                @foreach($dsKhenThuong as $kt)
+                                    @if($kt->id == $khenThuong->id)
+                                    <option value="{{$kt->ly_do}}" selected>{{$kt->ly_do}}</option>
+                                    @else
+                                    <option value="{{$kt->ly_do}}">{{$kt->ly_do}}</option>
+                                    @endif
+                                @endforeach
+                            </select>
                        </div>
                        <div class="col-6">
                             <label class="form-label">Số tiền thưởng</label>
@@ -39,4 +47,21 @@
         </div>
     </div>
 </div>
+<script>
+function myFunction() {
+  var x = document.getElementById("ly_do").value;
+  if(x== 'Hoàn thành chỉ tiêu tuần')
+  {
+    document.getElementById("so_tien").value = "100000";
+  }
+  if(x== 'Đi làm đầy đủ')
+  {
+    document.getElementById("so_tien").value = "300000";
+  }
+  else
+  {
+    document.getElementById("so_tien").value = "";
+  }
+}
+</script>
 @endsection

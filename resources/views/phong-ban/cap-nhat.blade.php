@@ -19,13 +19,18 @@
             <div class="card-body demo-vertical-spacing demo-only-element">
                 <form class="forms-sample" action="{{route('xl_cap_nhat_phong_ban',['id' => $phongBan->id])}}" method="post" enctype="multipart/form-data">
                     @csrf
-                    <div class="row mb-3">
-                        <div class="col-6">
-                            <label class="form-label">Tên phòng ban</label>
-                            <input type="text" class="form-control" id="ten_phong_ban" name="ten_phong_ban" placeholder="Nhập tên phòng ban" required
-                            value="{{$phongBan->ten_phong_ban}}">
-                       </div>
-                       <div class="col-6">
+                    <div class="col-6 mb-3">
+                        <select class="form-select" name="ten_phong_ban" required>
+                                @foreach($dsPhongBan as $pb)
+                                    @if($pb->id == $phongBan->id)
+                                    <option value="{{$pb->ten_phong_ban}}" selected>{{$pb->ten_phong_ban}}</option>
+                                    @else
+                                    <option value="{{$pb->ten_phong_ban}}">{{$pb->ten_phong_ban}}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                    </div>
+                       <div class="col-6 mb-3">
                             <label class="form-label">Trưởng phòng</label>
                             <select class="form-select " 
                                 id="user_id" name="user_id">
@@ -40,7 +45,7 @@
 
                             </select>
                        </div>
-                    </div>
+                    
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div>

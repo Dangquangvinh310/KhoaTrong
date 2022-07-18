@@ -20,7 +20,7 @@ class KhenThuongKyLuatController extends Controller
 
 
 
-        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
+        if(auth()->user()->chucVu->ten_chuc_vu == "Giám đốc")
         {
              $khenThuongKyLuats = User::where('id','>',0)->whereHas('khenThuongKyLuat')->with('khenThuongKyLuat') ->get();
         }
@@ -42,7 +42,7 @@ class KhenThuongKyLuatController extends Controller
 
     public function create()
     {
-        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
+        if(auth()->user()->chucVu->ten_chuc_vu == "Giám đốc")
         {
              $users = User::where('id','>',0)->whereHas('khenThuongKyLuat')->with('khenThuongKyLuat') ->get();
         }

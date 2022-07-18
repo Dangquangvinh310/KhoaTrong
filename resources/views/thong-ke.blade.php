@@ -71,7 +71,7 @@
     </div>
     @if(auth()->user()->chucVu->ten_chuc_vu != "Nhân viên")
     <div class="col-12 mb-3">
-        <div>
+        <div class="card">
             <h5 class="card-header">Danh sách hợp đồng</h5>
             <div class="card-body demo-vertical-spacing demo-only-element">
             <table class="table">
@@ -106,7 +106,7 @@
             </div>
         </div>
     </div>
-    @if(auth()->user()->chucVu->ten_chuc_vu == "admin")
+    @if(auth()->user()->chucVu->ten_chuc_vu == "Giám đốc")
     <div class="col-12 mb-3">
         <div class="card">
             <h5 class="card-header">Danh sách chờ duyệt thông tin</h5>
@@ -285,7 +285,7 @@
                     <th scope="col">Tên nhân viên</th>
                     <th scope="col">Ngày thưởng</th>
                     <th scope="col">Lý do</th>
-                    <th scope="col">Sô tiền</th>
+                    <th scope="col">Số tiền</th>
 
                   </tr>
                 </thead>
@@ -296,11 +296,6 @@
                     <td>{{ $khenThuong->ngay}}</td>
                     <td>{{ $khenThuong->ly_do}}</td>
                     <td>{{ $khenThuong->so_tien}}</td>
-                    <td>
-                        <a href="{{route('cap_nhat_khen_thuong',['id' => $khenThuong->id])}}" ><i class="bx bx-message-square-add"></i></a>
-                        <a href="{{route('xoa_khen_thuong',['id' => $khenThuong->id])}}" class="ms-3"><i class="bx bx-trash"></i></a>
-
-                    </td>
                 </tr>
                 @empty
                 <tr>
@@ -345,7 +340,7 @@
         </div>
     </div>
     @endif
-    @if(auth()->user()->chucVu->ten_chuc_vu != "admin")
+    @if(auth()->user()->chucVu->ten_chuc_vu != "Giám đốc")
     <div class="col-12 mb-3">
         <div class="card">
             <h3 class="card-header" style="text-align:center">Tin tức mới</h3>

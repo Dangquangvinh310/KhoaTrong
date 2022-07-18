@@ -159,6 +159,7 @@
                     <div data-i18n="Without menu">Bảo hiểm xã hội</div>
                   </a>
                 </li>
+                @if(auth()->user()->chucVu->ten_chuc_vu != "Trưởng phòng")
                 <li class="menu-item">
                   <a href="{{route('danh_sach_chuc_vu')}}" class="menu-link">
                     <div data-i18n="Without navbar">QL Chức vụ</div>
@@ -169,6 +170,7 @@
                     <div data-i18n="Container">Quản lý phòng ban</div>
                   </a>
                 </li>
+                @endif
               </ul>
             </li>
             <li class="menu-item">
@@ -192,12 +194,6 @@
             </li>
             @if(auth()->user()->chucVu->ten_chuc_vu != "Nhân viên")
             <li class="menu-item">
-              <a href="{{route('danh_sach_bang_luong')}}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                <div data-i18n="Analytics">Ql lương</div>
-              </a>
-            </li>
-            <li class="menu-item">
               <a href="{{route('danh_sach_cham_cong')}}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Chấm công</div>
@@ -213,6 +209,12 @@
               <a href="{{route('danh_sach_ky_luat')}}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Kỷ luật</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="{{route('danh_sach_bang_luong')}}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div data-i18n="Analytics">Ql lương</div>
               </a>
             </li>
             <li class="menu-item">

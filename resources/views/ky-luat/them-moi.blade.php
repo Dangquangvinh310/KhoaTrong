@@ -31,7 +31,15 @@
                        </div>
                         <div class="col-6">
                             <label class="form-label">Lý do</label>
-                            <input type="text" class="form-control" id="ly_do" name="ly_do" placeholder="Nhập lý do kỷ luật" required>
+                            <select class="form-select" name="ly_do"  id="ly_do" required onchange="myFunction()">
+                                <option value="Đi trễ">Đi trễ</option>
+                                <option value="Không hoàn thành chỉ tiêu ngày">Không hoàn thành chỉ tiêu ngày</option>
+                                <option value="Không hoàn thành chỉ tiêu tháng">Không hoàn thành chỉ tiêu tháng</option>
+                                <option value="Không tắt điện">Không tắt điện</option>
+                                <option value="Vệ sinh nơi làm không sạch sẽ">Vệ sinh nơi làm không sạch sẽ</option>
+                                <option value="Không mặc đồng phục">Không mặc đồng phục</option>
+                                <option value="Tự ý nghỉ việc">Tự ý nghỉ việc</option>
+                            </select>
                        </div>
                        <div class="col-6">
                             <label class="form-label">Số tiền thưởng</label>
@@ -44,4 +52,70 @@
         </div>
     </div>
 </div>
+<script>
+function myFunction() {
+  var x = document.getElementById("ly_do").value;
+  if(x== 'Đi trễ')
+  {
+    document.getElementById("so_tien").value = "100000";
+  }
+  if(x== 'Không hoàn thành chỉ tiêu ngày')
+  {
+    document.getElementById("so_tien").value = "100000";
+  }
+  if(x== 'Không hoàn thành chỉ tiêu tháng')
+  {
+    document.getElementById("so_tien").value = "300000";
+  }
+  if(x== 'Không tắt điện')
+  {
+    document.getElementById("so_tien").value = "100000";
+  }
+  if(x== 'Vệ sinh nơi làm không sạch sẽ')
+  {
+    document.getElementById("so_tien").value = "50000";
+  }
+  if(x== 'Không mặc đồng phục')
+  {
+    document.getElementById("so_tien").value = "200000";
+  }
+  if(x== 'Tự ý nghỉ việc')
+  {
+    document.getElementById("so_tien").value = "300000";
+  }
+}
+</script>
+<script>
+window.onload = function() {
+    var x = document.getElementById("ly_do").value;
+  if(x== 'Đi trễ')
+  {
+    document.getElementById("so_tien").value = "100000";
+  }
+  if(x== 'Không hoàn thành chỉ tiêu ngày')
+  {
+    document.getElementById("so_tien").value = "100000";
+  }
+  if(x== 'Không hoàn thành chỉ tiêu tháng')
+  {
+    document.getElementById("so_tien").value = "300000";
+  }
+  if(x== 'Không tắt điện')
+  {
+    document.getElementById("so_tien").value = "100000";
+  }
+  if(x== 'Vệ sinh nơi làm không sạch sẽ')
+  {
+    document.getElementById("so_tien").value = "50000";
+  }
+  if(x== 'Không mặc đồng phục')
+  {
+    document.getElementById("so_tien").value = "200000";
+  }
+  if(x== 'Tự ý nghỉ việc')
+  {
+    document.getElementById("so_tien").value = "300000";
+  }
+};
+</script>
 @endsection

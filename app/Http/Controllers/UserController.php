@@ -43,14 +43,15 @@ class UserController extends Controller
     }
     public function index()
     {
-        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
+        if(auth()->user()->chucVu->ten_chuc_vu == "Giám đốc")
         {
-            $users =User::all();
+            $chucVu = ChucVu::where('ten_chuc_vu', 'Giám đốc')->first();
+            $users =User::where('chuc_vu_id','!=', $chucVu->id)->get();
         }
         else if(auth()->user()->chucVu->ten_chuc_vu == "Trưởng phòng")
         {
             $phongBan = PhongBan::where('user_id', auth()->user()->id)->first();
-            $users = User::where('phong_ban_id', $phongBan->id)->get();
+            $users = User::where('id','!=', auth()->user()->id)->where('phong_ban_id', $phongBan->id)->get();
         }
         else{
             $users =User::where('id',auth()->user()->id)->get();
@@ -64,7 +65,7 @@ class UserController extends Controller
 
     public function create()
     {
-        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
+        if(auth()->user()->chucVu->ten_chuc_vu == "Giám đốc")
         {
             $phongBans =PhongBan::all();
             $chucVus =ChucVu::whereNotIn('ten_chuc_vu',['Trưởng phòng'])->get();
@@ -72,7 +73,7 @@ class UserController extends Controller
         else if(auth()->user()->chucVu->ten_chuc_vu == "Trưởng phòng")
         {
             $phongBans =PhongBan::where('id', auth()->user()->phong_ban_id)->get();
-            $chucVus =ChucVu::whereNotIn('ten_chuc_vu',['Trưởng phòng','admin'])->get();
+            $chucVus =ChucVu::whereNotIn('ten_chuc_vu',['Trưởng phòng','Giám đốc'])->get();
         }
         else
         {
@@ -152,7 +153,7 @@ class UserController extends Controller
     {
         $user = User::find($id);
 
-        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
+        if(auth()->user()->chucVu->ten_chuc_vu == "Giám đốc")
         {
             $phongBans =PhongBan::all();
             $chucVus =ChucVu::whereNotIn('ten_chuc_vu',['Trưởng phòng'])->get();
@@ -160,7 +161,7 @@ class UserController extends Controller
         else if(auth()->user()->chucVu->ten_chuc_vu == "Trưởng phòng")
         {
             $phongBans =PhongBan::where('id', auth()->user()->phong_ban_id)->get();
-            $chucVus =ChucVu::where('ten_chuc_vu','Trưởng phòng')->get();
+            $chucVus =ChucVu::where('ten_chuc_vu','Nhân viên')->get();
         }
         else
         {
@@ -257,7 +258,7 @@ class UserController extends Controller
         {
             $request->search = "";
         }
-        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
+        if(auth()->user()->chucVu->ten_chuc_vu == "Giám đốc")
         {
             $users =User::where('ho_ten','LIKE',"%$request->search%")
             ->orwhere('ho_ten','LIKE',"%$request->search%")

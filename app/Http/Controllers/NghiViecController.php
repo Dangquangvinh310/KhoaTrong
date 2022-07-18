@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\NghiViec;
+use App\Models\ChucVu;
 use App\Models\User;
 use App\Models\HopDong;
 use App\Models\PhongBan;
@@ -12,7 +13,7 @@ class NghiViecController extends Controller
 {
     public function index()
     {
-        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
+        if(auth()->user()->chucVu->ten_chuc_vu == "Giám đốc")
         {
             $users =User::all()->pluck('id');
         }
@@ -26,13 +27,13 @@ class NghiViecController extends Controller
             $users = User::where('id', auth()->user()->id)->get()->pluck('id');
         }
 
-        $nghiViecs  = NghiViec::where('trang_thai','Duyệt')->whereIn('user_id', $users)->get();
+        $nghiViecs  = NghiViec::whereIn('user_id', $users)->get();
         return view('nghi-viec/danh-sach',compact('nghiViecs'));
     }
 
     public function danh_sach_ngay_nghi_cho_duyet ()
     {
-        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
+        if(auth()->user()->chucVu->ten_chuc_vu == "Giám đốc")
         {
             $users =User::all()->pluck('id');
         }
@@ -81,19 +82,32 @@ class NghiViecController extends Controller
 
     }
 
+    public function khong_duyet_don_nghi($id)
+    {
+   
+      $update = NghiViec::find($id);
+      $update->trang_thai = 'Không duyệt';
+      $update->save();
+      return redirect()->route('danh_sach_nghi_viec')->with('status','Cập nhật thành công');
+
+    }
+
     public function create()
     {
-        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
+        if(auth()->user()->chucVu->ten_chuc_vu == "Giám đốc")
         {
-            $users =User::all();
+            $chucVu = ChucVu::where('ten_chuc_vu', 'Giám đốc')->first();
+            $users =User::where('chuc_vu_id','!=', $chucVu->id)->get();
         }
         else if(auth()->user()->chucVu->ten_chuc_vu == "Trưởng phòng")
         {
+            $chucVu = ChucVu::where('ten_chuc_vu', 'Giám đốc')->first();
             $phongBan = PhongBan::where('user_id', auth()->user()->id)->first();
-            $users = User::where('phong_ban_id', $phongBan->id)->get();
+            $users = User::where('chuc_vu_id','!=', $chucVu->id)->where('phong_ban_id', $phongBan->id)->get();
         }
-        else{
-            $users =User::where('id',auth()->user()->id)->get();
+        else
+        {
+            $users = User::where('id', auth()->user()->id)->get();
         }
         return view('nghi-viec/them-moi',compact('users'));
     }

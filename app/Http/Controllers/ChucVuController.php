@@ -46,11 +46,12 @@ class ChucVuController extends Controller
     public function edit($id)
     {
         $chucVu=ChucVu::find($id);
+        $dsChucVu=ChucVu::all();
         if($chucVu==null)
         {
             return redirect()->route('danh_sach_chuc_vu')->with('error','Không tìm thấy chức vụ này');
         }
-        return view('chuc-vu/cap-nhat', compact('chucVu'));   
+        return view('chuc-vu/cap-nhat', compact('chucVu','dsChucVu'));   
     }
 
     public function update(Request $request,$id)

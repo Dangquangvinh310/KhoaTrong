@@ -14,7 +14,7 @@ class KhenThuongController extends Controller
 {
     public function index()
     {
-        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
+        if(auth()->user()->chucVu->ten_chuc_vu == "Giám đốc")
         {
             $users=User::all()->pluck('id');
         }
@@ -32,7 +32,7 @@ class KhenThuongController extends Controller
 
     public function create()
     {
-        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
+        if(auth()->user()->chucVu->ten_chuc_vu == "Giám đốc")
         {
             $users=User::all();
         }
@@ -87,8 +87,9 @@ class KhenThuongController extends Controller
 
     public function edit($id)
     {
+        $dsKhenThuong = KhenThuong::all();
         $khenThuong = KhenThuong::find($id);
-        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
+        if(auth()->user()->chucVu->ten_chuc_vu == "Giám đốc")
         {
             $users=User::all();
         }
@@ -100,7 +101,7 @@ class KhenThuongController extends Controller
         {
             return redirect()->route('danh_sach_khen_thuong')->with('error','Không tìm thấy khen thưởng này');
         }
-        return view('khen-thuong/cap-nhat', compact('khenThuong','users'));   
+        return view('khen-thuong/cap-nhat', compact('khenThuong','users','dsKhenThuong'));   
     }
 
     public function update(Request $request,$id)

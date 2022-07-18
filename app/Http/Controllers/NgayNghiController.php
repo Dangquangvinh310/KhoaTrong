@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\NgayNghi;
+use App\Models\PhongBan;
+use App\Models\ChucVu;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
@@ -12,7 +14,7 @@ class NgayNghiController extends Controller
 {
     public function index()
     {
-        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
+        if(auth()->user()->chucVu->ten_chuc_vu == "Giám đốc")
         {
             $users =User::all()->pluck('id');
         }
@@ -26,13 +28,13 @@ class NgayNghiController extends Controller
             $users = User::where('id', auth()->user()->id)->get()->pluck('id');
         }
     
-        $ngayNghis  = NgayNghi::where('trang_thai','Duyệt')->whereIn('user_id', $users)->get();
+        $ngayNghis  = NgayNghi::whereIn('user_id', $users)->get();
 
         return view('ngay-nghi/danh-sach',compact('ngayNghis'));
     }
     public function danh_sach_ngay_nghi_cho_duyet()
     {
-        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
+        if(auth()->user()->chucVu->ten_chuc_vu == "Giám đốc")
         {
             $users =User::all()->pluck('id');
         }
@@ -61,15 +63,32 @@ class NgayNghiController extends Controller
 
     }
 
+    public function khong_duyet_don_nghi($id)
+    {
+   
+      $update = NgayNghi::find($id);
+      $update->trang_thai = 'Không duyệt';
+      $update->save();
+      return redirect()->route('danh_sach_ngay_nghi')->with('status','Cập nhật thành công');
+
+    }
+
     public function create()
     {
-        if(auth()->user()->chucVu->ten_chuc_vu == "Nhân viên")
+        if(auth()->user()->chucVu->ten_chuc_vu == "Giám đốc")
         {
-            $users =User::where('id', auth()->user()->id)->get();
+            $chucVu = ChucVu::where('ten_chuc_vu', 'Giám đốc')->first();
+            $users =User::where('chuc_vu_id','!=', $chucVu->id)->get();
+        }
+        else if(auth()->user()->chucVu->ten_chuc_vu == "Trưởng phòng")
+        {
+            $chucVu = ChucVu::where('ten_chuc_vu', 'Giám đốc')->first();
+            $phongBan = PhongBan::where('user_id', auth()->user()->id)->first();
+            $users = User::where('chuc_vu_id','!=', $chucVu->id)->where('phong_ban_id', $phongBan->id)->get();
         }
         else
         {
-            $users =User::all();
+            $users = User::where('id', auth()->user()->id)->get();
         }
         return view('ngay-nghi/them-moi',compact('users'));
     }

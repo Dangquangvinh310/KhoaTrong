@@ -41,13 +41,16 @@
                        </div>
                        <div class="col-6">
                             <label class="form-label">Ngày kết thúc</label>
-                            <input type="date" class="form-control" id="ngay_ket_thuc" name="ngay_ket_thuc" required>
+                            <input type="date" class="form-control" id="ngay_ket_thuc" name="ngay_ket_thuc">
                        </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-6">
                             <label class="form-label">Nội dung</label>
-                            <input type="text" class="form-control" id="noi_dung" name="noi_dung" placeholder="Nhập nội dung">
+                            <select class="form-select" name="noi_dung" id="noi_dung" required>
+                                <option value="Có thời hạn">Có thời hạn</option>
+                                <option value="Không thời hạn">Không thời hạn</option>
+                            </select>
                        </div>
                        <div class="col-6">
                             <label class="form-label">Lương</label>

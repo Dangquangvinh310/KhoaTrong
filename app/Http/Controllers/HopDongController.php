@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\HopDong;
+use App\Models\ChucVu;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use App\Models\PhongBan;
@@ -21,14 +22,15 @@ class HopDongController extends Controller
 
 
 
-        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
+        if(auth()->user()->chucVu->ten_chuc_vu == "Giám đốc")
         {
-             $hopDongs = User::where('id','>',0)->whereHas('hopDong')->with('hopDong') ->get();
+            $chucVu = ChucVu::where('ten_chuc_vu', 'Giám đốc')->first();
+             $hopDongs = User::where('chuc_vu_id','!=',$chucVu->id)->whereHas('hopDong')->with('hopDong') ->get();
         }
         else if(auth()->user()->chucVu->ten_chuc_vu == "Trưởng phòng")
         {
             $phongBan = PhongBan::where('user_id', auth()->user()->id)->first();
-            $hopDongs = User::where('phong_ban_id', $phongBan->id)->whereHas('hopDong')->with('hopDong') ->get();
+            $hopDongs = User::where('phong_ban_id', $phongBan->id)->whereHas('hopDong')->with('hopDong')->get();
         }
         else{
             $hopDongs =User::where('id',auth()->user()->id)->whereHas('hopDong')->with('hopDong') ->get();
@@ -42,14 +44,15 @@ class HopDongController extends Controller
 
     public function create()
     {
-        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
+        if(auth()->user()->chucVu->ten_chuc_vu == "Giám đốc")
         {
-             $users = User::where('id','>',0)->get();
+            $chucVu = ChucVu::where('ten_chuc_vu', 'Giám đốc')->first();
+            $users = User::where('chuc_vu_id','!=', $chucVu->id)->get();
         }
         else if(auth()->user()->chucVu->ten_chuc_vu == "Trưởng phòng")
         {
             $phongBan = PhongBan::where('user_id', auth()->user()->id)->first();
-            $users = User::where('phong_ban_id', $phongBan->id)->get();
+            $users = User::where('id','!=', auth()->user()->id)->where('phong_ban_id', $phongBan->id)->get();
         }
         else{
             $users =User::where('id',auth()->user()->id)->get();
@@ -63,7 +66,6 @@ class HopDongController extends Controller
             'user_id'               => 'required',
             'ngay_ki_hop_dong'      => 'required',
             'ngay_bat_dau'          => 'required',
-            'ngay_ket_thuc'         => 'required',
             'noi_dung'              => 'max:191',
             'luong'                 => 'required|max:19',
             ],
@@ -71,7 +73,6 @@ class HopDongController extends Controller
                 'user_id.required'              => 'Chưa chọn nhân viên',
                 'ngay_ki_hop_dong.required'     => 'Chưa chọn ngày kí hợp đồng',
                 'ngay_bat_dau.required'         => 'Chưa chọn ngày bắt đầu',
-                'ngay_ket_thuc.required'        => 'Chưa chọn ngày kết thúc',
                 'noi_dung.max'                  => 'Nội dung vượt quá 191 kí tự',
                 'luong.required'                => 'Chưa nhập lương',
                 'luong.max'                     => 'Lương vượt quá 19 kí tự',
@@ -94,7 +95,19 @@ class HopDongController extends Controller
     public function edit($id)
     {
         $hopDong=HopDong::find($id);
-        $users=User::all();
+        if(auth()->user()->chucVu->ten_chuc_vu == "Giám đốc")
+        {
+            $chucVu = ChucVu::where('ten_chuc_vu', 'Giám đốc')->first();
+            $users = User::where('chuc_vu_id','!=', $chucVu->id)->get();
+        }
+        else if(auth()->user()->chucVu->ten_chuc_vu == "Trưởng phòng")
+        {
+            $phongBan = PhongBan::where('user_id', auth()->user()->id)->first();
+            $users = User::where('id','!=', auth()->user()->id)->where('phong_ban_id', $phongBan->id)->get();
+        }
+        else{
+            $users =User::where('id',auth()->user()->id)->get();
+        }
         if($hopDong==null)
         {
             return redirect()->route('danh_sach_hop_dong')->with('error','Không tìm thấy hợp đồng này');
@@ -108,7 +121,6 @@ class HopDongController extends Controller
             'user_id'               => 'required',
             'ngay_ki_hop_dong'      => 'required',
             'ngay_bat_dau'          => 'required',
-            'ngay_ket_thuc'         => 'required',
             'noi_dung'              => 'max:191',
             'luong'                 => 'required|max:19',
             ],
@@ -116,7 +128,6 @@ class HopDongController extends Controller
                 'user_id.required'              => 'Chưa chọn nhân viên',
                 'ngay_ki_hop_dong.required'     => 'Chưa chọn ngày kí hợp đồng',
                 'ngay_bat_dau.required'         => 'Chưa chọn ngày bắt đầu',
-                'ngay_ket_thuc.required'        => 'Chưa chọn ngày kết thúc',
                 'noi_dung.max'                  => 'Nội dung vượt quá 191 kí tự',
                 'luong.required'                => 'Chưa nhập lương',
                 'luong.max'                     => 'Lương vượt quá 19 kí tự',

@@ -22,7 +22,11 @@
                     <div class="row mb-3">
                         <div class="col-6">
                             <label class="form-label">Tên phòng ban</label>
-                            <input type="text" class="form-control" id="ten_phong_ban" name="ten_phong_ban" placeholder="Nhập tên phòng ban" required>
+                            <select class="form-select" name="ten_phong_ban" required>
+                                <option value="Phòng hành chính">Phòng hành chính</option>
+                                <option value="Phòng kế toán">Phòng kế toán</option>
+                                <option value="Phòng kinh doanh">Phòng kinh doanh</option>
+                            </select>
                        </div>
                        <!-- <div class="col-6">
                             <label class="form-label">Trưởng phòng</label>

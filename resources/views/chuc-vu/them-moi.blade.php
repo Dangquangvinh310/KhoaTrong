@@ -22,7 +22,12 @@
                     <div class="row mb-3">
                         <div class="col-6">
                             <label class="form-label">Tên chức vụ</label>
-                            <input type="text" class="form-control" id="ten_chuc_vu" name="ten_chuc_vu" placeholder="Nhập tên chức vụ" required>
+                            <select class="form-select" name="ten_chuc_vu" required>
+                                <option value="Giám đốc">Giám đốc</option>
+                                <option value="Trưởng phòng">Trưởng phòng</option>
+                                <option value="Nhân viên">Nhân viên</option>
+                                <option value="Thư kí">Thư kí</option>
+                            </select>
                        </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>

@@ -31,8 +31,12 @@
                         </div>
                       
                         <div class="col-6">
-                                    <label class="form-label">Chọn đơn xin nghỉ</label>
-                                    <input type="file" class="form-control" id="don_xin_nghi" name="don_xin_nghi" >
+                            <label class="form-label">Chọn đơn xin nghỉ</label>
+                            <input type="file" class="form-control" id="don_xin_nghi" name="don_xin_nghi" >
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label">Lý do</label>
+                            <input type="text" class="form-control" id="ly_do" name="ly_do" value="{{$nghiViec->ly_do}}" required>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\ChamCong;
 use App\Models\User;
 use App\Models\Luong;
-
+use App\Models\ChucVu;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use App\Models\HopDong;
@@ -16,9 +16,10 @@ class ChamCongController extends Controller
 {
     public function index()
     {
-        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
+        if(auth()->user()->chucVu->ten_chuc_vu == "Giám đốc")
         {
-            $users =User::all()->pluck('id');
+            $chucVu = ChucVu::where('ten_chuc_vu', 'Giám đốc')->first();
+            $users =User::where('chuc_vu_id','!=', $chucVu->id)->pluck('id');
         }
         else
         {
@@ -36,9 +37,10 @@ class ChamCongController extends Controller
         $userDaChamCong = ChamCong::where('ngay_lam','LIKE',"$now%")->get()->pluck('user_id')->unique()->sort();
 
 
-        if(auth()->user()->chucVu->ten_chuc_vu == "admin")
+        if(auth()->user()->chucVu->ten_chuc_vu == "Giám đốc")
         {
-            $nguoi_dung =User::where('id','>',0);
+            $chucVu = ChucVu::where('ten_chuc_vu', 'Giám đốc')->first();
+            $nguoi_dung =User::where('chuc_vu_id','!=', $chucVu->id);
         }
         else if(auth()->user()->chucVu->ten_chuc_vu == "Trưởng phòng")
         {
@@ -68,45 +70,52 @@ class ChamCongController extends Controller
     if ($validator->fails()) {
         return back()->with('error', $validator->messages()->first());
     }
-       $chamCong = new ChamCong();
-       $chamCong->user_id = $request->user_id;
-       $chamCong->ngay_lam = Carbon::now()->format('d-m-Y H:m:s');
-       $chamCong->save();
-       if($chamCong)
-       {
-        $user = User::find((integer) $request->user_id)->chucVu;
-        if(empty($user))
+    $luong = HopDong::where('user_id',$request->user_id)->orderBy('id','desc')->first();
+    if($luong != null) {
+        $chamCong = new ChamCong();
+        $chamCong->user_id = $request->user_id;
+        $chamCong->ngay_lam = Carbon::now()->format('d-m-Y H:m:s');
+        $chamCong->save();
+        if($chamCong)
         {
-            return back()->with('error','Nhân viên này chưa có chức vụ');
-        }
-        $ngayLam = Carbon::now()->format('m-Y');
-        $tongNgayLam = ChamCong::where('user_id',$request->user_id)->where('ngay_lam','LIKE',"%$ngayLam%")->count();
-        $luongUser = Luong::where('user_id',$request->user_id)->where('thang_nam',$ngayLam)->first();
-        $luong = HopDong::where('user_id',$request->user_id)->orderBy('id','desc')->first();
+            $user = User::find((integer) $request->user_id)->chucVu;
+            if(empty($user))
+            {
+                return back()->with('error','Nhân viên này chưa có chức vụ');
+            }
+            $ngayLam = Carbon::now()->format('m-Y');
+            $tongNgayLam = ChamCong::where('user_id',$request->user_id)->where('ngay_lam','LIKE',"%$ngayLam%")->count();
+            $luongUser = Luong::where('user_id',$request->user_id)->where('thang_nam',$ngayLam)->first();
+            $luong = HopDong::where('user_id',$request->user_id)->orderBy('id','desc')->first();
 
-        if(empty($luongUser))
+            if(empty($luongUser))
+            {
+                Luong::create(
+                    [
+                        'user_id'    =>(integer) $request->user_id,
+                        'tong_ngay_lam'   =>  $tongNgayLam ,
+                        'tam_ung'       => 0,
+                        'phu_cap'                 => 0,
+                        'khen_thuong'       => 0,
+                        'ky_luat'                 => 0,
+                        'thang_nam'     => Carbon::now()->format('m-Y'),
+                        'tong_luong' =>  $tongNgayLam* $luong->luong,
+                    ]
+                );
+            }
+            else{
+                $luongUser->tong_ngay_lam = $tongNgayLam;
+                $luongUser->tong_luong =  (float)$luongUser->tong_ngay_lam * (float)$luong->luong
+                + (float)$luongUser->phu_cap - (float)$luongUser->tam_ung
+                +(float)$luongUser->khen_thuong - (float)$luongUser->ky_luat;
+                $luongUser->save();
+            }
+        }
+        }
+        else
         {
-            Luong::create(
-                [
-                    'user_id'    =>(integer) $request->user_id,
-                    'tong_ngay_lam'   =>  $tongNgayLam ,
-                    'tam_ung'       => 0,
-                    'phu_cap'                 => 0,
-                    'khen_thuong'       => 0,
-                    'ky_luat'                 => 0,
-                    'thang_nam'     => Carbon::now()->format('m-Y'),
-                    'tong_luong' =>  $tongNgayLam* $luong->luong,
-                ]
-            );
+            return back()->with('error','Nhân viên này chưa có hợp đồng');
         }
-        else{
-            $luongUser->tong_ngay_lam = $tongNgayLam;
-            $luongUser->tong_luong =  (float)$luongUser->tong_ngay_lam * (float)$luong->luong
-            + (float)$luongUser->phu_cap - (float)$luongUser->tam_ung
-            +(float)$luongUser->khen_thuong - (float)$luongUser->ky_luat;
-            $luongUser->save();
-        }
-       }
         return redirect()->route('danh_sach_cham_cong')->with('status','Bạn đã chấm công thành công!');
     }
 
@@ -116,7 +125,7 @@ class ChamCongController extends Controller
     //    $now = Carbon::now()->format('d-m-Y');
     //    $userDaChamCong = ChamCong::where('ngay_lam','LIKE',"$now%")->get()->pluck('user_id')->unique()->sort();
        
-    //    if(auth()->user()->chucVu->ten_chuc_vu == "admin")
+    //    if(auth()->user()->chucVu->ten_chuc_vu == "Giám đốc")
     //     {
     //         $nguoi_dung =User::where('id','>',0);
     //     }

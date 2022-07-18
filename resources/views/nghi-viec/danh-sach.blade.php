@@ -15,9 +15,11 @@
 @endif
 
 <div class="row">
+    @if(auth()->user()->chucVu->ten_chuc_vu != "Giám đốc")
     <div class="col-12 mb-3">
         <a href="{{route('them_moi_nghi_viec')}}" class="btn btn-primary" >Thêm mới</a>
     </div>
+    @endif
     <div class="col-12">
         <div class="card">
             @if(auth()->user()->chucVu->ten_chuc_vu != "Nhân viên")<h5 class="card-header">Danh sách đơn xin nghỉ /<a href="{{route('danh_sach_nghi_viec_cho_duyet')}}">Danh sách đơn xin nghỉ chờ duyệt</a></h5>@endif

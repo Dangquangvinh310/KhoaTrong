@@ -14,24 +14,11 @@ class ChucVuPhanQuyenSeeder extends Seeder
      */
     public function run()
     {
-        $chucVu                       = new ChucVu();
-        $chucVu->ten_chuc_vu          = 'admin';
-        $chucVu->luong                = 10000000;
-        $chucVu->save();
-
-        $chucVu                       = new ChucVu();
-        $chucVu->ten_chuc_vu          = 'Trưởng phòng';
-        $chucVu->luong                = 10000000;
-        $chucVu->save();
-
-        $chucVu                       = new ChucVu();
-        $chucVu->ten_chuc_vu          = 'Nhân viên';
-        $chucVu->luong                = 5000000;
-        $chucVu->save();
-
-        $phongBan                       = new PhongBan();
-        $phongBan->user_id              = 1;
-        $phongBan->ten_phong_ban        = 'Phòng ban 1';
-        $phongBan->save();
+        $chucVu = ChucVu::where('ten_chuc_vu','admin')->first();
+        if($chucVu!==null)
+        {
+            $chucVu->ten_chuc_vu = 'Giám đốc';
+            $chucVu->save();
+        }
     }
 }

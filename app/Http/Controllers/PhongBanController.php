@@ -59,12 +59,13 @@ class PhongBanController extends Controller
     public function edit($id)
     {
         $phongBan=PhongBan::find($id);
+        $dsPhongBan=PhongBan::all();
         $users=User::where('id', '!=', 1)->get();
         if($phongBan==null)
         {
             return redirect()->route('danh_sach_phong_ban')->with('error','Không tìm thấy phòng ban này');
         }
-        return view('phong-ban/cap-nhat', compact('phongBan','users'));   
+        return view('phong-ban/cap-nhat', compact('phongBan','users','dsPhongBan'));   
     }
 
     public function update(Request $request,$id)
