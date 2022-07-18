@@ -45,7 +45,7 @@
                     @if(Illuminate\Support\Facades\Auth::user()->chucVu->ten_chuc_vu == "Giám đốc" || Illuminate\Support\Facades\Auth::user()->chucVu->ten_chuc_vu == "Trưởng phòng")
                         <a href="{{route('duyet_don_nghi',['id' => $ngayNghi->id])}}" ><i class='bx bx-check'></i></a>
 
-                        <a href="{{route('khong_duyet_don_nghi',['id' => $ngayNghi->id])}}" ><i class='bx bx-trash'></i></a>
+                        <a href="{{route('khong_duyet_don_nghi',['id' => $ngayNghi->id])}}" ><i class="fa fa-window-close"></i></a>
 
                     @endif                        
                     </td>

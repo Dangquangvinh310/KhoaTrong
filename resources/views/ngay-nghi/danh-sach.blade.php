@@ -46,9 +46,9 @@
                     <td><a href="{{url('/Đơn xin nghỉ', $ngayNghi->don_nghi_viec)}}" download>Đơn xin nghỉ việc</td>
                     <td>{{ $ngayNghi->trang_thai}}</td>
 
-                    <td>
+                    <!-- <td>
                         <a href="{{route('xoa_ngay_nghi',['id' => $ngayNghi->id])}}" class="ms-3"><i class="bx bx-trash"></i></a>
-                    </td>
+                    </td> -->
                 </tr>
                 @empty
                 <tr>

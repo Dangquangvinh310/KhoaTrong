@@ -29,6 +29,7 @@
                   <tr>
                     <th scope="col">Tên nhân viên</th>
                     <th scope="col">Ngày nghỉ</th>
+                    <th scope="col">Lý do</th>
                     <th scope="col">Đơn xin nghỉ </th>
                     <th scope="col">Trạng thái </th>
                   </tr>
@@ -38,11 +39,13 @@
                 <tr>
                     <td>{{ $nghiViec->user->ho_ten}}</td>
                     <td>{{ $nghiViec->ngay_nghi}}</td>
+                    <td>{{ $nghiViec->ly_do}}</td>
+
                     <td><a href="{{url('/Đơn xin nghỉ', $nghiViec->don_nghi_viec)}}" download>Đơn xin nghỉ việc</td>
                     <td>{{ $nghiViec->trang_thai}}</td>
-                    <td>
+                    <!-- <td>
                         <a href="{{route('xoa_nghi_viec',['id' => $nghiViec->id])}}" class="ms-3"><i class="bx bx-trash"></i></a>
-                    </td>
+                    </td> -->
                 </tr>
                 @empty
                 <tr>
